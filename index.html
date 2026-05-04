@@ -122,7 +122,10 @@
       padding: 12px 18px;
       border: none;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+      /* 2-stop gradient uses end colors (grad-1, grad-3) so white text
+         stays readable across all themes — including ones where grad-2
+         is pure white (Austrian / Italian flag). */
+      background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
       color: #fff;
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
@@ -258,7 +261,7 @@
       transition: background 200ms ease, color 200ms ease;
     }
     .tab.active {
-      background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+      background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
       color: #fff;
       box-shadow: 0 6px 18px color-mix(in srgb, var(--grad-1) 30%, transparent);
     }
@@ -341,7 +344,7 @@
       transition: background 200ms ease, color 200ms ease;
     }
     .read-toggle button.active {
-      background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+      background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
       color: #fff;
     }
 
@@ -1323,6 +1326,196 @@
       text-transform: uppercase;
     }
 
+    /* ============================================================
+       VISUAL ATMOSPHERE — hero cover, story covers, tab cards.
+       ============================================================ */
+
+    /* Hero cover at top of Library tab. Holds either an uploaded image
+       (background-image) or the language's default SVG art. */
+    .hero-cover {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
+      background-color: var(--bg-via);
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-cover .cover-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .hero-cover .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.18) 50%, transparent 100%),
+        linear-gradient(135deg, transparent 60%, color-mix(in srgb, var(--accent) 18%, transparent));
+      pointer-events: none;
+    }
+    .hero-cover .hero-title {
+      position: absolute;
+      bottom: 16px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .hero-cover .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      line-height: 1.05;
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+    .hero-cover .hero-flag {
+      font-size: 36px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+    }
+    .hero-cover .hero-sub {
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      margin-top: 4px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Story card with cover image: text on left, image fading right. */
+    .story-card.with-cover {
+      padding-right: 38%;
+      min-height: 188px;
+    }
+    .story-card .story-cover {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 46%;
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .story-card .story-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right,
+        var(--bg-from) 0%,
+        color-mix(in srgb, var(--bg-via) 70%, transparent) 30%,
+        transparent 75%,
+        rgba(0, 0, 0, 0.18) 100%);
+    }
+    .story-card .story-cover.svg-cover svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .story-card.with-cover > *:not(.story-cover) {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Tab bar redesigned as glass cards with icons. */
+    .tab-cards {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .tab-card {
+      padding: 12px 4px 10px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      color: var(--text-dim);
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: pointer;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: transform 180ms ease, background 220ms ease,
+                  border-color 220ms ease, box-shadow 220ms ease, color 220ms ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .tab-card:active { transform: scale(0.96); }
+    .tab-card .tab-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .tab-card .tab-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+    }
+    .tab-card.active {
+      background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 10px 26px color-mix(in srgb, var(--grad-1) 32%, transparent);
+    }
+
+    /* Cover-image upload row inside Settings (lang/story rows). */
+    .cover-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--glass-border);
+    }
+    .cover-thumb {
+      width: 64px;
+      height: 48px;
+      border-radius: 8px;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      flex: none;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-soft);
+      overflow: hidden;
+    }
+    .cover-thumb svg { width: 100%; height: 100%; display: block; }
+
+    /* Subtle ambient blobs that respond to language theme on every page.
+       (Already present in body::before but slightly stronger now.) */
+    body::before {
+      background:
+        radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--grad-1) 26%, transparent), transparent 55%),
+        radial-gradient(circle at 82% 88%, color-mix(in srgb, var(--grad-3) 22%, transparent), transparent 55%);
+    }
+
+    @media (max-width: 480px) {
+      .tab-cards { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .tab-card { padding: 10px 2px 8px; }
+      .tab-card .tab-icon { font-size: 19px; }
+      .tab-card .tab-label { font-size: 9.5px; letter-spacing: 0.2px; }
+      .hero-cover { height: 160px; }
+      .hero-cover .hero-name { font-size: 22px; }
+      .story-card.with-cover { padding-right: 0; min-height: auto; }
+      .story-card .story-cover { display: none; }
+    }
+
     /* Login picker — Netflix-style profile chooser shown on every load. */
     .login-screen {
       position: fixed;
@@ -1456,15 +1649,25 @@
           accent:   '#ffce00'
         }
       },
+      flag_at: {
+        // Austrian flag — red / white / red. True 3-stop gradient with
+        // pure white in the middle. The slightly different reds at the
+        // ends keep the linear gradient feeling like a gradient.
+        name: 'Austrian Flag',
+        theme: {
+          gradient1: '#ed2939', gradient2: '#ffffff', gradient3: '#c1121f',
+          bgFrom:   '#0a0606', bgVia: '#1a0606', bgTo: '#0a0a0a',
+          accent:   '#ed2939'
+        }
+      },
       flag_it: {
-        // Italian Tricolore — green, cream-white, red. Pure white reads
-        // too hot on a dark cosmic UI, so the middle stop is a warm
-        // cream that bridges the green↔red gradient cleanly.
+        // Italian Tricolore — green / white / red. True 3-stop gradient
+        // matching the actual flag colors.
         name: 'Italian Flag',
         theme: {
-          gradient1: '#009e49', gradient2: '#fef9c3', gradient3: '#ce2b37',
+          gradient1: '#009246', gradient2: '#ffffff', gradient3: '#ce2b37',
           bgFrom:   '#0a0a0a', bgVia: '#061509', bgTo: '#14060a',
-          accent:   '#009e49'
+          accent:   '#009246'
         }
       },
       cosmic: {
@@ -1523,10 +1726,18 @@
         name: 'German',
         flag: '🇩🇪',
         ttsLang: 'de-DE',
-        // German default = flag-inspired (red + gold + bridge orange) on
-        // a near-black backbone. The Cosmic preset is preserved for
-        // users who preferred the chunk-1 purple/pink/cyan look.
-        theme: { ...THEME_PRESETS.flag_de.theme }
+        // German default = Austrian Flag (red/cream/red). Both German Flag
+        // (Bundesflagge) and Austrian Flag presets are available in the
+        // Settings → Languages → Theme dropdown.
+        theme: { ...THEME_PRESETS.flag_at.theme }
+      },
+      it: {
+        id: 'it',
+        name: 'Italian',
+        flag: '🇮🇹',
+        ttsLang: 'it-IT',
+        // Italian default = Tricolore preset (green / cream / red).
+        theme: { ...THEME_PRESETS.flag_it.theme }
       }
     };
 
@@ -1936,6 +2147,289 @@
       ]
     };
 
+    /* ------------------------------------------------------------
+       BUILT-IN STORY for Italian — same schema as German story-1.
+       Mirror of `example-italian-story.json` but embedded so it
+       always ships with the app (works offline + on file:// origins
+       where fetch is blocked + on hosted GitHub Pages alike).
+       ------------------------------------------------------------ */
+    const BUILTIN_STORY_IT_1 = {
+      schemaVersion: 1,
+      languageId: 'it',
+      id: 'story-1',
+      _storyVersion: 4,
+      title: 'Una giornata a Roma',
+      level: 'A1',
+      order: 1,
+      grammarFocus: ['essere/avere', 'definite articles', 'regular -are verbs', 'adjective agreement', 'contracted prepositions'],
+      sentences: [
+        { de: 'Mi chiamo Luca.', en: 'My name is Luca.', note: "Reflexive verb chiamarsi (literally 'to call oneself')." },
+        { de: 'Ho ventotto anni e abito a Roma.', en: 'I am twenty-eight years old and I live in Rome.', note: 'Italian uses avere (to have) for age, not essere.' },
+        { de: 'Ho una sorella, Sofia.', en: 'I have a sister, Sofia.', note: null },
+        { de: 'Sofia è simpatica e intelligente.', en: 'Sofia is nice and intelligent.', note: "Adjectives ending in -e (intelligente) don't change for gender." },
+        { de: 'Oggi è lunedì.', en: 'Today is Monday.', note: null },
+        { de: 'Sono le sette di mattina.', en: 'It is seven in the morning.', note: 'Time uses sono (plural) for any hour after 1.' },
+        { de: 'Mi alzo e vado in cucina.', en: 'I get up and go to the kitchen.', note: 'Reflexive alzarsi. Irregular andare → vado.' },
+        { de: 'Faccio un caffè forte.', en: 'I make a strong coffee.', note: 'Irregular fare → faccio.' },
+        { de: 'Il caffè è la mia passione.', en: 'Coffee is my passion.', note: 'Definite article il for masculine; possessive la mia agrees with feminine passione.' },
+        { de: 'Mangio anche un cornetto con marmellata.', en: 'I also eat a croissant with jam.', note: null },
+        { de: 'La mia casa è piccola ma luminosa.', en: 'My house is small but bright.', note: 'Feminine adjectives end in -a: piccola, luminosa.' },
+        { de: 'Ha una camera, un bagno e un soggiorno.', en: 'It has a bedroom, a bathroom and a living room.', note: 'Indefinite articles un/una match gender.' },
+        { de: 'Dalla finestra vedo i tetti rossi di Roma.', en: 'From the window I see the red roofs of Rome.', note: 'Contracted preposition: da + la = dalla. Plural masculine adjective: rossi.' },
+        { de: 'Alle otto vado al lavoro.', en: 'At eight I go to work.', note: 'Contracted: a + le = alle, a + il = al.' },
+        { de: 'Lavoro in una libreria nel centro.', en: 'I work in a bookstore in the center.', note: 'Contracted: in + il = nel.' },
+        { de: 'Il mio capo si chiama Marco.', en: 'My boss is called Marco.', note: null },
+        { de: 'È gentile ma severo.', en: 'He is kind but strict.', note: null },
+        { de: 'Mi piace il mio lavoro.', en: 'I like my work.', note: "Piacere construction: 'mi piace X' = 'X is pleasing to me'." },
+        { de: 'A pranzo mangio con la mia collega Giulia.', en: 'At lunch I eat with my colleague Giulia.', note: null },
+        { de: 'Giulia è giovane e divertente.', en: 'Giulia is young and funny.', note: null },
+        { de: 'Parla molto e ride spesso.', en: 'She talks a lot and laughs often.', note: 'Regular -are parlare → parla. Irregular ridere → ride.' },
+        { de: 'Mangio una pasta al pomodoro.', en: 'I eat pasta with tomato sauce.', note: null },
+        { de: "Beviamo l'acqua frizzante.", en: 'We drink sparkling water.', note: "L' before vowel; -iamo is the 1st person plural ending." },
+        { de: 'Il pranzo è sempre delizioso.', en: 'Lunch is always delicious.', note: null },
+        { de: 'Nel pomeriggio leggo i libri nuovi.', en: 'In the afternoon I read the new books.', note: 'Plural masculine agreement: i libri nuovi.' },
+        { de: 'Alle sei torno a casa.', en: 'At six I return home.', note: null },
+        { de: 'Ascolto la musica italiana.', en: 'I listen to Italian music.', note: 'Adjective italiana agrees with feminine la musica.' },
+        { de: 'La musica è bella e rilassante.', en: 'The music is beautiful and relaxing.', note: null },
+        { de: 'La sera leggo o guardo un film.', en: 'In the evening I read or watch a film.', note: null },
+        { de: 'Domani è un altro giorno bellissimo.', en: 'Tomorrow is another beautiful day.', note: 'Suffix -issimo intensifies an adjective: bello → bellissimo.' }
+      ],
+      vocabulary: [
+        { de: 'caffè', en: 'coffee', pos: 'noun', gender: 'il', plural: 'caffè', note: 'Invariable plural — accent makes it un-changing.' },
+        { de: 'casa', en: 'house, home', pos: 'noun', gender: 'la', plural: 'case' },
+        { de: 'lavoro', en: 'work, job', pos: 'noun', gender: 'il', plural: 'lavori' },
+        { de: 'amico', en: 'friend (male)', pos: 'noun', gender: "l'", plural: 'amici', note: "L' before vowel." },
+        { de: 'libro', en: 'book', pos: 'noun', gender: 'il', plural: 'libri' },
+        { de: 'macchina', en: 'car', pos: 'noun', gender: 'la', plural: 'macchine' },
+        { de: 'acqua', en: 'water', pos: 'noun', gender: "l'", plural: 'acque', note: "L' before vowel." },
+        { de: 'ragazza', en: 'girl', pos: 'noun', gender: 'la', plural: 'ragazze' },
+        { de: 'giorno', en: 'day', pos: 'noun', gender: 'il', plural: 'giorni' },
+        { de: 'madre', en: 'mother', pos: 'noun', gender: 'la', plural: 'madri' },
+        { de: 'anno', en: 'year', pos: 'noun', gender: "l'", plural: 'anni', note: "Masculine: l'anno, gli anni." },
+        { de: 'sorella', en: 'sister', pos: 'noun', gender: 'la', plural: 'sorelle' },
+        { de: 'mattina', en: 'morning', pos: 'noun', gender: 'la', plural: 'mattine', note: "'di mattina' = in the morning." },
+        { de: 'cucina', en: 'kitchen', pos: 'noun', gender: 'la', plural: 'cucine' },
+        { de: 'cornetto', en: 'croissant', pos: 'noun', gender: 'il', plural: 'cornetti', note: 'Italian breakfast classic.' },
+        { de: 'marmellata', en: 'jam', pos: 'noun', gender: 'la', plural: 'marmellate' },
+        { de: 'passione', en: 'passion', pos: 'noun', gender: 'la', plural: 'passioni' },
+        { de: 'camera', en: 'bedroom, room', pos: 'noun', gender: 'la', plural: 'camere' },
+        { de: 'bagno', en: 'bathroom', pos: 'noun', gender: 'il', plural: 'bagni' },
+        { de: 'soggiorno', en: 'living room', pos: 'noun', gender: 'il', plural: 'soggiorni' },
+        { de: 'finestra', en: 'window', pos: 'noun', gender: 'la', plural: 'finestre' },
+        { de: 'tetto', en: 'roof', pos: 'noun', gender: 'il', plural: 'tetti' },
+        { de: 'centro', en: 'center, downtown', pos: 'noun', gender: 'il', plural: 'centri' },
+        { de: 'libreria', en: 'bookstore', pos: 'noun', gender: 'la', plural: 'librerie' },
+        { de: 'capo', en: 'boss, head, chief', pos: 'noun', gender: 'il', plural: 'capi' },
+        { de: 'collega', en: 'colleague', pos: 'noun', gender: 'il/la', plural: 'colleghi/colleghe', note: 'Same form for m. and f. (article changes).' },
+        { de: 'pranzo', en: 'lunch', pos: 'noun', gender: 'il', plural: 'pranzi' },
+        { de: 'pasta', en: 'pasta, pastry', pos: 'noun', gender: 'la' },
+        { de: 'pomodoro', en: 'tomato', pos: 'noun', gender: 'il', plural: 'pomodori' },
+        { de: 'pomeriggio', en: 'afternoon', pos: 'noun', gender: 'il', plural: 'pomeriggi' },
+        { de: 'sera', en: 'evening', pos: 'noun', gender: 'la', plural: 'sere', note: "'la sera' = in the evening." },
+        { de: 'musica', en: 'music', pos: 'noun', gender: 'la' },
+        { de: 'film', en: 'film, movie', pos: 'noun', gender: 'il', plural: 'film', note: 'Loanword — invariable in plural.' },
+        { de: 'lunedì', en: 'Monday', pos: 'noun', gender: 'il', note: 'Days of the week are masculine.' },
+        { de: 'essere', en: 'to be', pos: 'verb', note: 'Irregular. io sono, tu sei, lui/lei è, noi siamo, voi siete, loro sono.' },
+        { de: 'avere', en: 'to have', pos: 'verb', note: 'Irregular. io ho, tu hai, lui/lei ha, noi abbiamo, voi avete, loro hanno.' },
+        { de: 'abitare', en: 'to live, reside', pos: 'verb', note: 'Regular -are.' },
+        { de: 'parlare', en: 'to speak, to talk', pos: 'verb', note: 'Regular -are. parlo, parli, parla, parliamo, parlate, parlano.' },
+        { de: 'mangiare', en: 'to eat', pos: 'verb', note: 'Regular -are. Stem -i drops in some forms: mangiamo, mangiate.' },
+        { de: 'bere', en: 'to drink', pos: 'verb', note: 'Irregular. bevo, bevi, beve, beviamo, bevete, bevono.' },
+        { de: 'andare', en: 'to go', pos: 'verb', note: 'Irregular. vado, vai, va, andiamo, andate, vanno.' },
+        { de: 'fare', en: 'to make, to do', pos: 'verb', note: 'Irregular. faccio, fai, fa, facciamo, fate, fanno.' },
+        { de: 'leggere', en: 'to read', pos: 'verb', note: 'Regular -ere. leggo, leggi, legge, leggiamo, leggete, leggono.' },
+        { de: 'ascoltare', en: 'to listen to', pos: 'verb', note: 'Regular -are. ascolto, ascolti, ascolta.' },
+        { de: 'chiamarsi', en: 'to be called', pos: 'verb', note: 'Reflexive. mi chiamo, ti chiami, si chiama.' },
+        { de: 'alzarsi', en: 'to get up', pos: 'verb', note: 'Reflexive. mi alzo, ti alzi, si alza.' },
+        { de: 'lavorare', en: 'to work', pos: 'verb', note: 'Regular -are. lavoro, lavori, lavora.' },
+        { de: 'vedere', en: 'to see', pos: 'verb', note: 'Regular -ere. vedo, vedi, vede.' },
+        { de: 'ridere', en: 'to laugh', pos: 'verb', note: 'Regular -ere. rido, ridi, ride.' },
+        { de: 'tornare', en: 'to return, come back', pos: 'verb', note: 'Regular -are. torno, torni, torna.' },
+        { de: 'guardare', en: 'to watch, to look at', pos: 'verb', note: 'Regular -are. guardo, guardi, guarda.' },
+        { de: 'piacere', en: 'to please, be liked by', pos: 'verb', note: "Used with indirect objects: 'mi piace' = I like it." },
+        { de: 'buono', en: 'good', pos: 'adjective', note: 'Forms: buono/buona/buoni/buone.' },
+        { de: 'grande', en: 'big, large, great', pos: 'adjective', note: '-e adjective: grande (sg.), grandi (pl.).' },
+        { de: 'piccolo', en: 'small, little', pos: 'adjective', note: 'Forms: piccolo/piccola/piccoli/piccole.' },
+        { de: 'bello', en: 'beautiful, nice, handsome', pos: 'adjective', note: 'Forms: bello/bella/belli/belle.' },
+        { de: 'bellissimo', en: 'very beautiful, gorgeous', pos: 'adjective', note: 'Suffix -issimo intensifies.' },
+        { de: 'simpatico', en: 'nice, friendly, likeable', pos: 'adjective', note: 'Forms: simpatico/simpatica/simpatici/simpatiche.' },
+        { de: 'intelligente', en: 'intelligent', pos: 'adjective', note: '-e adjective. Same form for m./f.' },
+        { de: 'forte', en: 'strong', pos: 'adjective', note: '-e adjective.' },
+        { de: 'luminoso', en: 'bright, luminous', pos: 'adjective' },
+        { de: 'rosso', en: 'red', pos: 'adjective' },
+        { de: 'gentile', en: 'kind, polite', pos: 'adjective', note: '-e adjective.' },
+        { de: 'severo', en: 'strict, severe', pos: 'adjective' },
+        { de: 'giovane', en: 'young', pos: 'adjective', note: '-e adjective.' },
+        { de: 'divertente', en: 'funny, fun, entertaining', pos: 'adjective', note: '-e adjective.' },
+        { de: 'delizioso', en: 'delicious', pos: 'adjective' },
+        { de: 'nuovo', en: 'new', pos: 'adjective' },
+        { de: 'italiano', en: 'Italian', pos: 'adjective', note: 'Also a noun for Italian speaker.' },
+        { de: 'rilassante', en: 'relaxing', pos: 'adjective', note: '-e adjective.' },
+        { de: 'frizzante', en: 'sparkling, fizzy', pos: 'adjective', note: 'Used for water, wine.' },
+        { de: 'anche', en: 'also, too', pos: 'adverb' },
+        { de: 'molto', en: 'a lot, much, very', pos: 'adverb' },
+        { de: 'spesso', en: 'often', pos: 'adverb' },
+        { de: 'sempre', en: 'always', pos: 'adverb' },
+        { de: 'domani', en: 'tomorrow', pos: 'adverb' },
+        { de: 'oggi', en: 'today', pos: 'adverb' },
+        { de: 'ventotto', en: 'twenty-eight', pos: 'number' },
+        { de: 'sette', en: 'seven', pos: 'number' },
+        { de: 'otto', en: 'eight', pos: 'number' },
+        { de: 'sei', en: 'six', pos: 'number' }
+      ],
+      grammarRules: [
+        {
+          name: 'Essere vs Avere',
+          tier: 1,
+          desc: "Italian has two verbs that English speakers often confuse. Use essere (to be) for identity, location, characteristics. Use avere (to have) for possession AND for states English expresses with 'to be' — age, hunger, thirst, cold.",
+          longExplanation: "English uses 'to be' for many things — age, hunger, thirst, fear. Italian uses 'avere' (to have) for those instead. So 'I am 28' becomes literally 'I have 28 years' — Ho 28 anni. Use ESSERE only for identity, location, and traits.",
+          examples: [
+            { de: 'Ho fame.', en: 'I am hungry.', highlight: 'Ho' },
+            { de: 'Ho ventotto anni.', en: 'I am twenty-eight years old.', highlight: 'Ho' },
+            { de: 'Sono italiano.', en: 'I am Italian.', highlight: 'Sono' }
+          ],
+          tips: [
+            'Use AVERE for: age, hunger, thirst, cold, hot, fear, need.',
+            'Use ESSERE for: identity, location, traits (tall, kind), feelings (happy, sad).'
+          ],
+          table: {
+            title: 'essere vs avere — present tense',
+            headers: ['', 'essere (to be)', 'avere (to have)'],
+            rows: [
+              ['io', 'sono', 'ho'],
+              ['tu', 'sei', 'hai'],
+              ['lui/lei', 'è', 'ha'],
+              ['noi', 'siamo', 'abbiamo'],
+              ['voi', 'siete', 'avete'],
+              ['loro', 'sono', 'hanno']
+            ],
+            note: "Both are highly irregular. The 'h' in avere forms is silent."
+          }
+        },
+        {
+          name: 'Definite Articles',
+          tier: 1,
+          desc: "il (m. sg.), la (f. sg.), lo (m. sg. before s+consonant or z), l' (before vowel), i (m. pl.), le (f. pl.), gli (m. pl. before vowel/s+consonant/z).",
+          longExplanation: "Italian definite articles depend on TWO things: gender (masculine/feminine) AND the first letter of the next word. Most words use simple il (m.) and la (f.), but masculine words starting with s+consonant or z take lo, and any word starting with a vowel takes l'.",
+          examples: [
+            { de: 'il libro', en: 'the book', highlight: 'il' },
+            { de: 'lo studente', en: 'the student', highlight: 'lo' },
+            { de: "l'amico", en: 'the friend', highlight: "l'" },
+            { de: 'gli studenti', en: 'the students', highlight: 'gli' }
+          ],
+          tips: [
+            "Masculine: il / lo / l' (sg.), i / gli (pl.).",
+            "Feminine: la / l' (sg.), le (pl.).",
+            "First letter sound matters: s+consonant or z → lo/gli; vowel → l'."
+          ],
+          table: {
+            title: 'Definite articles — singular & plural',
+            headers: ['', 'Masculine', 'Feminine'],
+            rows: [
+              ['before consonant', 'il libro · i libri', 'la casa · le case'],
+              ['before vowel', "l'amico · gli amici", "l'amica · le amiche"],
+              ['before s+cons. or z', 'lo studente · gli studenti', 'la stagione · le stagioni']
+            ],
+            note: 'Listen to the first letter SOUND, not just the spelling.'
+          }
+        },
+        {
+          name: 'Regular -are Verbs',
+          tier: 1,
+          desc: 'abitare, parlare, lavorare conjugate predictably: -o, -i, -a, -iamo, -ate, -ano. e.g. abitare → abito, abiti, abita, abitiamo, abitate, abitano.',
+          longExplanation: 'Italian -are verbs are the most regular family. Drop the -are ending and add: -o (I), -i (you), -a (he/she), -iamo (we), -ate (you all), -ano (they). Once you learn this pattern, you can conjugate hundreds of verbs.',
+          examples: [
+            { de: 'Parlo italiano.', en: 'I speak Italian.', highlight: 'Parlo' },
+            { de: 'Parli inglese?', en: 'Do you speak English?', highlight: 'Parli' },
+            { de: 'Parliamo spesso.', en: 'We talk often.', highlight: 'Parliamo' }
+          ],
+          tips: [
+            'Endings: -o, -i, -a, -iamo, -ate, -ano.',
+            'Same pattern for: abitare, lavorare, mangiare, ascoltare, guardare.'
+          ],
+          table: {
+            title: 'Regular -are conjugation: parlare (to speak)',
+            headers: ['Pronoun', 'Stem + ending', 'Form'],
+            rows: [
+              ['io', 'parl + o', 'parlo'],
+              ['tu', 'parl + i', 'parli'],
+              ['lui/lei', 'parl + a', 'parla'],
+              ['noi', 'parl + iamo', 'parliamo'],
+              ['voi', 'parl + ate', 'parlate'],
+              ['loro', 'parl + ano', 'parlano']
+            ],
+            note: 'Stress falls on the second-to-last syllable in most forms — except loro (parlano).'
+          }
+        },
+        {
+          name: 'Adjective Agreement',
+          tier: 2,
+          desc: 'Adjectives match the noun gender and number. -o adjectives have 4 forms; -e adjectives have 2 forms.',
+          longExplanation: 'Italian adjectives change endings to match the noun gender (masculine or feminine) and number (singular or plural). The most common pattern is -o/-a/-i/-e (rosso, rossa, rossi, rosse). Adjectives ending in -e have only two forms: -e (singular) and -i (plural).',
+          examples: [
+            { de: 'Il libro rosso.', en: 'The red book.', highlight: 'rosso' },
+            { de: 'La macchina rossa.', en: 'The red car.', highlight: 'rossa' },
+            { de: 'I libri rossi.', en: 'The red books.', highlight: 'rossi' },
+            { de: 'Persone gentili.', en: 'Kind people.', highlight: 'gentili' }
+          ],
+          tips: [
+            '-o adjectives have 4 forms (rosso/rossa/rossi/rosse).',
+            '-e adjectives have 2 forms (gentile/gentili — no gender distinction).',
+            "Adjective comes AFTER the noun in most cases (libro rosso, not 'rosso libro')."
+          ],
+          table: {
+            title: 'Adjective endings',
+            headers: ['Type', 'M. sg.', 'F. sg.', 'M. pl.', 'F. pl.'],
+            rows: [
+              ['-o adjective (rosso)', 'rosso', 'rossa', 'rossi', 'rosse'],
+              ['-e adjective (grande)', 'grande', 'grande', 'grandi', 'grandi']
+            ],
+            note: '-o family has 4 distinct forms; -e family has just 2.'
+          }
+        },
+        {
+          name: 'Contracted Prepositions',
+          tier: 3,
+          desc: 'Prepositions a, di, da, in, su contract with the definite article: a+il=al, a+la=alla, di+il=del, da+la=dalla, in+il=nel.',
+          longExplanation: "When the prepositions a, di, da, in, su come before the definite article (il, la, le, etc.), they merge into a single word. You almost never say 'a il' — it becomes 'al'. Memorize the most common ones: al, alla, alle, del, della, dal, dalla, nel, nella.",
+          examples: [
+            { de: 'Vado al cinema.', en: 'I go to the cinema.', highlight: 'al' },
+            { de: 'Vengo dalla scuola.', en: 'I come from the school.', highlight: 'dalla' },
+            { de: 'Sono nel parco.', en: 'I am in the park.', highlight: 'nel' }
+          ],
+          tips: [
+            '5 prepositions × 7 articles = ~35 contractions, but most are predictable.',
+            'Pattern: a+il=al, a+la=alla, a+le=alle, a+lo=allo.',
+            "'a il' or 'di il' sounds wrong to native ears — it is always contracted."
+          ],
+          table: {
+            title: 'Preposition + article contractions',
+            headers: ['Prep.', '+ il', '+ la', '+ lo', "+ l'", '+ i', '+ le', '+ gli'],
+            rows: [
+              ['a',  'al',  'alla',  'allo',  "all'",  'ai',  'alle',  'agli'],
+              ['di', 'del', 'della', 'dello', "dell'", 'dei', 'delle', 'degli'],
+              ['da', 'dal', 'dalla', 'dallo', "dall'", 'dai', 'dalle', 'dagli'],
+              ['in', 'nel', 'nella', 'nello', "nell'", 'nei', 'nelle', 'negli'],
+              ['su', 'sul', 'sulla', 'sullo', "sull'", 'sui', 'sulle', 'sugli']
+            ],
+            note: 'con, per, tra/fra do NOT contract — they stay as separate words.'
+          }
+        }
+      ],
+      grammarTests: [
+        { tier: 1, rule: 'Essere vs Avere', en: 'I have a sister.', de: 'Ho una sorella.', trap: null },
+        { tier: 1, rule: 'Essere vs Avere', en: 'She is nice.', de: 'È simpatica.', trap: null },
+        { tier: 1, rule: 'Essere vs Avere', en: 'I am cold.', de: 'Ho freddo.', trap: "Italian uses avere for cold, hunger, thirst, age — literally 'I have cold'." },
+        { tier: 1, rule: 'Definite Articles', en: 'The book is interesting.', de: 'Il libro è interessante.', trap: null },
+        { tier: 1, rule: 'Regular -are Verbs', en: 'I live in Milan.', de: 'Abito a Milano.', trap: null },
+        { tier: 1, rule: 'Regular -are Verbs', en: 'We speak Italian.', de: 'Parliamo italiano.', trap: '1st person plural ending is -iamo.' },
+        { tier: 2, rule: 'Adjective Agreement', en: 'The Italian girls are nice.', de: 'Le ragazze italiane sono simpatiche.', trap: 'Both adjectives need feminine plural -e endings.' },
+        { tier: 2, rule: 'Adjective Agreement', en: 'I read the new books.', de: 'Leggo i libri nuovi.', trap: 'Masculine plural -i ending on nuovi.' },
+        { tier: 3, rule: 'Contracted Prepositions', en: 'I go to the cinema.', de: 'Vado al cinema.', trap: "a + il = al (one word, not 'a il')." },
+        { tier: 3, rule: 'Contracted Prepositions', en: 'I come from the school.', de: 'Vengo dalla scuola.', trap: 'da + la = dalla.' }
+      ]
+    };
+
     /* ============================================================
        MIGRATION FRAMEWORK
        Even with only v1 today, this is wired up so future versions
@@ -2112,10 +2606,114 @@
     // ensureBuiltins — make sure each USER has German registered with
     // current built-in metadata, story-1 in their stories list, and the
     // built-in story content is up to date in the global storiesData.
+    // Map of built-in stories per language. Each entry has the embedded
+    // story object plus the preset theme to use as a one-time default
+    // when the language is first registered for a user.
+    const BUILTIN_STORIES = {
+      de: { story: BUILTIN_STORY_1,    defaultThemePreset: 'flag_at' },
+      it: { story: BUILTIN_STORY_IT_1, defaultThemePreset: 'flag_it' }
+    };
+
+    /* ------------------------------------------------------------
+       DEFAULT COVER ART — atmospheric SVG scenes per language.
+       Used when no user image is uploaded. Each is a self-contained
+       SVG that scales to its container via preserveAspectRatio.
+       ------------------------------------------------------------ */
+    const DEFAULT_COVERS = {
+      // Bavarian / alpine vibe: warm dawn sky over pine forest + peaks,
+      // with gold sun and hint of red ridgeline (Bundesflagge palette).
+      de: `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="de-sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1a0a14"/>
+      <stop offset="55%" stop-color="#2a0c0a"/>
+      <stop offset="100%" stop-color="#1f1500"/>
+    </linearGradient>
+    <radialGradient id="de-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ffce00" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#ffce00" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ffce00" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="300" fill="url(#de-sky)"/>
+  <!-- Sun glow + disk -->
+  <circle cx="640" cy="100" r="120" fill="url(#de-sun)"/>
+  <circle cx="640" cy="100" r="32" fill="#ffce00" opacity="0.95"/>
+  <!-- Far peaks -->
+  <path d="M0 215 L90 140 L155 175 L240 110 L310 165 L400 90 L490 165 L580 130 L670 175 L780 145 L800 160 L800 300 L0 300 Z"
+        fill="#0d0606" opacity="0.78"/>
+  <!-- Mid ridge with red tint -->
+  <path d="M0 245 L120 195 L210 225 L320 175 L450 220 L560 195 L680 230 L800 215 L800 300 L0 300 Z"
+        fill="#1a0606" opacity="0.92"/>
+  <!-- Pine trees row -->
+  <g fill="#000" opacity="0.92">
+    <polygon points="40,278 18,300 62,300"/>
+    <polygon points="100,266 78,300 122,300"/>
+    <polygon points="155,272 130,300 180,300"/>
+    <polygon points="220,260 195,300 245,300"/>
+    <polygon points="285,275 262,300 308,300"/>
+    <polygon points="350,265 325,300 375,300"/>
+    <polygon points="420,272 396,300 444,300"/>
+    <polygon points="490,260 465,300 515,300"/>
+    <polygon points="555,275 532,300 578,300"/>
+    <polygon points="620,265 596,300 644,300"/>
+    <polygon points="690,275 666,300 714,300"/>
+    <polygon points="760,260 736,300 784,300"/>
+  </g>
+</svg>`,
+      // Tuscan twilight: rolling hills, cypress trees, warm horizon glow,
+      // green sky transition (Italian Tricolore palette).
+      it: `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="it-sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0d1a14"/>
+      <stop offset="50%" stop-color="#3a1410"/>
+      <stop offset="100%" stop-color="#1a0606"/>
+    </linearGradient>
+    <radialGradient id="it-sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#fef9c3" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#ffce00" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ce2b37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="300" fill="url(#it-sky)"/>
+  <!-- Warm horizon glow -->
+  <ellipse cx="200" cy="220" rx="320" ry="60" fill="#ce2b37" opacity="0.18"/>
+  <!-- Sun -->
+  <circle cx="180" cy="115" r="140" fill="url(#it-sun)"/>
+  <circle cx="180" cy="115" r="28" fill="#fef9c3" opacity="0.96"/>
+  <!-- Distant rolling hills (greenish, faded) -->
+  <path d="M0 210 Q120 160 260 195 T520 180 T800 200 L800 300 L0 300 Z"
+        fill="#0a1f15" opacity="0.65"/>
+  <!-- Mid hill -->
+  <path d="M0 245 Q160 210 320 235 T640 230 T800 245 L800 300 L0 300 Z"
+        fill="#1a0606" opacity="0.85"/>
+  <!-- Front hill -->
+  <path d="M0 275 Q200 255 400 270 T800 270 L800 300 L0 300 Z"
+        fill="#0a0a0a" opacity="0.95"/>
+  <!-- Cypress trees clustered on the right hill -->
+  <g fill="#0a0606">
+    <ellipse cx="500" cy="232" rx="7"  ry="34"/>
+    <ellipse cx="540" cy="228" rx="9"  ry="42"/>
+    <ellipse cx="572" cy="234" rx="6"  ry="32"/>
+    <ellipse cx="608" cy="226" rx="8"  ry="44"/>
+    <ellipse cx="650" cy="232" rx="7"  ry="36"/>
+    <ellipse cx="690" cy="228" rx="9"  ry="42"/>
+    <ellipse cx="730" cy="234" rx="6"  ry="32"/>
+  </g>
+</svg>`
+    };
+
+    function getDefaultCoverSvg(langId) {
+      return DEFAULT_COVERS[langId] || null;
+    }
+
     function ensureBuiltins(s) {
       s.users = s.users || {};
-      // Make sure at least the admin user exists (defensive; migrations
-      // create users.luka but a hand-edited backup might lack it).
+      // Defensive: at least one user must exist (migrations create
+      // luka + sofia but a hand-edited backup might lack them).
       if (Object.keys(s.users).length === 0) {
         s.users.luka = makeDefaultUser('luka', 'Luka', 'admin', '1234');
       }
@@ -2123,46 +2721,84 @@
         s.activeUserId = 'luka' in s.users ? 'luka' : Object.keys(s.users)[0];
       }
 
+      // Per-user: register every BUILTIN_LANGUAGES entry, seed each
+      // language's built-in story, set the default theme on first
+      // registration. Languages already present are preserved.
       for (const uid in s.users) {
         const user = s.users[uid];
         user.languages = user.languages || {};
-        if (!user.languages.de) {
-          user.languages.de = {
-            ...BUILTIN_LANGUAGES.de,
-            stories: [],
-            lastTab: 'library',
-            lastStoryId: null,
-            readMode: 'full'
-          };
-        } else {
-          const lang = user.languages.de;
-          lang.theme = lang.theme || BUILTIN_LANGUAGES.de.theme;
-          lang.ttsLang = lang.ttsLang || BUILTIN_LANGUAGES.de.ttsLang;
-          lang.flag = lang.flag || BUILTIN_LANGUAGES.de.flag;
-          lang.name = lang.name || BUILTIN_LANGUAGES.de.name;
-          if (!Array.isArray(lang.stories)) lang.stories = [];
-          if (!lang.lastTab) lang.lastTab = 'library';
-          if (lang.lastStoryId === undefined) lang.lastStoryId = null;
-          if (!lang.readMode) lang.readMode = 'full';
-        }
-        if (!user.languages.de.stories.includes('story-1')) {
-          user.languages.de.stories.push('story-1');
-        }
-        // Per-user one-time flag-theme refresh.
-        if (user.languages.de.themeVersion === undefined) {
-          user.languages.de.theme = { ...THEME_PRESETS.flag_de.theme };
-          user.languages.de.themeVersion = 1;
+
+        for (const langId in BUILTIN_LANGUAGES) {
+          const builtin = BUILTIN_LANGUAGES[langId];
+          const existing = user.languages[langId];
+
+          if (!existing) {
+            user.languages[langId] = {
+              ...builtin,
+              theme: { ...builtin.theme },
+              stories: [],
+              lastTab: 'library',
+              lastStoryId: null,
+              readMode: 'full',
+              themeVersion: 1   // mark as already-themed; preset picker can change later
+            };
+          } else {
+            // Backfill missing fields on previously-stored language records.
+            existing.theme   = existing.theme   || { ...builtin.theme };
+            existing.ttsLang = existing.ttsLang || builtin.ttsLang;
+            existing.flag    = existing.flag    || builtin.flag;
+            existing.name    = existing.name    || builtin.name;
+            if (!Array.isArray(existing.stories)) existing.stories = [];
+            if (!existing.lastTab) existing.lastTab = 'library';
+            if (existing.lastStoryId === undefined) existing.lastStoryId = null;
+            if (!existing.readMode) existing.readMode = 'full';
+            // One-time theme refresh for users from before the flag-theme
+            // patch (German) or before Italian was a built-in.
+            if (existing.themeVersion === undefined) {
+              const preset = BUILTIN_STORIES[langId] && BUILTIN_STORIES[langId].defaultThemePreset;
+              if (preset && THEME_PRESETS[preset]) {
+                existing.theme = { ...THEME_PRESETS[preset].theme };
+              }
+              existing.themeVersion = 1;
+            }
+            // German default switched from `flag_de` → `flag_at`. Users
+            // who are still on the previous default get bumped to the
+            // new one; users who picked another preset (Cosmic, Ocean,
+            // …) keep their choice. themeVersion=2 marks the swap done.
+            if (langId === 'de' && existing.themeVersion < 2) {
+              const currentPreset = matchPresetId(existing.theme);
+              if (currentPreset === 'flag_de') {
+                existing.theme = { ...THEME_PRESETS.flag_at.theme };
+              }
+              existing.themeVersion = 2;
+            }
+          }
+
+          // Make sure each language's built-in story is registered.
+          const builtinEntry = BUILTIN_STORIES[langId];
+          if (builtinEntry && builtinEntry.story) {
+            const storyId = builtinEntry.story.id;
+            if (!user.languages[langId].stories.includes(storyId)) {
+              user.languages[langId].stories.push(storyId);
+            }
+          }
         }
       }
 
-      // Global story content: refresh the built-in story when its
-      // _storyVersion has advanced (additive rule content). Sentences
-      // don't change, so per-user card indices stay valid.
-      const storedStory = s.storiesData['de::story-1'];
-      const storedVer = (storedStory && storedStory._storyVersion) || 1;
-      const builtinVer = BUILTIN_STORY_1._storyVersion || 1;
-      if (!storedStory || storedVer < builtinVer) {
-        s.storiesData['de::story-1'] = BUILTIN_STORY_1;
+      // Global story content: refresh each built-in story when its
+      // _storyVersion has advanced. Sentences don't change, so existing
+      // card indices stay valid (cards are append-only by index).
+      for (const langId in BUILTIN_STORIES) {
+        const builtinEntry = BUILTIN_STORIES[langId];
+        const story = builtinEntry.story;
+        if (!story) continue;
+        const key = `${langId}::${story.id}`;
+        const stored = s.storiesData[key];
+        const storedVer  = (stored && stored._storyVersion) || 1;
+        const builtinVer = story._storyVersion || 1;
+        if (!stored || storedVer < builtinVer) {
+          s.storiesData[key] = story;
+        }
       }
     }
 
@@ -2454,6 +3090,104 @@
         reader.readAsText(file);
       };
       input.click();
+    }
+
+    /* Multi-file picker — accepts a JSON file and (optionally) an image.
+       The user can select both at once (Cmd/Shift-click in a file picker)
+       to attach a cover image when adding a language or story. Callback
+       gets (json, imageDataUrl). Either argument may be null. */
+    function importJSONWithImage(callback) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json,application/json,image/*';
+      input.multiple = true;
+      input.onchange = (e) => {
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+        let json = null;
+        let imageRaw = null;
+        let pending = files.length;
+        const finish = async () => {
+          if (--pending > 0) return;
+          let imageOut = null;
+          if (imageRaw) {
+            try { imageOut = await downsizeImage(imageRaw, 1280, 720, 0.75); }
+            catch { imageOut = imageRaw; }
+          }
+          callback(json, imageOut);
+        };
+        files.forEach(file => {
+          const isJson = file.type === 'application/json' || /\.json$/i.test(file.name);
+          const isImage = file.type.startsWith('image/');
+          if (!isJson && !isImage) { finish(); return; }
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (isJson) {
+              try { json = JSON.parse(reader.result); }
+              catch { showToast('Invalid JSON file', 'error'); }
+            } else if (isImage) {
+              imageRaw = reader.result;
+            }
+            finish();
+          };
+          reader.onerror = () => finish();
+          if (isJson) reader.readAsText(file);
+          else reader.readAsDataURL(file);
+        });
+      };
+      input.click();
+    }
+
+    /* Single image picker — used when adding/changing a cover after
+       the language/story is already imported. Callback gets a downsized
+       JPEG data URL. */
+    function importImageFile(callback) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async () => {
+          try {
+            const small = await downsizeImage(reader.result, 1280, 720, 0.75);
+            callback(small);
+          } catch {
+            callback(reader.result);
+          }
+        };
+        reader.onerror = () => showToast('Could not read image', 'error');
+        reader.readAsDataURL(file);
+      };
+      input.click();
+    }
+
+    /* Downsize an image to fit within (maxW × maxH) and re-encode as
+       JPEG at the given quality. Keeps localStorage usage manageable —
+       a typical phone photo (~3 MB) shrinks to ~80 KB. */
+    function downsizeImage(dataUrl, maxW, maxH, quality) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          const ratio = Math.min(maxW / width, maxH / height, 1);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          try {
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          } catch (err) {
+            reject(err);
+          }
+        };
+        img.onerror = reject;
+        img.src = dataUrl;
+      });
     }
 
     // Trigger a browser download of a string blob.
@@ -2944,18 +3678,19 @@
     function renderTabBar() {
       const lang = getActiveLang();
       const tabs = [
-        { id: 'library',  label: 'Library'  },
-        { id: 'read',     label: 'Read'     },
-        { id: 'rules',    label: 'Rules'    },
-        { id: 'cards',    label: 'Cards'    },
-        { id: 'test',     label: 'Test'     },
-        { id: 'settings', label: 'Settings' }
+        { id: 'library',  label: 'Library',  icon: '📚' },
+        { id: 'read',     label: 'Read',     icon: '📖' },
+        { id: 'rules',    label: 'Rules',    icon: '📋' },
+        { id: 'cards',    label: 'Cards',    icon: '🎴' },
+        { id: 'test',     label: 'Test',     icon: '🎯' },
+        { id: 'settings', label: 'Settings', icon: '⚙️' }
       ];
       return `
-        <div class="tab-bar cols-6">
+        <div class="tab-cards">
           ${tabs.map(t => `
-            <button class="tab ${lang.lastTab === t.id ? 'active' : ''}" data-tab="${t.id}">
-              ${t.label}
+            <button class="tab-card ${lang.lastTab === t.id ? 'active' : ''}" data-tab="${t.id}">
+              <span class="tab-icon">${t.icon}</span>
+              <span class="tab-label">${t.label}</span>
             </button>
           `).join('')}
         </div>
@@ -2964,12 +3699,15 @@
 
     function renderLibrary() {
       const lang = getActiveLang();
+      const hero = renderHeroCover(lang);
+
       if (!lang.stories.length) {
-        return `<div class="glass empty-state">
+        return hero + `<div class="glass empty-state">
           <div class="em-icon">📚</div>
           No stories yet for this language.
         </div>` + renderProgressSection();
       }
+
       const cards = lang.stories.map(storyId => {
         const story = getStory(lang.id, storyId);
         if (!story) return '';
@@ -2977,8 +3715,14 @@
         const total = stats.total;
         const masteredPct = total ? Math.round((stats.mastered / total) * 100) : 0;
         const grammarCount = (story.grammarRules || []).length;
+
+        // Cover: uploaded image OR per-language SVG default fallback.
+        const coverHtml = renderStoryCover(lang.id, story);
+        const cardClass = coverHtml ? 'glass story-card with-cover' : 'glass story-card';
+
         return `
-          <div class="glass story-card">
+          <div class="${cardClass}">
+            ${coverHtml}
             <div class="tags">
               <span class="tag-pill">${escapeHtml(story.level)}</span>
               <span class="tag-pill">Story #${story.order || 1}</span>
@@ -2993,7 +3737,56 @@
           </div>
         `;
       }).join('');
-      return cards + renderProgressSection();
+      return hero + cards + renderProgressSection();
+    }
+
+    /* Hero cover at top of Library: uploaded image overrides default
+       per-language SVG art. Keeps the layout if neither is present
+       (renders a gradient fallback). */
+    function renderHeroCover(lang) {
+      if (!lang) return '';
+      const uploaded = lang.coverImage || null;
+      const svgArt = !uploaded ? getDefaultCoverSvg(lang.id) : null;
+
+      const bgStyle = uploaded
+        ? `background-image: url('${escapeHtml(uploaded)}');`
+        : '';
+      const artHtml = !uploaded && svgArt
+        ? `<div class="cover-art">${svgArt}</div>`
+        : !uploaded
+          ? `<div class="cover-art" style="background: linear-gradient(135deg, var(--grad-1), var(--grad-2) 55%, var(--grad-3));"></div>`
+          : '';
+
+      const totalStories = (lang.stories || []).length;
+      const sub = `${totalStories} ${totalStories === 1 ? 'story' : 'stories'}`;
+
+      return `
+        <div class="hero-cover" style="${bgStyle}">
+          ${artHtml}
+          <div class="hero-overlay"></div>
+          <div class="hero-title">
+            <div>
+              <div class="hero-name">${escapeHtml(lang.name).toUpperCase()}</div>
+              <div class="hero-sub">${sub}</div>
+            </div>
+            <div class="hero-flag">${lang.flag || ''}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* Per-story cover panel, shown on the right side of the story tile.
+       Falls back to the language's default SVG art when no upload. */
+    function renderStoryCover(langId, story) {
+      const uploaded = story && story.coverImage;
+      if (uploaded) {
+        return `<div class="story-cover" style="background-image: url('${escapeHtml(uploaded)}');"></div>`;
+      }
+      const svgArt = getDefaultCoverSvg(langId);
+      if (svgArt) {
+        return `<div class="story-cover svg-cover">${svgArt}</div>`;
+      }
+      return '';
     }
 
     /* ---------- Library: collapsible Progress section ---------- */
@@ -3831,15 +4624,21 @@
     function renderSettingsLanguages() {
       const langs = Object.values(state.languages);
       const active = getActiveLang();
+      const builtinIds = new Set(Object.keys(BUILTIN_LANGUAGES));
       const rows = langs.map(l => {
         const isActive = l.id === state.activeLanguageId;
-        const isBuiltin = l.id === 'de';
+        const isBuiltin = builtinIds.has(l.id);
         const currentPresetId = matchPresetId(l.theme);
         const presetOpts = Object.entries(THEME_PRESETS).map(([id, p]) =>
           `<option value="${id}" ${currentPresetId === id ? 'selected' : ''}>${escapeHtml(p.name)}</option>`
         ).join('');
         const customOpt = currentPresetId == null
           ? `<option value="" selected>Custom (uploaded)</option>` : '';
+        const cover = l.coverImage;
+        const thumbStyle = cover ? `background-image: url('${escapeHtml(cover)}');` : '';
+        const thumbInner = cover
+          ? ''
+          : (getDefaultCoverSvg(l.id) || `<span>📷</span>`);
         return `
           <div class="item-row" style="flex-direction: column; align-items: stretch;">
             <div style="display:flex; align-items:center; gap:12px;">
@@ -3858,6 +4657,16 @@
               <select data-theme-lang="${escapeHtml(l.id)}">
                 ${customOpt}${presetOpts}
               </select>
+            </div>
+            <div class="cover-row">
+              <div class="cover-thumb" style="${thumbStyle}">${cover ? '' : thumbInner}</div>
+              <div class="grow">
+                <div class="meta" style="margin-top: 0;">${cover ? 'Custom cover image set' : 'Using default cover art'}</div>
+              </div>
+              <div class="actions">
+                <button class="small-btn" data-set-lang-cover="${escapeHtml(l.id)}">${cover ? 'Change' : 'Set Cover'}</button>
+                ${cover ? `<button class="small-btn danger" data-clear-lang-cover="${escapeHtml(l.id)}">Remove</button>` : ''}
+              </div>
             </div>
           </div>
         `;
@@ -3888,7 +4697,11 @@
         const packs = Object.values(state.testPacks)
           .filter(p => p.languageId === lang.id && p.storyId === storyId);
         const packTotal = packs.reduce((a, p) => a + p.tests.length, 0);
-        const isBuiltin = lang.id === 'de' && storyId === 'story-1';
+        const isBuiltin = !!(BUILTIN_STORIES[lang.id] && BUILTIN_STORIES[lang.id].story && BUILTIN_STORIES[lang.id].story.id === storyId);
+        const cover = story.coverImage;
+        const compoundId = `${lang.id}::${storyId}`;
+        const thumbStyle = cover ? `background-image: url('${escapeHtml(cover)}');` : '';
+        const thumbInner = cover ? '' : (getDefaultCoverSvg(lang.id) || `<span>📷</span>`);
 
         const packRows = packs.map(p => `
           <div class="item-row" style="margin-top:6px;">
@@ -3911,10 +4724,20 @@
                 <div class="meta">Default tests: ${builtinTests} · Test packs: ${packs.length} (+${packTotal} tests)</div>
               </div>
             </div>
+            <div class="cover-row">
+              <div class="cover-thumb" style="${thumbStyle}">${cover ? '' : thumbInner}</div>
+              <div class="grow">
+                <div class="meta" style="margin-top: 0;">${cover ? 'Custom cover image set' : 'Using default cover art'}</div>
+              </div>
+              <div class="actions">
+                <button class="small-btn" data-set-story-cover="${escapeHtml(compoundId)}">${cover ? 'Change' : 'Set Cover'}</button>
+                ${cover ? `<button class="small-btn danger" data-clear-story-cover="${escapeHtml(compoundId)}">Remove</button>` : ''}
+              </div>
+            </div>
             ${packs.length ? `<div style="margin-top:10px;">${packRows}</div>` : ''}
             ${!isBuiltin ? `
               <div class="btn-row" style="margin-top: 10px;">
-                <button class="small-btn danger" data-delete-story="${escapeHtml(`${lang.id}::${storyId}`)}">Delete Story</button>
+                <button class="small-btn danger" data-delete-story="${escapeHtml(compoundId)}">Delete Story</button>
               </div>` : ''}
           </div>
         `;
@@ -4559,7 +5382,7 @@
       if (switchLangBtn) switchLangBtn.addEventListener('click', openLangModal);
 
       const addLangBtn = document.getElementById('btn-add-lang');
-      if (addLangBtn) addLangBtn.addEventListener('click', () => importJSONFile(handleLanguageImport));
+      if (addLangBtn) addLangBtn.addEventListener('click', () => importJSONWithImage(handleLanguageImport));
 
       document.querySelectorAll('[data-set-active-lang]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -4601,9 +5424,65 @@
         });
       });
 
+      /* ---------- Cover image controls (per language) ---------- */
+      document.querySelectorAll('[data-set-lang-cover]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const langId = btn.getAttribute('data-set-lang-cover');
+          importImageFile((dataUrl) => {
+            // Cover sync to every user's copy of this language so all
+            // profiles see the same image.
+            for (const uid in rawState.users) {
+              const lang = rawState.users[uid].languages?.[langId];
+              if (lang) lang.coverImage = dataUrl;
+            }
+            saveState();
+            render();
+            showToast('Cover image set', 'success');
+          });
+        });
+      });
+      document.querySelectorAll('[data-clear-lang-cover]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const langId = btn.getAttribute('data-clear-lang-cover');
+          for (const uid in rawState.users) {
+            const lang = rawState.users[uid].languages?.[langId];
+            if (lang) lang.coverImage = null;
+          }
+          saveState();
+          render();
+          showToast('Cover image removed', 'info');
+        });
+      });
+
+      /* ---------- Cover image controls (per story) ---------- */
+      document.querySelectorAll('[data-set-story-cover]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const compoundId = btn.getAttribute('data-set-story-cover');
+          importImageFile((dataUrl) => {
+            const story = rawState.storiesData[compoundId];
+            if (!story) return;
+            story.coverImage = dataUrl;
+            saveState();
+            render();
+            showToast('Story cover set', 'success');
+          });
+        });
+      });
+      document.querySelectorAll('[data-clear-story-cover]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const compoundId = btn.getAttribute('data-clear-story-cover');
+          const story = rawState.storiesData[compoundId];
+          if (!story) return;
+          story.coverImage = null;
+          saveState();
+          render();
+          showToast('Story cover removed', 'info');
+        });
+      });
+
       /* ---------- Settings: Stories ---------- */
       const addStoryBtn = document.getElementById('btn-add-story');
-      if (addStoryBtn) addStoryBtn.addEventListener('click', () => importJSONFile(handleStoryImport));
+      if (addStoryBtn) addStoryBtn.addEventListener('click', () => importJSONWithImage(handleStoryImport));
 
       const addPackBtn = document.getElementById('btn-add-testpack');
       if (addPackBtn) addPackBtn.addEventListener('click', () => importJSONFile(handleTestPackImport));
@@ -4733,13 +5612,18 @@
        CHUNK 3A — Import / delete handlers for languages, stories,
        test packs.
        ============================================================ */
-    function handleLanguageImport(json) {
+    function handleLanguageImport(json, coverImage) {
+      if (!json) {
+        showToast('No JSON file selected', 'error');
+        return;
+      }
       const v = validateLanguage(json);
       if (!v.valid) {
         showToast('Invalid language: ' + v.errors[0], 'error');
         console.warn('language errors:', v.errors);
         return;
       }
+      const cover = coverImage || json.coverImage || null;
       // Add this language to EVERY user's languages registry so all
       // profiles can see + study it. Per-user state (theme/lastTab/...)
       // initializes fresh for each profile.
@@ -4752,18 +5636,25 @@
           flag: json.flag,
           ttsLang: json.ttsLang,
           theme: { ...json.theme },
+          coverImage: cover,
           stories: [],
           lastTab: 'library',
           lastStoryId: null,
-          readMode: 'full'
+          readMode: 'full',
+          themeVersion: 1
         };
       }
       saveState();
       render();
-      showToast(`Language ${json.name} added`, 'success');
+      const note = cover ? ' (with cover image)' : '';
+      showToast(`Language ${json.name} added${note}`, 'success');
     }
 
-    async function handleStoryImport(json) {
+    async function handleStoryImport(json, coverImage) {
+      if (!json) {
+        showToast('No JSON file selected', 'error');
+        return;
+      }
       const v = validateStoryAllowReplace(json);
       if (!v.valid) {
         showToast('Invalid story: ' + v.errors[0], 'error');
@@ -4780,7 +5671,6 @@
           danger: true
         });
         if (!ok) return;
-        // Wipe each user's cards + test attempts for this story.
         for (const uid in rawState.users) {
           const user = rawState.users[uid];
           for (const k of Object.keys(user.cards || {})) {
@@ -4791,8 +5681,10 @@
           }
         }
       }
-      rawState.storiesData[storyKey] = json;
-      // Register the story under each user's matching language, if they have it.
+      // Attach the cover (uploaded image overrides any inline coverImage in JSON).
+      const finalStory = { ...json };
+      if (coverImage) finalStory.coverImage = coverImage;
+      rawState.storiesData[storyKey] = finalStory;
       for (const uid in rawState.users) {
         const lang = rawState.users[uid].languages?.[json.languageId];
         if (lang && !lang.stories.includes(json.id)) lang.stories.push(json.id);
@@ -4800,7 +5692,8 @@
       ensureCards(rawState);
       saveState();
       render();
-      showToast(`Story "${json.title}" added — ${json.sentences.length} new cards`, 'success');
+      const note = (coverImage || json.coverImage) ? ' (with cover image)' : '';
+      showToast(`Story "${json.title}" added${note} — ${json.sentences.length} new cards`, 'success');
     }
 
     // Like validateStory but allows the id-already-exists case (we handle
