@@ -37,7 +37,7 @@ can be exported as a JSON backup at any time.
 
 ## Setup on Mac/Desktop
 
-Open `german-app.html` in any modern browser (Safari, Chrome, Firefox).
+Open `index.html` in any modern browser (Safari, Chrome, Firefox).
 
 ## Daily Use
 
@@ -113,7 +113,7 @@ modern browser.
 
 ## File Layout
 
-- `german-app.html` — the entire app
+- `index.html` — the entire app
 - `story-1.json` — canonical example story schema (also embedded in the app)
 - `example-italian-language.json` — example language JSON for testing uploads
 - `example-italian-story.json` — short example story for testing uploads

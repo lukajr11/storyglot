@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "languageId": "it",
   "id": "story-1",
-  "_storyVersion": 2,
+  "_storyVersion": 3,
   "title": "Una giornata a Roma",
   "level": "A1",
   "order": 1,
@@ -13,8 +13,8 @@
     { "de": "Ho una sorella, Sofia.", "en": "I have a sister, Sofia.", "note": null },
     { "de": "Sofia è simpatica e intelligente.", "en": "Sofia is nice and intelligent.", "note": "Adjectives ending in -e (intelligente) don't change for gender." },
     { "de": "Oggi è lunedì.", "en": "Today is Monday.", "note": null },
-    { "de": "Sono le sette di mattina.", "en": "It is seven in the morning.", "note": "Time uses sono (plural) for any hour after 1 — le sette." },
-    { "de": "Mi alzo e vado in cucina.", "en": "I get up and go to the kitchen.", "note": "Reflexive alzarsi (mi alzo). Irregular andare → vado." },
+    { "de": "Sono le sette di mattina.", "en": "It is seven in the morning.", "note": "Time uses sono (plural) for any hour after 1." },
+    { "de": "Mi alzo e vado in cucina.", "en": "I get up and go to the kitchen.", "note": "Reflexive alzarsi. Irregular andare → vado." },
     { "de": "Faccio un caffè forte.", "en": "I make a strong coffee.", "note": "Irregular fare → faccio." },
     { "de": "Il caffè è la mia passione.", "en": "Coffee is my passion.", "note": "Definite article il for masculine; possessive la mia agrees with feminine passione." },
     { "de": "Mangio anche un cornetto con marmellata.", "en": "I also eat a croissant with jam.", "note": null },
@@ -25,7 +25,7 @@
     { "de": "Lavoro in una libreria nel centro.", "en": "I work in a bookstore in the center.", "note": "Contracted: in + il = nel." },
     { "de": "Il mio capo si chiama Marco.", "en": "My boss is called Marco.", "note": null },
     { "de": "È gentile ma severo.", "en": "He is kind but strict.", "note": null },
-    { "de": "Mi piace il mio lavoro.", "en": "I like my work.", "note": "Piacere construction: 'mi piace X' = literally 'X is pleasing to me'." },
+    { "de": "Mi piace il mio lavoro.", "en": "I like my work.", "note": "Piacere construction: 'mi piace X' = 'X is pleasing to me'." },
     { "de": "A pranzo mangio con la mia collega Giulia.", "en": "At lunch I eat with my colleague Giulia.", "note": null },
     { "de": "Giulia è giovane e divertente.", "en": "Giulia is young and funny.", "note": null },
     { "de": "Parla molto e ride spesso.", "en": "She talks a lot and laughs often.", "note": "Regular -are parlare → parla. Irregular ridere → ride." },
@@ -38,6 +38,33 @@
     { "de": "La musica è bella e rilassante.", "en": "The music is beautiful and relaxing.", "note": null },
     { "de": "La sera leggo o guardo un film.", "en": "In the evening I read or watch a film.", "note": null },
     { "de": "Domani è un altro giorno bellissimo.", "en": "Tomorrow is another beautiful day.", "note": "Suffix -issimo intensifies an adjective: bello → bellissimo." }
+  ],
+  "vocabulary": [
+    { "de": "caffè", "en": "coffee", "pos": "noun", "gender": "il", "plural": "caffè", "note": "Invariable plural — accent makes it un-changing." },
+    { "de": "casa", "en": "house, home", "pos": "noun", "gender": "la", "plural": "case", "note": null },
+    { "de": "lavoro", "en": "work, job", "pos": "noun", "gender": "il", "plural": "lavori", "note": null },
+    { "de": "amico", "en": "friend (male)", "pos": "noun", "gender": "l'", "plural": "amici", "note": "L' before a/e/i/o/u." },
+    { "de": "libro", "en": "book", "pos": "noun", "gender": "il", "plural": "libri", "note": null },
+    { "de": "macchina", "en": "car", "pos": "noun", "gender": "la", "plural": "macchine", "note": null },
+    { "de": "acqua", "en": "water", "pos": "noun", "gender": "l'", "plural": "acque", "note": "L' before vowel." },
+    { "de": "ragazza", "en": "girl", "pos": "noun", "gender": "la", "plural": "ragazze", "note": null },
+    { "de": "giorno", "en": "day", "pos": "noun", "gender": "il", "plural": "giorni", "note": null },
+    { "de": "madre", "en": "mother", "pos": "noun", "gender": "la", "plural": "madri", "note": null },
+    { "de": "essere", "en": "to be", "pos": "verb", "gender": null, "plural": null, "note": "Irregular. io sono, tu sei, lui/lei è, noi siamo, voi siete, loro sono." },
+    { "de": "avere", "en": "to have", "pos": "verb", "gender": null, "plural": null, "note": "Irregular. io ho, tu hai, lui/lei ha, noi abbiamo, voi avete, loro hanno." },
+    { "de": "abitare", "en": "to live, reside", "pos": "verb", "gender": null, "plural": null, "note": "Regular -are. abito, abiti, abita, abitiamo, abitate, abitano." },
+    { "de": "parlare", "en": "to speak, to talk", "pos": "verb", "gender": null, "plural": null, "note": "Regular -are. parlo, parli, parla, parliamo, parlate, parlano." },
+    { "de": "mangiare", "en": "to eat", "pos": "verb", "gender": null, "plural": null, "note": "Regular -are. Stem -i drops in some forms: mangiamo, mangiate." },
+    { "de": "bere", "en": "to drink", "pos": "verb", "gender": null, "plural": null, "note": "Irregular. bevo, bevi, beve, beviamo, bevete, bevono." },
+    { "de": "andare", "en": "to go", "pos": "verb", "gender": null, "plural": null, "note": "Irregular. vado, vai, va, andiamo, andate, vanno." },
+    { "de": "fare", "en": "to make, to do", "pos": "verb", "gender": null, "plural": null, "note": "Irregular. faccio, fai, fa, facciamo, fate, fanno." },
+    { "de": "leggere", "en": "to read", "pos": "verb", "gender": null, "plural": null, "note": "Regular -ere. leggo, leggi, legge, leggiamo, leggete, leggono." },
+    { "de": "ascoltare", "en": "to listen to", "pos": "verb", "gender": null, "plural": null, "note": "Regular -are. ascolto, ascolti, ascolta." },
+    { "de": "buono", "en": "good", "pos": "adjective", "gender": null, "plural": null, "note": "Forms: buono/buona/buoni/buone." },
+    { "de": "grande", "en": "big, large, great", "pos": "adjective", "gender": null, "plural": null, "note": "-e adjective: grande (sg.), grandi (pl.) — no gender distinction." },
+    { "de": "piccolo", "en": "small, little", "pos": "adjective", "gender": null, "plural": null, "note": "Forms: piccolo/piccola/piccoli/piccole." },
+    { "de": "bello", "en": "beautiful, nice, handsome", "pos": "adjective", "gender": null, "plural": null, "note": "Forms: bello/bella/belli/belle. Often shortens before nouns." },
+    { "de": "simpatico", "en": "nice, friendly, likeable", "pos": "adjective", "gender": null, "plural": null, "note": "Forms: simpatico/simpatica/simpatici/simpatiche." }
   ],
   "grammarRules": [
     {
@@ -53,7 +80,20 @@
       "tips": [
         "Use AVERE for: age, hunger, thirst, cold, hot, fear, need.",
         "Use ESSERE for: identity, location, traits (tall, kind), feelings (happy, sad)."
-      ]
+      ],
+      "table": {
+        "title": "essere vs avere — present tense",
+        "headers": ["", "essere (to be)", "avere (to have)"],
+        "rows": [
+          ["io", "sono", "ho"],
+          ["tu", "sei", "hai"],
+          ["lui/lei", "è", "ha"],
+          ["noi", "siamo", "abbiamo"],
+          ["voi", "siete", "avete"],
+          ["loro", "sono", "hanno"]
+        ],
+        "note": "Both are highly irregular. The 'h' in avere forms is silent."
+      }
     },
     {
       "name": "Definite Articles",
@@ -70,7 +110,17 @@
         "Masculine: il / lo / l' (sg.), i / gli (pl.).",
         "Feminine: la / l' (sg.), le (pl.).",
         "First letter sound matters: s+consonant or z → lo/gli; vowel → l'."
-      ]
+      ],
+      "table": {
+        "title": "Definite articles — singular & plural",
+        "headers": ["", "Masculine", "Feminine"],
+        "rows": [
+          ["before consonant", "il libro · i libri", "la casa · le case"],
+          ["before vowel", "l'amico · gli amici", "l'amica · le amiche"],
+          ["before s+cons. or z", "lo studente · gli studenti", "la stagione · le stagioni"]
+        ],
+        "note": "Listen to the first letter SOUND, not just the spelling."
+      }
     },
     {
       "name": "Regular -are Verbs",
@@ -85,7 +135,20 @@
       "tips": [
         "Endings: -o, -i, -a, -iamo, -ate, -ano.",
         "Same pattern for: abitare, lavorare, mangiare, ascoltare, guardare."
-      ]
+      ],
+      "table": {
+        "title": "Regular -are conjugation: parlare (to speak)",
+        "headers": ["Pronoun", "Stem + ending", "Form"],
+        "rows": [
+          ["io", "parl + o", "parlo"],
+          ["tu", "parl + i", "parli"],
+          ["lui/lei", "parl + a", "parla"],
+          ["noi", "parl + iamo", "parliamo"],
+          ["voi", "parl + ate", "parlate"],
+          ["loro", "parl + ano", "parlano"]
+        ],
+        "note": "Stress falls on the second-to-last syllable in most forms — except loro (parlano)."
+      }
     },
     {
       "name": "Adjective Agreement",
@@ -102,7 +165,16 @@
         "-o adjectives have 4 forms (rosso/rossa/rossi/rosse).",
         "-e adjectives have 2 forms (gentile/gentili — no gender distinction).",
         "Adjective comes AFTER the noun in most cases (libro rosso, not 'rosso libro')."
-      ]
+      ],
+      "table": {
+        "title": "Adjective endings",
+        "headers": ["Type", "Masc. sg.", "Fem. sg.", "Masc. pl.", "Fem. pl."],
+        "rows": [
+          ["-o adjective (rosso)", "rosso", "rossa", "rossi", "rosse"],
+          ["-e adjective (grande)", "grande", "grande", "grandi", "grandi"]
+        ],
+        "note": "-o family has 4 distinct forms; -e family has just 2."
+      }
     },
     {
       "name": "Contracted Prepositions",
@@ -118,7 +190,19 @@
         "5 prepositions × 7 articles = ~35 contractions, but most are predictable.",
         "Pattern: a+il=al, a+la=alla, a+le=alle, a+lo=allo.",
         "If you say 'a il' or 'di il', it sounds wrong to native ears — it's always contracted."
-      ]
+      ],
+      "table": {
+        "title": "Preposition + article contractions",
+        "headers": ["Prep.", "+ il", "+ la", "+ lo", "+ l'", "+ i", "+ le", "+ gli"],
+        "rows": [
+          ["a", "al", "alla", "allo", "all'", "ai", "alle", "agli"],
+          ["di", "del", "della", "dello", "dell'", "dei", "delle", "degli"],
+          ["da", "dal", "dalla", "dallo", "dall'", "dai", "dalle", "dagli"],
+          ["in", "nel", "nella", "nello", "nell'", "nei", "nelle", "negli"],
+          ["su", "sul", "sulla", "sullo", "sull'", "sui", "sulle", "sugli"]
+        ],
+        "note": "con, per, tra/fra do NOT contract — they stay as separate words."
+      }
     }
   ],
   "grammarTests": [
