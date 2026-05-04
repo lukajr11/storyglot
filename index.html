@@ -1242,6 +1242,87 @@
     }
     .read-toggle button[disabled] { cursor: not-allowed; }
 
+    /* 3-way toggle for the Cards mode bar (Type / Speak / Browse). */
+    .read-toggle.three { grid-template-columns: repeat(3, 1fr); }
+
+    /* Browse view — tile grid of every sentence or vocab item. */
+    .browse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .browse-tile {
+      padding: 14px 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      animation: fade-in 200ms ease;
+    }
+    .browse-tile.tile-vocab .bt-de {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.1px;
+    }
+    .browse-tile.tile-vocab .bt-de .gen {
+      color: var(--text-dim);
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .browse-tile.tile-sentence .bt-de {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .browse-tile .bt-en {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+    .browse-tile .bt-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .browse-tile .bt-pos {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .browse-tile .bt-plural {
+      font-size: 10.5px;
+      color: var(--text-soft);
+      letter-spacing: 0.2px;
+    }
+    .browse-tile .bt-idx {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.4px;
+      color: var(--text-soft);
+    }
+    .browse-tile .audio-btn {
+      font-size: 10.5px;
+      padding: 4px 10px;
+      align-self: flex-start;
+    }
+    .browse-summary {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.6px;
+      color: var(--text-soft);
+      margin: 10px 0 14px;
+      text-transform: uppercase;
+    }
+
     /* Login picker — Netflix-style profile chooser shown on every load. */
     .login-screen {
       position: fixed;
@@ -1458,7 +1539,7 @@
       schemaVersion: 1,
       languageId: 'de',
       id: 'story-1',
-      _storyVersion: 3,  // v3: vocabulary[] + rule.table additions
+      _storyVersion: 4,  // v4: full-coverage vocabulary expansion
       title: 'Ein neuer Tag',
       level: 'A1',
       order: 1,
@@ -1532,46 +1613,143 @@
         { de: 'Das Leben ist gut.', en: 'Life is good.', note: null }
       ],
       vocabulary: [
-        { de: 'Kaffee',     en: 'coffee',                pos: 'noun', gender: 'der', plural: 'Kaffees',    note: null },
-        { de: 'Schwester',  en: 'sister',                pos: 'noun', gender: 'die', plural: 'Schwestern', note: null },
-        { de: 'Bruder',     en: 'brother',               pos: 'noun', gender: 'der', plural: 'Brüder',     note: 'Umlaut in plural.' },
-        { de: 'Wohnung',    en: 'apartment',             pos: 'noun', gender: 'die', plural: 'Wohnungen',  note: null },
-        { de: 'Küche',      en: 'kitchen',               pos: 'noun', gender: 'die', plural: 'Küchen',     note: null },
-        { de: 'Arbeit',     en: 'work, job',             pos: 'noun', gender: 'die', plural: 'Arbeiten',   note: null },
-        { de: 'Büro',       en: 'office',                pos: 'noun', gender: 'das', plural: 'Büros',      note: null },
-        { de: 'Chef',       en: 'boss',                  pos: 'noun', gender: 'der', plural: 'Chefs',      note: "Pronounced 'shef'." },
-        { de: 'Buch',       en: 'book',                  pos: 'noun', gender: 'das', plural: 'Bücher',     note: 'Umlaut in plural.' },
-        { de: 'Wasser',     en: 'water',                 pos: 'noun', gender: 'das', plural: null,         note: 'Usually uncountable.' },
-        { de: 'Essen',      en: 'food, meal',            pos: 'noun', gender: 'das', plural: null,         note: "Also the infinitive 'to eat'." },
-        { de: 'Wochenende', en: 'weekend',               pos: 'noun', gender: 'das', plural: 'Wochenenden',note: null },
-        { de: 'Eltern',     en: 'parents',               pos: 'noun', gender: 'die', plural: 'Eltern',     note: 'Plural-only noun.' },
-        { de: 'Wein',       en: 'wine',                  pos: 'noun', gender: 'der', plural: 'Weine',      note: null },
-        { de: 'Wetter',     en: 'weather',               pos: 'noun', gender: 'das', plural: null,         note: null },
-        { de: 'heißen',     en: 'to be called, named',   pos: 'verb', gender: null, plural: null, note: 'ich heiße, du heißt, er heißt.' },
-        { de: 'wohnen',     en: 'to live, reside',       pos: 'verb', gender: null, plural: null, note: 'Regular -en. ich wohne, du wohnst.' },
-        { de: 'sein',       en: 'to be',                 pos: 'verb', gender: null, plural: null, note: 'Highly irregular. ich bin, du bist, er ist, wir sind, ihr seid, sie sind.' },
-        { de: 'haben',      en: 'to have',               pos: 'verb', gender: null, plural: null, note: 'Irregular. ich habe, du hast, er hat, wir haben.' },
-        { de: 'machen',     en: 'to make, to do',        pos: 'verb', gender: null, plural: null, note: 'Regular. ich mache, du machst.' },
-        { de: 'trinken',    en: 'to drink',              pos: 'verb', gender: null, plural: null, note: 'Regular. ich trinke, du trinkst.' },
-        { de: 'essen',      en: 'to eat',                pos: 'verb', gender: null, plural: null, note: 'Stem-changing: ich esse, du isst, er isst.' },
-        { de: 'gehen',      en: 'to go, to walk',        pos: 'verb', gender: null, plural: null, note: 'Regular. ich gehe, du gehst.' },
-        { de: 'fahren',     en: 'to drive, travel',      pos: 'verb', gender: null, plural: null, note: 'Stem-changing: ich fahre, du fährst, er fährt.' },
-        { de: 'arbeiten',   en: 'to work',               pos: 'verb', gender: null, plural: null, note: 'Adds -e- in some forms: du arbeitest, er arbeitet.' },
-        { de: 'lesen',      en: 'to read',               pos: 'verb', gender: null, plural: null, note: 'Stem-changing: ich lese, du liest, er liest.' },
-        { de: 'möchten',    en: 'would like to',         pos: 'verb', gender: null, plural: null, note: 'Modal verb. Sends the infinitive to the END of the clause.' },
-        { de: 'können',     en: 'can, to be able to',    pos: 'verb', gender: null, plural: null, note: 'Modal. ich kann, du kannst, er kann.' },
-        { de: 'lernen',     en: 'to learn',              pos: 'verb', gender: null, plural: null, note: 'Regular. ich lerne, du lernst.' },
-        { de: 'anrufen',    en: 'to call (on the phone)',pos: 'verb', gender: null, plural: null, note: 'Separable: ich rufe ... an.' },
-        { de: 'gut',        en: 'good',                  pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'schön',      en: 'beautiful, nice',       pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'groß',       en: 'big, large, tall',      pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'klein',      en: 'small, little',         pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'neu',        en: 'new',                   pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'alt',        en: 'old',                   pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'müde',       en: 'tired',                 pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'glücklich',  en: 'happy',                 pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'lecker',     en: 'delicious, tasty',      pos: 'adjective', gender: null, plural: null, note: null },
-        { de: 'wichtig',    en: 'important',             pos: 'adjective', gender: null, plural: null, note: null }
+        // NOUNS
+        { de: 'Kaffee',     en: 'coffee', pos: 'noun', gender: 'der', plural: 'Kaffees' },
+        { de: 'Schwester',  en: 'sister', pos: 'noun', gender: 'die', plural: 'Schwestern' },
+        { de: 'Bruder',     en: 'brother', pos: 'noun', gender: 'der', plural: 'Brüder', note: 'Umlaut in plural.' },
+        { de: 'Wohnung',    en: 'apartment', pos: 'noun', gender: 'die', plural: 'Wohnungen' },
+        { de: 'Küche',      en: 'kitchen', pos: 'noun', gender: 'die', plural: 'Küchen' },
+        { de: 'Arbeit',     en: 'work, job', pos: 'noun', gender: 'die', plural: 'Arbeiten' },
+        { de: 'Büro',       en: 'office', pos: 'noun', gender: 'das', plural: 'Büros' },
+        { de: 'Chef',       en: 'boss', pos: 'noun', gender: 'der', plural: 'Chefs', note: "Pronounced 'shef'." },
+        { de: 'Buch',       en: 'book', pos: 'noun', gender: 'das', plural: 'Bücher', note: 'Umlaut in plural.' },
+        { de: 'Wasser',     en: 'water', pos: 'noun', gender: 'das', note: 'Usually uncountable.' },
+        { de: 'Essen',      en: 'food, meal', pos: 'noun', gender: 'das', note: "Also the infinitive 'to eat'." },
+        { de: 'Wochenende', en: 'weekend', pos: 'noun', gender: 'das', plural: 'Wochenenden' },
+        { de: 'Eltern',     en: 'parents', pos: 'noun', gender: 'die', plural: 'Eltern', note: 'Plural-only noun.' },
+        { de: 'Wein',       en: 'wine', pos: 'noun', gender: 'der', plural: 'Weine' },
+        { de: 'Wetter',     en: 'weather', pos: 'noun', gender: 'das' },
+        { de: 'Jahr',       en: 'year', pos: 'noun', gender: 'das', plural: 'Jahre' },
+        { de: 'Brot',       en: 'bread', pos: 'noun', gender: 'das', plural: 'Brote' },
+        { de: 'Butter',     en: 'butter', pos: 'noun', gender: 'die' },
+        { de: 'Zimmer',     en: 'room', pos: 'noun', gender: 'das', plural: 'Zimmer', note: 'Plural identical to singular.' },
+        { de: 'Bad',        en: 'bathroom, bath', pos: 'noun', gender: 'das', plural: 'Bäder' },
+        { de: 'Fenster',    en: 'window', pos: 'noun', gender: 'das', plural: 'Fenster' },
+        { de: 'Himmel',     en: 'sky, heaven', pos: 'noun', gender: 'der', plural: 'Himmel' },
+        { de: 'Bank',       en: 'bank (institution)', pos: 'noun', gender: 'die', plural: 'Banken' },
+        { de: 'Tisch',      en: 'table, desk', pos: 'noun', gender: 'der', plural: 'Tische' },
+        { de: 'Computer',   en: 'computer', pos: 'noun', gender: 'der', plural: 'Computer' },
+        { de: 'E-Mail',     en: 'email', pos: 'noun', gender: 'die', plural: 'E-Mails' },
+        { de: 'Hunger',     en: 'hunger', pos: 'noun', gender: 'der', note: "'ich habe Hunger' = I am hungry." },
+        { de: 'Restaurant', en: 'restaurant', pos: 'noun', gender: 'das', plural: 'Restaurants' },
+        { de: 'Suppe',      en: 'soup', pos: 'noun', gender: 'die', plural: 'Suppen' },
+        { de: 'Salat',      en: 'salad', pos: 'noun', gender: 'der', plural: 'Salate' },
+        { de: 'Pizza',      en: 'pizza', pos: 'noun', gender: 'die', plural: 'Pizzas/Pizzen' },
+        { de: 'Musik',      en: 'music', pos: 'noun', gender: 'die' },
+        { de: 'Meeting',    en: 'meeting', pos: 'noun', gender: 'das', plural: 'Meetings' },
+        { de: 'Projekt',    en: 'project', pos: 'noun', gender: 'das', plural: 'Projekte' },
+        { de: 'Nudel',      en: 'noodle, pasta', pos: 'noun', gender: 'die', plural: 'Nudeln', note: 'Usually used in plural: Nudeln.' },
+        { de: 'Tomate',     en: 'tomato', pos: 'noun', gender: 'die', plural: 'Tomaten' },
+        { de: 'Film',       en: 'film, movie', pos: 'noun', gender: 'der', plural: 'Filme' },
+        { de: 'Nachmittag', en: 'afternoon', pos: 'noun', gender: 'der', plural: 'Nachmittage' },
+        { de: 'Bett',       en: 'bed', pos: 'noun', gender: 'das', plural: 'Betten' },
+        { de: 'Tag',        en: 'day', pos: 'noun', gender: 'der', plural: 'Tage' },
+        { de: 'Wort',       en: 'word', pos: 'noun', gender: 'das', plural: 'Wörter' },
+        { de: 'Leben',      en: 'life', pos: 'noun', gender: 'das' },
+        { de: 'Haus',       en: 'house, home', pos: 'noun', gender: 'das', plural: 'Häuser', note: "'zu Hause' = at home (frozen, no article)." },
+        { de: 'Fahrrad',    en: 'bicycle', pos: 'noun', gender: 'das', plural: 'Fahrräder' },
+        { de: 'Morgen',     en: 'morning', pos: 'noun', gender: 'der', note: "'Guten Morgen' = good morning." },
+        { de: 'Kollege',    en: 'colleague (male)', pos: 'noun', gender: 'der', plural: 'Kollegen' },
+        { de: 'Kollegin',   en: 'colleague (female)', pos: 'noun', gender: 'die', plural: 'Kolleginnen' },
+        { de: 'Herr',       en: 'mister, gentleman', pos: 'noun', gender: 'der', plural: 'Herren' },
+        { de: 'Samstag',    en: 'Saturday', pos: 'noun', gender: 'der' },
+        { de: 'Montag',     en: 'Monday', pos: 'noun', gender: 'der' },
+        { de: 'Uhr',        en: "clock, hour, o'clock", pos: 'noun', gender: 'die', plural: 'Uhren' },
+        { de: 'Arbeitstag', en: 'workday', pos: 'noun', gender: 'der', plural: 'Arbeitstage' },
+        { de: 'Deutsch',    en: 'German (the language)', pos: 'noun', gender: 'das', note: "'auf Deutsch' = in German." },
+        // VERBS
+        { de: 'heißen',     en: 'to be called, named', pos: 'verb', note: 'ich heiße, du heißt, er heißt.' },
+        { de: 'wohnen',     en: 'to live, reside', pos: 'verb', note: 'Regular -en. ich wohne, du wohnst.' },
+        { de: 'sein',       en: 'to be', pos: 'verb', note: 'Highly irregular. ich bin, du bist, er ist, wir sind, ihr seid, sie sind.' },
+        { de: 'haben',      en: 'to have', pos: 'verb', note: 'Irregular. ich habe, du hast, er hat, wir haben.' },
+        { de: 'machen',     en: 'to make, to do', pos: 'verb', note: 'Regular. ich mache, du machst.' },
+        { de: 'trinken',    en: 'to drink', pos: 'verb', note: 'Regular. ich trinke, du trinkst.' },
+        { de: 'essen',      en: 'to eat', pos: 'verb', note: 'Stem-changing: ich esse, du isst, er isst.' },
+        { de: 'gehen',      en: 'to go, to walk', pos: 'verb', note: 'Regular. ich gehe, du gehst.' },
+        { de: 'fahren',     en: 'to drive, travel', pos: 'verb', note: 'Stem-changing: ich fahre, du fährst, er fährt.' },
+        { de: 'arbeiten',   en: 'to work', pos: 'verb', note: 'Adds -e- in some forms: du arbeitest, er arbeitet.' },
+        { de: 'lesen',      en: 'to read', pos: 'verb', note: 'Stem-changing: ich lese, du liest, er liest.' },
+        { de: 'möchten',    en: 'would like to', pos: 'verb', note: 'Modal. Sends the infinitive to the END.' },
+        { de: 'können',     en: 'can, to be able to', pos: 'verb', note: 'Modal. ich kann, du kannst, er kann.' },
+        { de: 'lernen',     en: 'to learn', pos: 'verb', note: 'Regular. ich lerne, du lernst.' },
+        { de: 'anrufen',    en: 'to call (on the phone)', pos: 'verb', note: 'Separable: ich rufe ... an.' },
+        { de: 'aufstehen',  en: 'to get up, stand up', pos: 'verb', note: 'Separable: ich stehe ... auf.' },
+        { de: 'sehen',      en: 'to see', pos: 'verb', note: 'Stem-changing: ich sehe, du siehst, er sieht.' },
+        { de: 'nehmen',     en: 'to take', pos: 'verb', note: 'Stem-changing: ich nehme, du nimmst, er nimmt.' },
+        { de: 'sagen',      en: 'to say, to tell', pos: 'verb', note: 'Regular. ich sage, du sagst.' },
+        { de: 'mögen',      en: 'to like', pos: 'verb', note: 'Modal-like. ich mag, du magst, er mag.' },
+        { de: 'sitzen',     en: 'to sit', pos: 'verb', note: 'Strong verb. ich sitze, du sitzt.' },
+        { de: 'schreiben',  en: 'to write', pos: 'verb', note: 'Regular. ich schreibe, du schreibst.' },
+        { de: 'sprechen',   en: 'to speak, talk', pos: 'verb', note: 'Stem-changing: ich spreche, du sprichst, er spricht.' },
+        { de: 'besuchen',   en: 'to visit', pos: 'verb', note: 'Regular. ich besuche, du besuchst.' },
+        { de: 'bleiben',    en: 'to stay, remain', pos: 'verb', note: 'Regular present. ich bleibe, du bleibst.' },
+        { de: 'kochen',     en: 'to cook', pos: 'verb', note: 'Regular. ich koche, du kochst.' },
+        { de: 'hören',      en: 'to hear, to listen', pos: 'verb', note: 'Regular. ich höre, du hörst.' },
+        { de: 'bringen',    en: 'to bring', pos: 'verb', note: 'Mixed verb. ich bringe, du bringst.' },
+        { de: 'verstehen',  en: 'to understand', pos: 'verb', note: 'Inseparable prefix. ich verstehe, du verstehst.' },
+        { de: 'einschlafen',en: 'to fall asleep', pos: 'verb', note: 'Separable: ich schlafe ... ein.' },
+        { de: 'schlafen',   en: 'to sleep', pos: 'verb', note: 'Stem-changing: ich schlafe, du schläfst, er schläft.' },
+        { de: 'kommen',     en: 'to come', pos: 'verb', note: 'Strong verb. ich komme, du kommst.' },
+        // ADJECTIVES
+        { de: 'gut',         en: 'good, well',                pos: 'adjective' },
+        { de: 'schön',       en: 'beautiful, nice',           pos: 'adjective' },
+        { de: 'groß',        en: 'big, large, tall',          pos: 'adjective' },
+        { de: 'klein',       en: 'small, little',             pos: 'adjective' },
+        { de: 'neu',         en: 'new',                       pos: 'adjective' },
+        { de: 'alt',         en: 'old',                       pos: 'adjective' },
+        { de: 'müde',        en: 'tired',                     pos: 'adjective' },
+        { de: 'glücklich',   en: 'happy, lucky',              pos: 'adjective' },
+        { de: 'lecker',      en: 'delicious, tasty',          pos: 'adjective' },
+        { de: 'wichtig',     en: 'important',                 pos: 'adjective' },
+        { de: 'nett',        en: 'nice, kind',                pos: 'adjective' },
+        { de: 'heiß',        en: 'hot',                       pos: 'adjective' },
+        { de: 'schwarz',     en: 'black',                     pos: 'adjective' },
+        { de: 'frisch',      en: 'fresh',                     pos: 'adjective' },
+        { de: 'blau',        en: 'blue',                      pos: 'adjective' },
+        { de: 'weit',        en: 'far, wide',                 pos: 'adjective' },
+        { de: 'interessant', en: 'interesting',               pos: 'adjective' },
+        { de: 'schwer',      en: 'hard, difficult, heavy',    pos: 'adjective' },
+        { de: 'streng',      en: 'strict, severe',            pos: 'adjective' },
+        { de: 'fair',        en: 'fair',                      pos: 'adjective' },
+        { de: 'jung',        en: 'young',                     pos: 'adjective' },
+        { de: 'lustig',      en: 'funny, fun',                pos: 'adjective' },
+        { de: 'ruhig',       en: 'calm, quiet',               pos: 'adjective' },
+        { de: 'einfach',     en: 'easy, simple',              pos: 'adjective' },
+        { de: 'schnell',     en: 'fast, quick',               pos: 'adjective' },
+        { de: 'kalt',        en: 'cold',                      pos: 'adjective' },
+        // ADVERBS
+        { de: 'heute',       en: 'today',                     pos: 'adverb' },
+        { de: 'morgen',      en: 'tomorrow',                  pos: 'adverb', note: "Lowercase = 'tomorrow'. Capitalized 'Morgen' = 'morning'." },
+        { de: 'sehr',        en: 'very',                      pos: 'adverb' },
+        { de: 'auch',        en: 'also, too',                 pos: 'adverb' },
+        { de: 'langsam',     en: 'slowly, slow',              pos: 'adverb' },
+        { de: 'nicht',       en: 'not',                       pos: 'adverb' },
+        { de: 'manchmal',    en: 'sometimes',                 pos: 'adverb' },
+        { de: 'viel',        en: 'a lot, much',               pos: 'adverb' },
+        { de: 'hier',        en: 'here',                      pos: 'adverb' },
+        { de: 'weiter',      en: 'further, on',               pos: 'adverb' },
+        { de: 'gerne',       en: 'gladly, with pleasure',     pos: 'adverb' },
+        { de: 'jeden',       en: 'every (acc. m.)',           pos: 'determiner', note: "'jeden Tag' = every day." },
+        // NUMBERS + INTERJECTIONS
+        { de: 'dreißig',     en: 'thirty',                    pos: 'number' },
+        { de: 'sieben',      en: 'seven',                     pos: 'number' },
+        { de: 'acht',        en: 'eight',                     pos: 'number' },
+        { de: 'sechs',       en: 'six',                       pos: 'number' },
+        { de: 'elf',         en: 'eleven',                    pos: 'number' },
+        { de: 'zwölf',       en: 'twelve',                    pos: 'number' },
+        { de: 'Hallo',       en: 'hello',                     pos: 'interjection' },
+        { de: 'danke',       en: 'thanks, thank you',         pos: 'interjection' },
+        { de: 'Ja',          en: 'yes',                       pos: 'interjection' }
       ],
       grammarRules: [
         {
@@ -3091,15 +3269,22 @@
         </div>
       `;
       const modeToggle = `
-        <div class="read-toggle">
-          <button class="${mode === 'type'  ? 'active' : ''}" data-card-mode="type">⌨️  Type</button>
-          <button class="${mode === 'speak' ? 'active' : ''}" data-card-mode="speak">🗣️  Speak</button>
+        <div class="read-toggle three">
+          <button class="${mode === 'type'   ? 'active' : ''}" data-card-mode="type">⌨️  Type</button>
+          <button class="${mode === 'speak'  ? 'active' : ''}" data-card-mode="speak">🗣️  Speak</button>
+          <button class="${mode === 'browse' ? 'active' : ''}" data-card-mode="browse">📋  Browse</button>
         </div>
       `;
       const toggles = sourceToggle + modeToggle;
 
       // Story has no vocab but vocab source is selected — fall back gracefully.
       const effectiveSource = (source === 'vocabulary' && !hasVocab) ? 'sentences' : source;
+
+      // Browse mode bypasses the SRS session entirely — just renders
+      // every item as a tile grid. No queue, no grading.
+      if (mode === 'browse') {
+        return `${toggles}${renderCardsBrowse(story, effectiveSource, lang)}`;
+      }
 
       const session = ensureCardSession(lang.id, storyId, mode, effectiveSource);
 
@@ -3275,6 +3460,55 @@
           <button class="wr-btn right" data-speak-grade="right">Right →</button>
         </div>
       `;
+    }
+
+    /* ============================================================
+       Browse mode — non-SRS reference view. Renders every sentence or
+       vocab item as a tile. Audio works; no grading, no progress.
+       ============================================================ */
+    function renderCardsBrowse(story, source, lang) {
+      const items = source === 'vocabulary'
+        ? (Array.isArray(story.vocabulary) ? story.vocabulary : [])
+        : (Array.isArray(story.sentences)  ? story.sentences  : []);
+
+      if (items.length === 0) {
+        return `<div class="glass empty-state">
+          <div class="em-icon">📋</div>
+          Nothing to browse — story has no ${source === 'vocabulary' ? 'vocabulary' : 'sentences'} defined.
+        </div>`;
+      }
+
+      const summary = `<div class="browse-summary">${items.length} ${source === 'vocabulary' ? 'words' : 'sentences'}</div>`;
+
+      const tiles = items.map((item, i) => {
+        if (source === 'vocabulary') {
+          const speakText = vocabSpeakText(item);
+          const genderHtml = item.gender ? `<span class="gen">${escapeHtml(item.gender)}</span>` : '';
+          const posBits = [];
+          if (item.pos) posBits.push(item.pos);
+          const meta = posBits.length ? `<span class="bt-pos">${escapeHtml(posBits.join(' · '))}</span>` : '';
+          const plural = item.plural ? `<span class="bt-plural">pl. ${escapeHtml(item.plural)}</span>` : '';
+          return `
+            <div class="glass browse-tile tile-vocab">
+              <div class="bt-de">${genderHtml}${escapeHtml(item.de)}</div>
+              <div class="bt-en">${escapeHtml(item.en || '')}</div>
+              <div class="bt-meta">${meta}${plural}</div>
+              <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 DE</button>
+            </div>
+          `;
+        }
+        // sentence tile
+        return `
+          <div class="glass browse-tile tile-sentence">
+            <div class="bt-idx">#${i + 1}</div>
+            <div class="bt-de">${escapeHtml(item.de)}</div>
+            <div class="bt-en">${escapeHtml(item.en)}</div>
+            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(item.de)}">🔊 DE</button>
+          </div>
+        `;
+      }).join('');
+
+      return `${summary}<div class="browse-grid">${tiles}</div>`;
     }
 
     /* ============================================================
