@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "languageId": "it",
+  "id": "story-1",
+  "_storyVersion": 2,
+  "title": "Una giornata a Roma",
+  "level": "A1",
+  "order": 1,
+  "grammarFocus": ["essere/avere", "definite articles", "regular -are verbs", "adjective agreement", "contracted prepositions"],
+  "sentences": [
+    { "de": "Mi chiamo Luca.", "en": "My name is Luca.", "note": "Reflexive verb chiamarsi (literally 'to call oneself')." },
+    { "de": "Ho ventotto anni e abito a Roma.", "en": "I am twenty-eight years old and I live in Rome.", "note": "Italian uses avere (to have) for age, not essere." },
+    { "de": "Ho una sorella, Sofia.", "en": "I have a sister, Sofia.", "note": null },
+    { "de": "Sofia è simpatica e intelligente.", "en": "Sofia is nice and intelligent.", "note": "Adjectives ending in -e (intelligente) don't change for gender." },
+    { "de": "Oggi è lunedì.", "en": "Today is Monday.", "note": null },
+    { "de": "Sono le sette di mattina.", "en": "It is seven in the morning.", "note": "Time uses sono (plural) for any hour after 1 — le sette." },
+    { "de": "Mi alzo e vado in cucina.", "en": "I get up and go to the kitchen.", "note": "Reflexive alzarsi (mi alzo). Irregular andare → vado." },
+    { "de": "Faccio un caffè forte.", "en": "I make a strong coffee.", "note": "Irregular fare → faccio." },
+    { "de": "Il caffè è la mia passione.", "en": "Coffee is my passion.", "note": "Definite article il for masculine; possessive la mia agrees with feminine passione." },
+    { "de": "Mangio anche un cornetto con marmellata.", "en": "I also eat a croissant with jam.", "note": null },
+    { "de": "La mia casa è piccola ma luminosa.", "en": "My house is small but bright.", "note": "Feminine adjectives end in -a: piccola, luminosa." },
+    { "de": "Ha una camera, un bagno e un soggiorno.", "en": "It has a bedroom, a bathroom and a living room.", "note": "Indefinite articles un/una match gender." },
+    { "de": "Dalla finestra vedo i tetti rossi di Roma.", "en": "From the window I see the red roofs of Rome.", "note": "Contracted preposition: da + la = dalla. Plural masculine adjective: rossi." },
+    { "de": "Alle otto vado al lavoro.", "en": "At eight I go to work.", "note": "Contracted: a + le = alle, a + il = al." },
+    { "de": "Lavoro in una libreria nel centro.", "en": "I work in a bookstore in the center.", "note": "Contracted: in + il = nel." },
+    { "de": "Il mio capo si chiama Marco.", "en": "My boss is called Marco.", "note": null },
+    { "de": "È gentile ma severo.", "en": "He is kind but strict.", "note": null },
+    { "de": "Mi piace il mio lavoro.", "en": "I like my work.", "note": "Piacere construction: 'mi piace X' = literally 'X is pleasing to me'." },
+    { "de": "A pranzo mangio con la mia collega Giulia.", "en": "At lunch I eat with my colleague Giulia.", "note": null },
+    { "de": "Giulia è giovane e divertente.", "en": "Giulia is young and funny.", "note": null },
+    { "de": "Parla molto e ride spesso.", "en": "She talks a lot and laughs often.", "note": "Regular -are parlare → parla. Irregular ridere → ride." },
+    { "de": "Mangio una pasta al pomodoro.", "en": "I eat pasta with tomato sauce.", "note": null },
+    { "de": "Beviamo l'acqua frizzante.", "en": "We drink sparkling water.", "note": "L' before vowel; -iamo is the 1st person plural ending." },
+    { "de": "Il pranzo è sempre delizioso.", "en": "Lunch is always delicious.", "note": null },
+    { "de": "Nel pomeriggio leggo i libri nuovi.", "en": "In the afternoon I read the new books.", "note": "Plural masculine agreement: i libri nuovi." },
+    { "de": "Alle sei torno a casa.", "en": "At six I return home.", "note": null },
+    { "de": "Ascolto la musica italiana.", "en": "I listen to Italian music.", "note": "Adjective italiana agrees with feminine la musica." },
+    { "de": "La musica è bella e rilassante.", "en": "The music is beautiful and relaxing.", "note": null },
+    { "de": "La sera leggo o guardo un film.", "en": "In the evening I read or watch a film.", "note": null },
+    { "de": "Domani è un altro giorno bellissimo.", "en": "Tomorrow is another beautiful day.", "note": "Suffix -issimo intensifies an adjective: bello → bellissimo." }
+  ],
+  "grammarRules": [
+    {
+      "name": "Essere vs Avere",
+      "tier": 1,
+      "desc": "Italian has two verbs that English speakers often confuse. Use essere (to be) for identity, location, characteristics. Use avere (to have) for possession AND for states English expresses with 'to be' — age, hunger, thirst, cold.",
+      "longExplanation": "English uses 'to be' for many things — age, hunger, thirst, fear. Italian uses 'avere' (to have) for those instead. So 'I am 28' becomes literally 'I have 28 years' — Ho 28 anni. Use ESSERE only for identity, location, and traits.",
+      "examples": [
+        { "de": "Ho fame.", "en": "I am hungry.", "highlight": "Ho" },
+        { "de": "Ho ventotto anni.", "en": "I am twenty-eight years old.", "highlight": "Ho" },
+        { "de": "Sono italiano.", "en": "I am Italian.", "highlight": "Sono" }
+      ],
+      "tips": [
+        "Use AVERE for: age, hunger, thirst, cold, hot, fear, need.",
+        "Use ESSERE for: identity, location, traits (tall, kind), feelings (happy, sad)."
+      ]
+    },
+    {
+      "name": "Definite Articles",
+      "tier": 1,
+      "desc": "il (masc. sg.), la (fem. sg.), lo (masc. sg. before s+consonant or z), l' (before vowel), i (masc. pl.), le (fem. pl.), gli (masc. pl. before vowel/s+consonant/z).",
+      "longExplanation": "Italian definite articles depend on TWO things: gender (masculine/feminine) AND the first letter of the next word. Most words use simple il (m.) and la (f.), but masculine words starting with s+consonant or z take lo, and any word starting with a vowel takes l'.",
+      "examples": [
+        { "de": "il libro", "en": "the book", "highlight": "il" },
+        { "de": "lo studente", "en": "the student", "highlight": "lo" },
+        { "de": "l'amico", "en": "the friend", "highlight": "l'" },
+        { "de": "gli studenti", "en": "the students", "highlight": "gli" }
+      ],
+      "tips": [
+        "Masculine: il / lo / l' (sg.), i / gli (pl.).",
+        "Feminine: la / l' (sg.), le (pl.).",
+        "First letter sound matters: s+consonant or z → lo/gli; vowel → l'."
+      ]
+    },
+    {
+      "name": "Regular -are Verbs",
+      "tier": 1,
+      "desc": "abitare, parlare, lavorare conjugate predictably: -o, -i, -a, -iamo, -ate, -ano. e.g. abitare → abito, abiti, abita, abitiamo, abitate, abitano.",
+      "longExplanation": "Italian -are verbs are the most regular family. Drop the -are ending and add: -o (I), -i (you), -a (he/she), -iamo (we), -ate (you all), -ano (they). Once you learn this pattern, you can conjugate hundreds of verbs.",
+      "examples": [
+        { "de": "Parlo italiano.", "en": "I speak Italian.", "highlight": "Parlo" },
+        { "de": "Parli inglese?", "en": "Do you speak English?", "highlight": "Parli" },
+        { "de": "Parliamo spesso.", "en": "We talk often.", "highlight": "Parliamo" }
+      ],
+      "tips": [
+        "Endings: -o, -i, -a, -iamo, -ate, -ano.",
+        "Same pattern for: abitare, lavorare, mangiare, ascoltare, guardare."
+      ]
+    },
+    {
+      "name": "Adjective Agreement",
+      "tier": 2,
+      "desc": "Adjectives match the noun's gender and number. -o adjectives: rosso (m.sg.), rossa (f.sg.), rossi (m.pl.), rosse (f.pl.). -e adjectives: gentile / gentili (only 2 forms).",
+      "longExplanation": "Italian adjectives change endings to match the noun's gender (masculine or feminine) and number (singular or plural). The most common pattern is -o/-a/-i/-e (rosso, rossa, rossi, rosse). Adjectives ending in -e have only two forms: -e (singular) and -i (plural).",
+      "examples": [
+        { "de": "Il libro rosso.", "en": "The red book.", "highlight": "rosso" },
+        { "de": "La macchina rossa.", "en": "The red car.", "highlight": "rossa" },
+        { "de": "I libri rossi.", "en": "The red books.", "highlight": "rossi" },
+        { "de": "Persone gentili.", "en": "Kind people.", "highlight": "gentili" }
+      ],
+      "tips": [
+        "-o adjectives have 4 forms (rosso/rossa/rossi/rosse).",
+        "-e adjectives have 2 forms (gentile/gentili — no gender distinction).",
+        "Adjective comes AFTER the noun in most cases (libro rosso, not 'rosso libro')."
+      ]
+    },
+    {
+      "name": "Contracted Prepositions",
+      "tier": 3,
+      "desc": "Prepositions a, di, da, in, su contract with the definite article: a+il=al, a+la=alla, di+il=del, da+la=dalla, in+il=nel, etc.",
+      "longExplanation": "When the prepositions a, di, da, in, su come before the definite article (il, la, le, etc.), they merge into a single word. You almost never say 'a il' — it becomes 'al'. Memorize the most common ones: al, alla, alle, del, della, dal, dalla, nel, nella.",
+      "examples": [
+        { "de": "Vado al cinema.", "en": "I go to the cinema.", "highlight": "al" },
+        { "de": "Vengo dalla scuola.", "en": "I come from the school.", "highlight": "dalla" },
+        { "de": "Sono nel parco.", "en": "I am in the park.", "highlight": "nel" }
+      ],
+      "tips": [
+        "5 prepositions × 7 articles = ~35 contractions, but most are predictable.",
+        "Pattern: a+il=al, a+la=alla, a+le=alle, a+lo=allo.",
+        "If you say 'a il' or 'di il', it sounds wrong to native ears — it's always contracted."
+      ]
+    }
+  ],
+  "grammarTests": [
+    { "tier": 1, "rule": "Essere vs Avere", "en": "I have a sister.", "de": "Ho una sorella.", "trap": null },
+    { "tier": 1, "rule": "Essere vs Avere", "en": "She is nice.", "de": "È simpatica.", "trap": null },
+    { "tier": 1, "rule": "Essere vs Avere", "en": "I am cold.", "de": "Ho freddo.", "trap": "Italian uses avere for cold, hunger, thirst, age — literally 'I have cold'." },
+    { "tier": 1, "rule": "Definite Articles", "en": "The book is interesting.", "de": "Il libro è interessante.", "trap": null },
+    { "tier": 1, "rule": "Regular -are Verbs", "en": "I live in Milan.", "de": "Abito a Milano.", "trap": null },
+    { "tier": 1, "rule": "Regular -are Verbs", "en": "We speak Italian.", "de": "Parliamo italiano.", "trap": "1st person plural ending is -iamo." },
+    { "tier": 2, "rule": "Adjective Agreement", "en": "The Italian girls are nice.", "de": "Le ragazze italiane sono simpatiche.", "trap": "Both adjectives need feminine plural -e endings." },
+    { "tier": 2, "rule": "Adjective Agreement", "en": "I read the new books.", "de": "Leggo i libri nuovi.", "trap": "Masculine plural -i ending on nuovi." },
+    { "tier": 3, "rule": "Contracted Prepositions", "en": "I go to the cinema.", "de": "Vado al cinema.", "trap": "a + il = al (one word, not 'a il')." },
+    { "tier": 3, "rule": "Contracted Prepositions", "en": "I come from the school.", "de": "Vengo dalla scuola.", "trap": "da + la = dalla." }
+  ]
+}
