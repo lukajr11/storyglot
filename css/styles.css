@@ -1,0 +1,2788 @@
+/* ============================================================
+   THEME — CSS variables, swapped at runtime per active language.
+   applyTheme() in JS rewrites these on :root.
+   ============================================================ */
+:root {
+  --bg-from: #0a0118;
+  --bg-via: #150030;
+  --bg-to: #001428;
+  --grad-1: #a855f7;
+  --grad-2: #ec4899;
+  --grad-3: #06b6d4;
+  --accent: #a855f7;
+
+  --text: #f5f5fa;
+  --text-dim: rgba(245, 245, 250, 0.62);
+  --text-soft: rgba(245, 245, 250, 0.38);
+
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+*:focus { outline: none; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  background:
+    radial-gradient(ellipse at top left, var(--bg-via), transparent 55%),
+    radial-gradient(ellipse at bottom right, var(--bg-to), transparent 55%),
+    var(--bg-from);
+}
+
+/* Soft cosmic glow blobs that follow the active gradient. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--grad-1) 22%, transparent), transparent 55%),
+    radial-gradient(circle at 82% 88%, color-mix(in srgb, var(--grad-3) 18%, transparent), transparent 55%);
+}
+/* When a custom wallpaper is set, only the dark overlay should sit
+   over the photo — the colored ambient blobs would tint it. */
+body.has-bg-image::before { display: none; }
+
+/* Custom wallpapers vary wildly in tone, so the default 4%-white
+   glass disappears against bright photos. Override the glass
+   variables in one place — every .glass/ghost-btn/tag-pill/tab/
+   stat-pill/lang-pill picks up the deeper backdrop and stronger
+   border automatically. Text-dim/soft are nudged up so secondary
+   text stays readable over busy backgrounds. */
+body.has-bg-image {
+  --glass-bg: rgba(12, 6, 24, 0.58);
+  --glass-bg-strong: rgba(12, 6, 24, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --text-dim: rgba(245, 245, 250, 0.78);
+  --text-soft: rgba(245, 245, 250, 0.55);
+}
+body.has-bg-image .glass {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+body.has-bg-image .gradient-btn {
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--grad-1) 45%, transparent),
+              0 2px 6px rgba(0, 0, 0, 0.4);
+}
+/* The hero banner (language name over its cover SVG/photo) is the
+   "above the story card" panel. When the body itself shows that
+   same language cover as a wallpaper it's just duplication — drop
+   the hero in that case so the page reads cleaner. */
+body.has-bg-image .hero-cover { display: none; }
+
+button { font-family: inherit; cursor: pointer; }
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 22px 16px 96px;
+}
+
+.row { display: flex; gap: 10px; }
+.row-tight { display: flex; gap: 6px; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+
+/* ============================================================
+   GLASS / GRADIENT PRIMITIVES
+   ============================================================ */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-radius: var(--radius-lg);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2) 55%, var(--grad-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: var(--radius-md);
+  /* 2-stop gradient uses end colors (grad-1, grad-3) so white text
+     stays readable across all themes — including ones where grad-2
+     is pure white (Austrian / Italian flag). */
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--grad-1) 35%, transparent);
+  transition: transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+}
+.gradient-btn:active { transform: scale(0.97); }
+.gradient-btn[disabled] { opacity: 0.55; }
+
+.ghost-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.ghost-btn:active { transform: scale(0.97); background: var(--glass-bg-strong); }
+
+.tag-pill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+/* Phase pill (Intro N/6 · Drill N/6 · ✓ Done) — sits inline with
+   the other tag-pills in the .tags row, no absolute positioning. */
+.tag-pill.phase-pill {
+  background: color-mix(in srgb, var(--accent) 22%, rgba(0,0,0,0.35));
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--glass-border));
+  color: var(--text);
+}
+.tag-pill.phase-pill.done {
+  background: color-mix(in srgb, var(--grad-3) 32%, rgba(0,0,0,0.30));
+  border-color: color-mix(in srgb, var(--grad-3) 60%, transparent);
+  color: #fff;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.app-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+
+.lang-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: var(--text);
+  text-transform: uppercase;
+}
+.lang-pill .flag { font-size: 16px; }
+
+/* ============================================================
+   STATS ROW
+   ============================================================ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.stat-pill {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 12px 8px 10px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.stat-pill .label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.stat-pill .value {
+  margin-top: 4px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ============================================================
+   TAB BAR
+   ============================================================ */
+.tab-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 4px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  margin-bottom: 18px;
+}
+.tab {
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  border-radius: var(--radius-sm);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  transition: background 200ms ease, color 200ms ease;
+}
+.tab.active {
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
+  color: #fff;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--grad-1) 30%, transparent);
+}
+
+/* ============================================================
+   LIBRARY — story cards
+   ============================================================ */
+.story-card {
+  padding: 22px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.story-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 70%;
+  height: 200%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--grad-2) 14%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.story-card .tags {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.story-card .story-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 4px 0 6px;
+}
+/* Slight shadow lifts the title off bright wallpapers without
+   affecting the default dark theme. */
+body.has-bg-image .story-card .story-title,
+body.has-bg-image .hero-cover .hero-name {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+.story-card .story-meta {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.progress {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--grad-1), var(--grad-2), var(--grad-3));
+  border-radius: 999px;
+  transition: width 250ms ease;
+}
+.story-card .story-foot {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   READ TAB
+   ============================================================ */
+.read-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.read-toggle button {
+  background: transparent;
+  border: none;
+  padding: 10px 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  transition: background 200ms ease, color 200ms ease;
+}
+.read-toggle button.active {
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
+  color: #fff;
+}
+
+.play-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.story-prose {
+  padding: 22px;
+  font-size: 18px;
+  line-height: 1.75;
+  letter-spacing: 0.1px;
+}
+.story-prose .sent {
+  transition: background 200ms ease, color 200ms ease;
+  border-radius: 6px;
+  padding: 1px 2px;
+}
+.story-prose .sent.active {
+  background: linear-gradient(120deg,
+    color-mix(in srgb, var(--grad-1) 28%, transparent),
+    color-mix(in srgb, var(--grad-2) 28%, transparent));
+  color: #fff;
+}
+
+.english-toggle {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.english-block {
+  margin-top: 12px;
+  padding: 18px;
+  font-family: 'Inter', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  white-space: pre-wrap;
+}
+
+.sentence-row {
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.sentence-row:active { transform: scale(0.995); }
+.sentence-row.active {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grad-1) 16%, transparent),
+    color-mix(in srgb, var(--grad-2) 16%, transparent));
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.sentence-row .de {
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 500;
+}
+.sentence-row .en {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+.sentence-row .note {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 7px 10px;
+  border-radius: 8px;
+  margin-top: 8px;
+  border-left: 2px solid var(--grad-1);
+  line-height: 1.45;
+}
+
+.empty-state {
+  padding: 40px 22px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+.empty-state .em-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 22px;
+}
+.modal-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+.lang-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.lang-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.02);
+  transition: background 200ms ease, transform 200ms ease;
+}
+.lang-row:active { transform: scale(0.99); }
+.lang-row.active {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grad-1) 18%, transparent),
+    color-mix(in srgb, var(--grad-2) 18%, transparent));
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--grad-1) 22%, transparent);
+}
+.lang-row .flag { font-size: 22px; }
+.lang-row .name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+}
+.lang-row .sub {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   PLACEHOLDER (Cards / Test tabs in chunk 1)
+   ============================================================ */
+.placeholder {
+  padding: 36px 22px;
+  text-align: center;
+}
+.placeholder .ph-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.placeholder .ph-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ============================================================
+   CARDS + TEST — Chunk 2 additions.
+   New classes only; nothing here overrides Chunk 1 styles.
+   ============================================================ */
+.card-counter {
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.card-pane {
+  padding: 22px;
+  margin-bottom: 14px;
+  animation: fade-in 200ms ease;
+}
+@keyframes fade-in {
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.big-sentence {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  margin: 8px 0 18px;
+  letter-spacing: 0.1px;
+}
+
+.type-area {
+  width: 100%;
+  min-height: 88px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  resize: none;
+  margin-bottom: 14px;
+  outline: none;
+  -webkit-appearance: none;
+}
+.type-area:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.full-btn { width: 100%; }
+
+/* Feedback banners — three states for Type, two states for Test. */
+.feedback {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid;
+  animation: slide-down 180ms ease;
+}
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.feedback.ok     { background: rgba(34,197,94,0.10);  border-color: rgba(34,197,94,0.32);  color: #d1fae5; }
+.feedback.almost { background: rgba(234,179,8,0.10); border-color: rgba(234,179,8,0.32); color: #fef9c3; }
+.feedback.bad    { background: rgba(239,68,68,0.10); border-color: rgba(239,68,68,0.32); color: #fecaca; }
+
+/* Inline audio button (small pill). */
+.audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.5px;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.audio-btn:active { transform: scale(0.96); }
+.audio-btn.speaking {
+  animation: audio-pulse 700ms ease-in-out infinite;
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+@keyframes audio-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 35%, transparent); transform: scale(1); }
+  50%      { box-shadow: 0 0 0 8px transparent; transform: scale(1.04); }
+}
+.audio-row {
+  display: flex; gap: 8px; justify-content: center;
+  margin: 8px 0 12px;
+}
+
+.note-callout {
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.04);
+  border-left: 2px solid var(--grad-1);
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 12px 0;
+}
+
+/* Type mode grade row. */
+.grade-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+.grade-btn {
+  padding: 14px 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  transition: transform 100ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+.grade-btn:active { transform: scale(0.96); }
+.grade-btn .lbl { display: block; }
+.grade-btn .sub {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--text-soft);
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.grade-btn.again { box-shadow: inset 0 0 0 1px rgba(239,68,68,0.32); color: #fca5a5; }
+.grade-btn.hard  { box-shadow: inset 0 0 0 1px rgba(249,115,22,0.32); color: #fdba74; }
+.grade-btn.good  { box-shadow: inset 0 0 0 1px rgba(34,197,94,0.32);  color: #86efac; }
+.grade-btn.easy  { box-shadow: inset 0 0 0 1px rgba(59,130,246,0.32); color: #93c5fd; }
+.grade-btn.again:active { background: rgba(239,68,68,0.12); }
+.grade-btn.hard:active  { background: rgba(249,115,22,0.12); }
+.grade-btn.good:active  { background: rgba(34,197,94,0.12); }
+.grade-btn.easy:active  { background: rgba(59,130,246,0.12); }
+
+/* Speak mode: flip card + swipe state. */
+.flip-card {
+  min-height: 240px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  transition: transform 220ms ease, opacity 220ms ease, box-shadow 220ms ease, border-color 200ms ease;
+  will-change: transform;
+}
+.flip-card .hint { font-size: 12px; color: var(--text-soft); letter-spacing: 0.4px; margin-top: 4px; }
+.flip-card.tint-right { box-shadow: 0 12px 36px rgba(34,197,94,0.32); border-color: rgba(34,197,94,0.45); }
+.flip-card.tint-left  { box-shadow: 0 12px 36px rgba(239,68,68,0.32); border-color: rgba(239,68,68,0.45); }
+.flip-card.commit-right { transform: translateX(120vw) rotate(20deg) !important; opacity: 0; }
+.flip-card.commit-left  { transform: translateX(-120vw) rotate(-20deg) !important; opacity: 0; }
+
+.wr-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.wr-btn {
+  padding: 16px 0;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  transition: transform 100ms ease, background 200ms ease;
+}
+.wr-btn:active { transform: scale(0.96); }
+.wr-btn.wrong { box-shadow: inset 0 0 0 1px rgba(239,68,68,0.36); color: #fca5a5; }
+.wr-btn.right { box-shadow: inset 0 0 0 1px rgba(34,197,94,0.36); color: #86efac; }
+.wr-btn.wrong:active { background: rgba(239,68,68,0.12); }
+.wr-btn.right:active { background: rgba(34,197,94,0.12); }
+
+/* Session end. */
+.session-end {
+  padding: 36px 22px;
+  text-align: center;
+}
+.session-end .se-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.session-end .se-sub {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+
+/* Test tier-selection cards. */
+.tier-card {
+  padding: 22px;
+  margin-bottom: 12px;
+}
+.tier-card .tc-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.05;
+}
+.tier-card .tc-rules {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin: 6px 0 10px;
+  letter-spacing: 0.2px;
+}
+.tier-card .tc-stats {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 14px;
+}
+.tier-card.locked { opacity: 0.55; }
+.tier-card .lock { margin-right: 6px; }
+
+.trap-callout {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(234,179,8,0.10);
+  border: 1px solid rgba(234,179,8,0.32);
+  color: #fef9c3;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+.celebrate {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--grad-1) 22%, transparent),
+    color-mix(in srgb, var(--grad-2) 22%, transparent));
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 28%, transparent);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  text-align: center;
+}
+
+.rule-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, transparent);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   CHUNK 3A — Toasts, Settings, Sparkline, Import/Export
+   ============================================================ */
+
+/* Toast stack — fixed bottom-center, slides up. */
+#toast-stack {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  width: min(90vw, 420px);
+}
+.toast {
+  pointer-events: auto;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: toast-up 250ms ease-out;
+  border: 1px solid;
+}
+@keyframes toast-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.toast.success {
+  background: rgba(34,197,94,0.14); border-color: rgba(34,197,94,0.36); color: #d1fae5;
+  box-shadow: 0 12px 30px rgba(34,197,94,0.22);
+}
+.toast.error {
+  background: rgba(239,68,68,0.14); border-color: rgba(239,68,68,0.36); color: #fecaca;
+  box-shadow: 0 12px 30px rgba(239,68,68,0.22);
+}
+.toast.info {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--text);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.toast.exiting { animation: toast-down 250ms ease-in forwards; }
+@keyframes toast-down {
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+/* Settings tab — section cards + form rows. */
+.section-card {
+  padding: 22px;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.section-sub {
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.form-row { margin-bottom: 14px; }
+.form-row .lbl {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.form-row .lbl .val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  color: var(--text);
+}
+.form-row input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  outline: none;
+}
+.form-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  cursor: pointer;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--grad-1) 40%, transparent);
+}
+.form-row select {
+  width: 100%;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.row-list { display: flex; flex-direction: column; gap: 8px; }
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.02);
+}
+.item-row .grow { flex: 1; min-width: 0; }
+.item-row .title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+}
+.item-row .meta {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.3px;
+  margin-top: 2px;
+}
+.item-row .actions { display: flex; gap: 6px; }
+
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 36%, transparent);
+  color: var(--text);
+}
+
+.small-btn {
+  padding: 6px 10px;
+  font-size: 11px;
+  border-radius: 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.small-btn.danger { box-shadow: inset 0 0 0 1px rgba(239,68,68,0.36); color: #fca5a5; }
+.small-btn.danger:active { background: rgba(239,68,68,0.12); }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.danger-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.36);
+  color: #fca5a5;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  box-shadow: 0 8px 24px rgba(239,68,68,0.16);
+}
+.danger-btn:active { background: rgba(239,68,68,0.16); }
+
+.warning-banner {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(234,179,8,0.10);
+  border: 1px solid rgba(234,179,8,0.32);
+  color: #fef9c3;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Modal text input (Reset confirmation, Replace story confirm). */
+.modal input[type=text] {
+  width: 100%;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  margin: 8px 0 12px;
+  -webkit-appearance: none;
+  outline: none;
+}
+.modal input[type=text]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.modal-body p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+/* Library Progress section. */
+.progress-section {
+  padding: 22px;
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
+.progress-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+.progress-toggle .arrow { transition: transform 200ms ease; }
+.progress-toggle.open .arrow { transform: rotate(90deg); }
+.progress-body { margin-top: 14px; animation: fade-in 200ms ease; }
+
+.streak-display {
+  text-align: center;
+  padding: 10px 0 14px;
+}
+.streak-display .num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+.streak-display .lbl {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+.sparkline-wrap {
+  width: 100%;
+  height: 80px;
+  margin: 8px 0 12px;
+}
+.sparkline-wrap svg { width: 100%; height: 100%; display: block; }
+
+.vocab-line {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 8px 0 14px;
+}
+.vocab-line .num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Tab bar grows from 4 to 5 to 6 columns. */
+.tab-bar.cols-5 { grid-template-columns: repeat(5, 1fr); }
+.tab-bar.cols-5 .tab { font-size: 12px; padding: 9px 0; }
+.tab-bar.cols-6 { grid-template-columns: repeat(6, 1fr); }
+.tab-bar.cols-6 .tab { font-size: 11.5px; padding: 9px 0; letter-spacing: 0.2px; }
+
+/* Rules tab — explanation cards with examples + tips. */
+.rule-card {
+  padding: 22px;
+  margin-bottom: 14px;
+}
+.rule-card .rc-tier {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.rule-card .rc-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.rule-card .rc-explain {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.rule-card .rc-section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin: 14px 0 8px;
+}
+.rule-example {
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 2px solid var(--grad-2);
+  border-radius: 8px;
+}
+.rule-example .ex-de {
+  font-size: 14.5px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.rule-example .ex-de mark {
+  background: linear-gradient(120deg,
+    color-mix(in srgb, var(--grad-1) 40%, transparent),
+    color-mix(in srgb, var(--grad-2) 40%, transparent));
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+.rule-example .ex-en {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-top: 3px;
+}
+.rule-example .audio-btn {
+  margin-top: 6px;
+  font-size: 10.5px;
+  padding: 4px 10px;
+}
+.rule-tips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rule-tips li {
+  position: relative;
+  padding: 4px 0 4px 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.rule-tips li::before {
+  content: '›';
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.tier-divider {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  text-align: center;
+  margin: 12px 0 8px;
+}
+
+/* Paradigm tables inside Rules cards. Horizontal scroll for wide ones. */
+.rule-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 6px 0 4px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.03);
+}
+.rule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.rule-table th, .rule-table td {
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  white-space: nowrap;
+}
+.rule-table th {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky;
+  top: 0;
+}
+.rule-table tr:last-child td { border-bottom: none; }
+.rule-table td.rt-label {
+  font-weight: 600;
+  color: var(--text-dim);
+  font-size: 11.5px;
+  letter-spacing: 0.3px;
+}
+.rt-note {
+  font-size: 11.5px;
+  color: var(--text-soft);
+  font-style: italic;
+  margin: 6px 0 12px;
+  line-height: 1.5;
+}
+
+/* Disabled toggle button (e.g. Vocabulary toggle when story has no vocab). */
+.read-toggle button.tab-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.read-toggle button[disabled] { cursor: not-allowed; }
+
+/* ============================================================
+   LIBRARY — top-level language journey cards (Stage B).
+   Each card represents a full A1→B2 series for one language.
+   ============================================================ */
+.journey-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (min-width: 720px) {
+  .journey-grid { grid-template-columns: 1fr 1fr; }
+}
+.journey-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+.journey-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px color-mix(in srgb, var(--accent) 22%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.journey-card .jc-cover {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.journey-card .jc-cover svg { width: 100%; height: 100%; display: block; }
+.journey-card .jc-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.15) 60%, transparent 100%),
+    linear-gradient(135deg, transparent 60%, color-mix(in srgb, var(--accent) 18%, transparent));
+  pointer-events: none;
+}
+.journey-card .jc-body {
+  position: absolute;
+  inset: 0;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  z-index: 1;
+}
+.journey-card .jc-flag {
+  font-size: 30px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  align-self: flex-end;
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+.journey-card .jc-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.05;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+.journey-card .jc-teaser {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.45;
+  max-width: 86%;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.journey-card .jc-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.78);
+  text-transform: uppercase;
+}
+.journey-card .jc-progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 6px;
+}
+.journey-card .jc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--grad-1), var(--grad-3));
+}
+
+/* Back-to-languages bar shown above story tiles when drilled in. */
+.back-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.back-bar .back-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 180ms ease, background 200ms ease;
+}
+.back-bar .back-btn:active { transform: scale(0.96); }
+.back-bar .back-context {
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* Phase status moved inline into .tags as a .phase-pill — kept
+   here only as a no-op so any cached HTML doesn't leak a stray
+   absolute-positioned element. */
+.story-card .story-badge { display: none; }
+
+/* Global Review button at the bottom of top-level library. */
+.global-review {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.global-review:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.global-review:active { transform: scale(0.98); }
+
+/* Name-selection screen — full-screen overlay, similar shell to
+   the login picker but content-focused. */
+.name-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  animation: fade-in 200ms ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.name-screen .ns-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+}
+.name-screen .ns-bg svg { width: 100%; height: 100%; display: block; }
+.name-screen .ns-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.85));
+}
+.name-screen .ns-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: 26px 22px;
+  text-align: center;
+}
+.name-screen .ns-flag {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.name-screen .ns-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 6px;
+  letter-spacing: 0.5px;
+}
+.name-screen .ns-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.name-screen select,
+.name-screen input[type=text] {
+  width: 100%;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  outline: none;
+}
+.name-screen .ns-or {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  margin: 6px 0 8px;
+}
+.name-screen .ns-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+body.name-locked #app, body.name-locked #toast-stack { display: none; }
+
+/* ============================================================
+   CINEMA MODE — full-screen narration view for First-Read Step 1.
+   Cover image fills the viewport; one centered sentence at a time
+   crossfades in sync with the audio playback machinery (the
+   existing data-sent-idx highlight loop drives `.active`).
+   Header / stats / tab bar hide via body.cinema-mode.
+   ============================================================ */
+body.cinema-mode #app,
+body.cinema-mode #toast-stack { display: none; }
+#cinema-root:empty { display: none; }
+
+.cinema-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background-size: cover;
+  background-position: center;
+  background-color: #07041a;
+  display: flex;
+  flex-direction: column;
+  animation: fade-in 350ms ease;
+}
+.cinema-screen .cs-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%),
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.55) 0%,
+      rgba(0,0,0,0.20) 30%,
+      rgba(0,0,0,0.20) 70%,
+      rgba(0,0,0,0.85) 100%);
+  pointer-events: none;
+}
+.cinema-screen .cs-topbar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 22px 24px 0;
+}
+.cinema-screen .cs-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.cinema-screen .cs-icon-btn:hover { background: rgba(0,0,0,0.65); }
+.cinema-screen .cs-icon-btn:active { transform: scale(0.94); }
+.cinema-screen .cs-en-toggle {
+  width: auto;
+  padding: 0 16px;
+  border-radius: 22px;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.cinema-screen .cs-stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8% 8%;
+  overflow: hidden;
+}
+.cinema-screen .cs-lines {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  text-align: center;
+}
+.cinema-screen .cs-line {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 450ms ease, transform 450ms ease;
+  pointer-events: none;
+}
+.cinema-screen .cs-line.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cinema-screen .cs-line .it {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px, 3.6vw, 38px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.85);
+  letter-spacing: 0.2px;
+}
+.cinema-screen .cs-line .en {
+  margin-top: 18px;
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.78);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+}
+/* When EN toggle is off, hide the .en sub-line. */
+.cinema-screen.no-en .cs-line .en { display: none; }
+
+.cinema-screen .cs-controls {
+  position: relative;
+  z-index: 1;
+  padding: 0 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.cinema-screen .cs-progress {
+  width: min(820px, 90vw);
+  height: 3px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.cinema-screen .cs-progress .bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--grad-1), var(--grad-3));
+  transition: width 350ms ease;
+}
+.cinema-screen .cs-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+.cinema-screen .cs-meta {
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  font-family: 'Space Grotesk', sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.cinema-screen .cs-time-left {
+  color: rgba(255,255,255,0.85);
+}
+.cinema-screen .cs-speed {
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 200ms ease, transform 150ms ease;
+  font-variant-numeric: tabular-nums;
+}
+.cinema-screen .cs-speed:hover { background: rgba(0,0,0,0.65); }
+.cinema-screen .cs-speed:active { transform: scale(0.94); }
+.cinema-screen .cs-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.cinema-screen .cs-play:hover { background: rgba(0,0,0,0.75); }
+.cinema-screen .cs-play:active { transform: scale(0.97); }
+.cinema-screen .cs-transport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Cinema intro variant — atmosphere card before narration kicks in.
+   Three-dot pulse, eyebrow label, multiline English synopsis. */
+.cinema-screen.cinema-intro .cs-stage {
+  flex-direction: column;
+  gap: 22px;
+  text-align: center;
+}
+.cinema-screen .cs-intro-pulse {
+  display: flex;
+  gap: 10px;
+}
+.cinema-screen .cs-intro-pulse span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.78);
+  animation: cs-pulse 1.4s ease-in-out infinite;
+}
+.cinema-screen .cs-intro-pulse span:nth-child(2) { animation-delay: 0.18s; }
+.cinema-screen .cs-intro-pulse span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes cs-pulse {
+  0%, 80%, 100% { opacity: 0.30; transform: scale(0.85); }
+  40%           { opacity: 1.00; transform: scale(1.20); }
+}
+.cinema-screen .cs-intro-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+}
+.cinema-screen .cs-intro-text {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(17px, 2.2vw, 23px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.85);
+  max-width: 720px;
+}
+
+/* Cinematic Grammar — one rule at a time. */
+.cinema-screen.cinema-rule .cs-stage {
+  align-items: center;
+  text-align: left;
+  overflow-y: auto;
+  padding: 0 8% 6%;
+}
+.cinema-screen .cs-rule {
+  width: 100%;
+  max-width: 760px;
+  color: #fff;
+}
+.cinema-screen .cs-rule-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.85);
+}
+.cinema-screen .cs-rule-desc {
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.65;
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 2px 14px rgba(0,0,0,0.75);
+  margin-bottom: 18px;
+}
+.cinema-screen .cs-examples {
+  list-style: none;
+  padding: 16px 18px;
+  margin: 0;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.cinema-screen .cs-examples li {
+  padding: 6px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.cinema-screen .cs-examples li:last-child { border-bottom: none; }
+
+/* 3-way toggle for the Cards mode bar (Type / Speak / Browse). */
+.read-toggle.three { grid-template-columns: repeat(3, 1fr); }
+
+/* Browse view — tile grid of every sentence or vocab item. */
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+.browse-tile {
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fade-in 200ms ease;
+}
+.browse-tile.tile-vocab .bt-de {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+}
+.browse-tile.tile-vocab .bt-de .gen {
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.browse-tile.tile-sentence .bt-de {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.browse-tile .bt-en {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+.browse-tile .bt-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.browse-tile .bt-pos {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.browse-tile .bt-plural {
+  font-size: 10.5px;
+  color: var(--text-soft);
+  letter-spacing: 0.2px;
+}
+.browse-tile .bt-idx {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  color: var(--text-soft);
+}
+.browse-tile .audio-btn {
+  font-size: 10.5px;
+  padding: 4px 10px;
+  align-self: flex-start;
+}
+.browse-summary {
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  color: var(--text-soft);
+  margin: 10px 0 14px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   VISUAL ATMOSPHERE — hero cover, story covers, tab cards.
+   ============================================================ */
+
+/* Hero cover at top of Library tab. Holds either an uploaded image
+   (background-image) or the language's default SVG art. */
+.hero-cover {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32);
+  background-color: var(--bg-via);
+  background-size: cover;
+  background-position: center;
+}
+.hero-cover .cover-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hero-cover .hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.18) 50%, transparent 100%),
+    linear-gradient(135deg, transparent 60%, color-mix(in srgb, var(--accent) 18%, transparent));
+  pointer-events: none;
+}
+.hero-cover .hero-title {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.hero-cover .hero-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.05;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+.hero-cover .hero-flag {
+  font-size: 36px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+.hero-cover .hero-sub {
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin-top: 4px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Listen-card — cinema-mode entry rendered above each story tile.
+   Compact glass row: thumbnail • title/meta • play button. Tapping
+   any part of the card enters cinema mode for that story. */
+.listen-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+.listen-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--glass-border));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 18%, rgba(0,0,0,0.35));
+}
+.listen-card:active { transform: scale(0.99); }
+.listen-card .lc-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.listen-card .lc-body { flex: 1; min-width: 0; }
+.listen-card .lc-eyebrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 2px;
+}
+.listen-card .lc-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.listen-card .lc-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.listen-card .lc-play {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--grad-1) 35%, transparent);
+  transition: transform 200ms ease;
+}
+.listen-card .lc-play:active { transform: scale(0.92); }
+.listen-card.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.listen-card.locked .lc-thumb {
+  background: rgba(255,255,255,0.05);
+  font-size: 22px;
+}
+.listen-card .lc-lock {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  white-space: nowrap;
+  padding: 0 14px;
+}
+.listen-card.done {
+  border-color: color-mix(in srgb, var(--grad-3) 45%, var(--glass-border));
+}
+.listen-card .lc-check {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--grad-3) 38%, rgba(0,0,0,0.40));
+  border: 1px solid color-mix(in srgb, var(--grad-3) 60%, transparent);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Story card with cover image: 50/50 split — text strictly on the
+   left, image strictly on the right. The horizontal blend is done
+   via `mask-image` on the cover element, so the LEFT half of the
+   image strip fades to fully transparent (revealing the card's own
+   glass background underneath) instead of being darkened by an
+   overlay. Result: a true card-bg → image dissolve, no hard column. */
+.story-card.with-cover {
+  padding-right: 60%;
+  min-height: 220px;
+}
+.story-card .story-cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60%;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 55%, black 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 55%, black 100%);
+}
+.story-card .story-cover::before {
+  /* Subtle top/bottom vignette only — horizontal blend is the mask. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    transparent 25%,
+    transparent 75%,
+    rgba(0, 0, 0, 0.28) 100%);
+}
+.story-card .story-cover.svg-cover svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.story-card.with-cover > *:not(.story-cover) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tab bar redesigned as glass cards with icons. */
+.tab-cards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.tab-card {
+  padding: 12px 4px 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  color: var(--text-dim);
+  font-family: 'Space Grotesk', sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 180ms ease, background 220ms ease,
+              border-color 220ms ease, box-shadow 220ms ease, color 220ms ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.tab-card:active { transform: scale(0.96); }
+.tab-card .tab-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.tab-card .tab-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+.tab-card.active {
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 10px 26px color-mix(in srgb, var(--grad-1) 32%, transparent);
+}
+
+/* Cover-image upload row inside Settings (lang/story rows). */
+.cover-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--glass-border);
+}
+.cover-thumb {
+  width: 64px;
+  height: 48px;
+  border-radius: 8px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  flex: none;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-soft);
+  overflow: hidden;
+}
+.cover-thumb svg { width: 100%; height: 100%; display: block; }
+
+/* Subtle ambient blobs that respond to language theme on every page.
+   (Already present in body::before but slightly stronger now.) */
+body::before {
+  background:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--grad-1) 26%, transparent), transparent 55%),
+    radial-gradient(circle at 82% 88%, color-mix(in srgb, var(--grad-3) 22%, transparent), transparent 55%);
+}
+
+@media (max-width: 480px) {
+  .tab-cards { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .tab-card { padding: 10px 2px 8px; }
+  .tab-card .tab-icon { font-size: 19px; }
+  .tab-card .tab-label { font-size: 9.5px; letter-spacing: 0.2px; }
+  .hero-cover { height: 160px; }
+  .hero-cover .hero-name { font-size: 22px; }
+  .story-card.with-cover { padding-right: 0; min-height: auto; }
+  .story-card .story-cover { display: none; }
+}
+
+/* Login picker — Netflix-style profile chooser shown on every load. */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 40px 20px;
+  z-index: 50;
+  animation: fade-in 200ms ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.login-screen .greeting {
+  text-align: center;
+}
+.login-screen .brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.login-screen .ask {
+  font-size: 14px;
+  color: var(--text-dim);
+  letter-spacing: 0.4px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+  gap: 18px;
+  justify-content: center;
+  width: 100%;
+  max-width: 720px;
+}
+.profile-card {
+  padding: 22px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  border: 1px solid var(--glass-border);
+}
+.profile-card:active { transform: scale(0.98); }
+.profile-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2) 55%, var(--grad-3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 auto 12px;
+  box-shadow: 0 14px 32px color-mix(in srgb, var(--grad-1) 32%, transparent);
+}
+.profile-card .pname {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.profile-card .prole {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+.profile-card .lock-badge {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 11px;
+}
+
+/* Hide the main app while showing the login screen — saves a render
+   pass but also stops handlers below from grabbing focus. */
+body.locked #app, body.locked #toast-stack { display: none; }
+
+/* ============================================================
+   RESPONSIVE — small phone tweaks (mostly iPad-first)
+   ============================================================ */
+@media (max-width: 380px) {
+  .stat-pill .value { font-size: 19px; }
+  .story-card .story-title { font-size: 24px; }
+  .story-prose { font-size: 16px; }
+  .big-sentence { font-size: 22px; }
+  .grade-btn { font-size: 12px; }
+  .tab-bar.cols-5 .tab { font-size: 10.5px; letter-spacing: 0.2px; }
+  .streak-display .num { font-size: 40px; }
+}
+
+/* ============================================================
+   FIRST-READ FLOW — Stage C styles. Six-step linear journey:
+   atmosphere listen, grammar preview, sentence walk, vocab walk,
+   closing listen, drill-flow unlock celebration.
+   ============================================================ */
+.fr-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 14px;
+  flex-wrap: wrap;
+}
+.fr-step-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: var(--text-soft);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.fr-exit-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.fr-cover-wrap {
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+.fr-cover-wrap.fr-cover-thin .story-cover { height: 120px; }
+.fr-cover-wrap .story-cover { height: 220px; }
+@media (max-width: 380px) {
+  .fr-cover-wrap .story-cover { height: 180px; }
+}
+.fr-listen-card {
+  text-align: center;
+  padding: 28px 18px;
+}
+.fr-listen-title {
+  font-size: 20px;
+  margin: 14px 0 6px;
+  font-weight: 600;
+}
+.fr-listen-sub {
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+.fr-listen-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.fr-pulse {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 6px 0 12px;
+}
+.fr-pulse span {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.4;
+  animation: fr-pulse 1.4s infinite ease-in-out;
+}
+.fr-pulse span:nth-child(2) { animation-delay: 0.2s; }
+.fr-pulse span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes fr-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%      { opacity: 1;   transform: scale(1.2); }
+}
+
+.fr-soft-card {
+  text-align: center;
+  padding: 24px 18px;
+}
+.fr-soft-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.fr-soft-msg {
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.fr-narration-list {
+  padding: 16px 14px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.fr-narr-row {
+  padding: 10px 8px;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+.fr-narr-row.active {
+  background: rgba(255,255,255,0.08);
+}
+.fr-narr-row .de { font-size: 16px; line-height: 1.5; }
+.fr-narr-row .en { font-size: 13px; color: var(--text-soft); margin-top: 4px; }
+.fr-eng-toggle {
+  flex-shrink: 0;
+}
+
+.fr-section-intro {
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-bottom: 12px;
+  text-align: center;
+}
+.fr-rule-card {
+  padding: 18px;
+  margin-bottom: 12px;
+}
+.fr-rule-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.fr-rule-expl {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.fr-rule-examples { display: flex; flex-direction: column; gap: 8px; }
+.fr-rule-ex {
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+}
+.fr-rule-ex .ex-de { font-size: 15px; }
+.fr-rule-ex .ex-en { font-size: 13px; color: var(--text-soft); margin-top: 3px; }
+
+.fr-progress-line {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.fr-sentence-card, .fr-vocab-card {
+  padding: 22px 18px;
+  text-align: center;
+  position: relative;
+}
+.fr-sentence-de {
+  font-size: 22px;
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+.fr-sentence-en {
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.fr-vocab-mark {
+  cursor: pointer;
+  border-bottom: 2px dotted var(--accent);
+  padding-bottom: 1px;
+}
+.fr-vocab-mark:hover { background: rgba(255,255,255,0.06); }
+.fr-vocab-popover {
+  position: absolute;
+  z-index: 50;
+  padding: 10px 14px;
+  background: rgba(20,20,30,0.95);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  max-width: 240px;
+}
+.fr-vp-word { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+.fr-vp-trans { color: var(--text-soft); font-size: 13px; }
+
+.fr-vocab-pos { margin-bottom: 10px; }
+.fr-vocab-word { font-size: 30px; margin-bottom: 8px; }
+.fr-vocab-en { font-size: 16px; color: var(--text-soft); margin-bottom: 14px; }
+.fr-vocab-context {
+  margin-top: 14px; font-size: 15px; line-height: 1.5;
+  padding: 10px 12px; background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+}
+.fr-vocab-context-en {
+  font-size: 13px; color: var(--text-soft); margin-top: 4px;
+  padding: 0 12px;
+}
+
+.fr-nav-row {
+  display: flex; gap: 10px; margin-top: 12px;
+}
+.fr-nav-row .ghost-btn { flex: 1; }
+.fr-nav-row .gradient-btn { flex: 2; }
+
+.fr-celebrate {
+  text-align: center; padding: 32px 20px;
+}
+.fr-celebrate-icon {
+  font-size: 56px; color: var(--accent);
+  margin-bottom: 12px;
+}
+.fr-celebrate-title {
+  font-size: 24px; font-weight: 700; margin-bottom: 10px;
+}
+.fr-celebrate-msg {
+  color: var(--text-soft); font-size: 14px; line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+/* ============================================================
+   DRILL FLOW — Stage D styles. Six-dot progress track, shared
+   drill containers, sentence-assembly tiles, drill-complete card.
+   ============================================================ */
+.drill-track {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 0 0 18px;
+}
+.drill-dot {
+  flex: 1;
+  max-width: 60px;
+  text-align: center;
+  padding: 6px 0;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  font-size: 12px;
+  color: var(--text-soft);
+  letter-spacing: 0.5px;
+}
+.drill-dot.current {
+  background: rgba(255,255,255,0.12);
+  border-color: var(--accent);
+  color: var(--text);
+  font-weight: 600;
+}
+.drill-dot.done {
+  background: rgba(34,197,94,0.18);
+  border-color: rgba(34,197,94,0.4);
+  color: rgb(134,239,172);
+}
+
+.drill-progress-line {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.drill-empty {
+  text-align: center;
+  padding: 32px 20px;
+}
+.drill-empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+.drill-empty-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.drill-empty-msg {
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.drill-complete {
+  text-align: center;
+  padding: 32px 20px;
+}
+.drill-complete-icon {
+  font-size: 56px;
+  color: rgb(134,239,172);
+  margin-bottom: 12px;
+}
+.drill-complete-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.drill-complete-msg {
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Drill 3 — Sentence assembly tiles */
+.d3-pane {
+  padding: 18px;
+}
+.d3-hint {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.d3-assembled {
+  min-height: 56px;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px dashed rgba(255,255,255,0.12);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+.d3-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.word-tile {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.15s;
+}
+.word-tile:hover { background: rgba(255,255,255,0.12); }
+.word-tile:active { transform: scale(0.95); }
+.word-tile.assembled {
+  background: rgba(255,255,255,0.10);
+  border-color: var(--accent);
+}
+.word-tile-placeholder {
+  color: var(--text-soft);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Drill 4 — Dictation */
+.d4-pane .audio-btn.big {
+  font-size: 18px;
+  padding: 14px 28px;
+}
+.d4-instructions {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+/* Drill 5 — Rule spotting */
+.d5-pane {
+  padding: 18px;
+}
+.d5-rule-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.d5-rule-expl {
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.d5-question {
+  font-size: 14px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.ghost-btn.d5-correct {
+  background: rgba(34,197,94,0.16);
+  border-color: rgba(34,197,94,0.5);
+}
+.ghost-btn.d5-wrong {
+  background: rgba(239,68,68,0.16);
+  border-color: rgba(239,68,68,0.5);
+}
+
+/* ============================================================
+   FREE PRACTICE — Stage E. Hub tile grid for completed stories.
+   ============================================================ */
+.fp-header {
+  padding: 18px 16px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.fp-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.fp-sub {
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.fp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (max-width: 380px) {
+  .fp-grid { grid-template-columns: 1fr; }
+}
+.fp-tile {
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.18s ease;
+  text-align: center;
+}
+.fp-tile:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.10);
+}
+.fp-tile:active { transform: scale(0.98); }
+.fp-tile-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+  opacity: 0.92;
+}
+.fp-tile-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.fp-tile-sub {
+  color: var(--text-soft);
+  font-size: 11.5px;
+  letter-spacing: 0.2px;
+  line-height: 1.35;
+}
+
+/* ============================================================
+   SETTINGS — wallpaper preview tile.
+   ============================================================ */
+.bg-preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bg-preview.empty {
+  background: rgba(255,255,255,0.04);
+}
+.bg-empty-hint {
+  color: var(--text-soft);
+  font-size: 13px;
+}
