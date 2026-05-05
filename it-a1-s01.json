@@ -1,0 +1,1710 @@
+{
+  "type": "story",
+  "id": "it-a1-s01",
+  "languageId": "italian",
+  "level": "A1",
+  "order": 1,
+  "title": "Il gruppo",
+  "synopsis": "On a grey September Tuesday in Varenna, ten-year-old {{PROTAGONIST}} is left out when her classmates form groups for a project. She pretends not to mind, walks home along the lake, and draws what she sees instead of saying what she feels.",
+  "sentences": [
+    {
+      "order": 1,
+      "targetText": "È martedì mattina.",
+      "englishGloss": "It is Tuesday morning.",
+      "note": "Essere 3sg for time. Martedì is masculine."
+    },
+    {
+      "order": 2,
+      "targetText": "È fine settembre a Varenna.",
+      "englishGloss": "It is late September in Varenna.",
+      "note": "Settembre: masculine. Place name exempt from vocab pool."
+    },
+    {
+      "order": 3,
+      "targetText": "L'aria è fredda.",
+      "englishGloss": "The air is cold.",
+      "note": "L' = elided la (feminine, before vowel). Adjective fredda agrees feminine (a1-g-02, a1-g-07)."
+    },
+    {
+      "order": 4,
+      "targetText": "{{PROTAGONIST}} è in classe.",
+      "englishGloss": "{{PROTAGONIST}} is in class.",
+      "note": "La classe is feminine (a1-g-02)."
+    },
+    {
+      "order": 5,
+      "targetText": "Lei ha dieci anni.",
+      "englishGloss": "She is ten years old.",
+      "note": "Overt subject pronoun lei (a1-g-01). Italian uses avere for age (a1-g-06)."
+    },
+    {
+      "order": 6,
+      "targetText": "È una bambina piccola e tranquilla.",
+      "englishGloss": "She is a small and quiet girl.",
+      "note": "Una bambina: feminine indefinite (a1-g-04). Adjectives piccola, tranquilla agree feminine (a1-g-02, a1-g-07)."
+    },
+    {
+      "order": 7,
+      "targetText": "Il banco è di legno.",
+      "englishGloss": "The desk is wooden.",
+      "note": "Il banco: masculine definite (a1-g-05)."
+    },
+    {
+      "order": 8,
+      "targetText": "La finestra guarda il lago.",
+      "englishGloss": "The window looks at the lake.",
+      "note": "La finestra: feminine. Il lago: masculine (a1-g-02)."
+    },
+    {
+      "order": 9,
+      "targetText": "L'acqua è grigia.",
+      "englishGloss": "The water is grey.",
+      "note": "L' = elided la. Adjective grigia agrees feminine."
+    },
+    {
+      "order": 10,
+      "targetText": "La maestra entra.",
+      "englishGloss": "The teacher comes in.",
+      "note": "La maestra: feminine."
+    },
+    {
+      "order": 11,
+      "targetText": "Lei ha un libro in mano.",
+      "englishGloss": "She has a book in her hand.",
+      "note": "Lei overt for emphasis (a1-g-01). Un libro: masc. La mano: irregular feminine."
+    },
+    {
+      "order": 12,
+      "targetText": "I bambini sono pronti.",
+      "englishGloss": "The children are ready.",
+      "note": "I bambini: masc plural definite (a1-g-03, a1-g-05). Pronti agrees masc plural."
+    },
+    {
+      "order": 13,
+      "targetText": "«Oggi facciamo un lavoro di gruppo,» dice la maestra.",
+      "englishGloss": "\"Today we do a group project,\" says the teacher.",
+      "note": "Noi facciamo: 1pl, fare (a1-g-09). Un lavoro: masc indefinite."
+    },
+    {
+      "order": 14,
+      "targetText": "«Tre bambini per gruppo.»",
+      "englishGloss": "\"Three children per group.\"",
+      "note": "Tre: indeclinable number."
+    },
+    {
+      "order": 15,
+      "targetText": "«Scegliete voi.»",
+      "englishGloss": "\"You choose.\"",
+      "note": "Voi overt subject pronoun for emphasis (a1-g-01). Receptive imperative — used here as fixed teacher-talk."
+    },
+    {
+      "order": 16,
+      "targetText": "{{PROTAGONIST}} non parla.",
+      "englishGloss": "{{PROTAGONIST}} doesn't speak.",
+      "note": "Negation with non (a1-g-10)."
+    },
+    {
+      "order": 17,
+      "targetText": "Lei guarda il banco.",
+      "englishGloss": "She looks at the desk.",
+      "note": "Lei overt (a1-g-01)."
+    },
+    {
+      "order": 18,
+      "targetText": "I bambini si alzano.",
+      "englishGloss": "The children get up.",
+      "note": "Si alzano: receptive — alzarsi reflexive used as fixed expression. Flagged."
+    },
+    {
+      "order": 19,
+      "targetText": "Le sedie fanno rumore.",
+      "englishGloss": "The chairs make noise.",
+      "note": "Le sedie: feminine plural (a1-g-03, a1-g-05). Fare 3pl (a1-g-09)."
+    },
+    {
+      "order": 20,
+      "targetText": "Giulia è già con due amiche.",
+      "englishGloss": "Giulia is already with two friends.",
+      "note": "Giulia: hardcoded character. Due amiche: feminine plural."
+    },
+    {
+      "order": 21,
+      "targetText": "Loro ridono.",
+      "englishGloss": "They are laughing.",
+      "note": "Overt loro (a1-g-01). Ridere as receptive verb at A1, used contextually."
+    },
+    {
+      "order": 22,
+      "targetText": "Loro non guardano {{PROTAGONIST}}.",
+      "englishGloss": "They don't look at {{PROTAGONIST}}.",
+      "note": "Negation. Loro overt for contrast with the protagonist (a1-g-01)."
+    },
+    {
+      "order": 23,
+      "targetText": "Giulia guarda {{PROTAGONIST}}.",
+      "englishGloss": "Giulia looks at {{PROTAGONIST}}.",
+      "note": "Subject elsewhere; verb 3sg."
+    },
+    {
+      "order": 24,
+      "targetText": "Lei alza una mano.",
+      "englishGloss": "She raises a hand.",
+      "note": "Una mano: feminine (irregular). Lei overt (a1-g-01)."
+    },
+    {
+      "order": 25,
+      "targetText": "Poi lei parla con le altre.",
+      "englishGloss": "Then she speaks with the others.",
+      "note": "Le altre: feminine plural. Lei overt continues subject contrast."
+    },
+    {
+      "order": 26,
+      "targetText": "{{PROTAGONIST}} non si muove.",
+      "englishGloss": "{{PROTAGONIST}} doesn't move.",
+      "note": "Si muove: receptive reflexive (muoversi). Used as fixed expression at A1."
+    },
+    {
+      "order": 27,
+      "targetText": "La maestra guarda la classe.",
+      "englishGloss": "The teacher looks at the class.",
+      "note": "Two feminine nouns; both with definite article."
+    },
+    {
+      "order": 28,
+      "targetText": "Ci sono tre gruppi di tre.",
+      "englishGloss": "There are three groups of three.",
+      "note": "Ci sono: existential. Gruppi masc plural."
+    },
+    {
+      "order": 29,
+      "targetText": "E c'è {{PROTAGONIST}}, da sola.",
+      "englishGloss": "And there is {{PROTAGONIST}}, alone.",
+      "note": "C'è: 3sg existential. Da sola: adjective sola agrees feminine (a1-g-07)."
+    },
+    {
+      "order": 30,
+      "targetText": "«{{PROTAGONIST}}, vai con loro,» dice la maestra.",
+      "englishGloss": "\"{{PROTAGONIST}}, go with them,\" says the teacher.",
+      "note": "Vai: receptive imperative (andare 2sg) — fixed teacher-talk. Loro overt object-of-preposition."
+    },
+    {
+      "order": 31,
+      "targetText": "«Quattro va bene.»",
+      "englishGloss": "\"Four is fine.\"",
+      "note": "Va bene: fixed expression."
+    },
+    {
+      "order": 32,
+      "targetText": "{{PROTAGONIST}} dice: «Va bene.»",
+      "englishGloss": "{{PROTAGONIST}} says: \"Okay.\"",
+      "note": "Same fixed expression, echoed back."
+    },
+    {
+      "order": 33,
+      "targetText": "Le tre bambine non parlano.",
+      "englishGloss": "The three girls don't speak.",
+      "note": "Le bambine: feminine plural definite. Negation."
+    },
+    {
+      "order": 34,
+      "targetText": "Lavorano insieme.",
+      "englishGloss": "They work together.",
+      "note": "Subject dropped (default). Verb 3pl (a1-g-08)."
+    },
+    {
+      "order": 35,
+      "targetText": "{{PROTAGONIST}} guarda.",
+      "englishGloss": "{{PROTAGONIST}} watches.",
+      "note": "Verb of perception. Subject named."
+    },
+    {
+      "order": 36,
+      "targetText": "Lei prende un foglio.",
+      "englishGloss": "She takes a sheet of paper.",
+      "note": "Lei overt (a1-g-01). Un foglio: masc (a1-g-04)."
+    },
+    {
+      "order": 37,
+      "targetText": "Il foglio è bianco.",
+      "englishGloss": "The sheet is white.",
+      "note": "Il foglio masc, bianco agrees masc."
+    },
+    {
+      "order": 38,
+      "targetText": "Lei ha una matita.",
+      "englishGloss": "She has a pencil.",
+      "note": "Una matita: feminine. Avere (a1-g-06)."
+    },
+    {
+      "order": 39,
+      "targetText": "La matita è di Nonna.",
+      "englishGloss": "The pencil is from Nonna.",
+      "note": "Nonna: hardcoded character (Nonna Elsa, named here only as Nonna)."
+    },
+    {
+      "order": 40,
+      "targetText": "Lei scrive un nome.",
+      "englishGloss": "She writes a name.",
+      "note": "Un nome: masculine (-e ending)."
+    },
+    {
+      "order": 41,
+      "targetText": "Suona la campanella.",
+      "englishGloss": "The bell rings.",
+      "note": "Subject inversion: la campanella feminine. Suonare receptive use."
+    },
+    {
+      "order": 42,
+      "targetText": "I bambini escono.",
+      "englishGloss": "The children go out.",
+      "note": "Uscire: irregular (a1-g-09)."
+    },
+    {
+      "order": 43,
+      "targetText": "{{PROTAGONIST}} esce per ultima.",
+      "englishGloss": "{{PROTAGONIST}} goes out last.",
+      "note": "Per ultima: feminine agreement (ultima)."
+    },
+    {
+      "order": 44,
+      "targetText": "Il sole è basso.",
+      "englishGloss": "The sun is low.",
+      "note": "Il sole: masculine (-e ending). Basso agrees masc."
+    },
+    {
+      "order": 45,
+      "targetText": "Il cortile è grande.",
+      "englishGloss": "The schoolyard is big.",
+      "note": "Il cortile: masculine. Grande invariable."
+    },
+    {
+      "order": 46,
+      "targetText": "{{PROTAGONIST}} sta vicino al muro.",
+      "englishGloss": "{{PROTAGONIST}} stands near the wall.",
+      "note": "Stare (a1-g-09). Al muro: a + il = al."
+    },
+    {
+      "order": 47,
+      "targetText": "Lei ha il quaderno in mano.",
+      "englishGloss": "She has the notebook in her hand.",
+      "note": "Il quaderno: masculine. Lei overt (a1-g-01)."
+    },
+    {
+      "order": 48,
+      "targetText": "Lei apre il quaderno.",
+      "englishGloss": "She opens the notebook.",
+      "note": "Aprire (a1-g-08, -ire verb)."
+    },
+    {
+      "order": 49,
+      "targetText": "Disegna un albero.",
+      "englishGloss": "She draws a tree.",
+      "note": "Subject dropped. Un albero: masculine. Disegnare regular -are (a1-g-08)."
+    },
+    {
+      "order": 50,
+      "targetText": "Disegna anche una donna.",
+      "englishGloss": "She also draws a woman.",
+      "note": "Una donna: feminine. Anche."
+    },
+    {
+      "order": 51,
+      "targetText": "Giulia chiama: «{{PROTAGONIST}}, vieni?»",
+      "englishGloss": "Giulia calls: \"{{PROTAGONIST}}, are you coming?\"",
+      "note": "Vieni: venire 2sg (a1-g-09). Question form (a1-g-11)."
+    },
+    {
+      "order": 52,
+      "targetText": "Le altre bambine giocano già.",
+      "englishGloss": "The other girls are already playing.",
+      "note": "Giocare regular -are. Le altre: feminine plural."
+    },
+    {
+      "order": 53,
+      "targetText": "{{PROTAGONIST}} guarda Giulia.",
+      "englishGloss": "{{PROTAGONIST}} looks at Giulia.",
+      "note": ""
+    },
+    {
+      "order": 54,
+      "targetText": "Lei guarda anche le altre.",
+      "englishGloss": "She also looks at the others.",
+      "note": "Lei overt (a1-g-01). Le altre feminine plural."
+    },
+    {
+      "order": 55,
+      "targetText": "«No, grazie,» dice {{PROTAGONIST}}.",
+      "englishGloss": "\"No, thanks,\" says {{PROTAGONIST}}.",
+      "note": "Polite refusal. Fixed."
+    },
+    {
+      "order": 56,
+      "targetText": "Giulia non insiste.",
+      "englishGloss": "Giulia doesn't insist.",
+      "note": "Negation."
+    },
+    {
+      "order": 57,
+      "targetText": "Il pomeriggio è grigio.",
+      "englishGloss": "The afternoon is grey.",
+      "note": "Il pomeriggio: masculine. Grigio agrees masc."
+    },
+    {
+      "order": 58,
+      "targetText": "{{PROTAGONIST}} esce dalla scuola.",
+      "englishGloss": "{{PROTAGONIST}} leaves school.",
+      "note": "Dalla = da + la. La scuola: feminine."
+    },
+    {
+      "order": 59,
+      "targetText": "Cammina piano verso casa.",
+      "englishGloss": "She walks slowly toward home.",
+      "note": "Subject dropped. Verso casa: 'home' as destination, common bare-noun use."
+    },
+    {
+      "order": 60,
+      "targetText": "La strada scende verso il lago.",
+      "englishGloss": "The road goes down to the lake.",
+      "note": "La strada: feminine. Scendere regular -ere (a1-g-08). Il lago: masc."
+    },
+    {
+      "order": 61,
+      "targetText": "Le pietre sono bagnate.",
+      "englishGloss": "The stones are wet.",
+      "note": "Le pietre: feminine plural. Bagnate agrees fem plural (a1-g-07)."
+    },
+    {
+      "order": 62,
+      "targetText": "L'acqua del lago è ferma.",
+      "englishGloss": "The water of the lake is still.",
+      "note": "L' = elided la. Del = di + il. Ferma agrees feminine."
+    },
+    {
+      "order": 63,
+      "targetText": "{{PROTAGONIST}} non pensa alla scuola.",
+      "englishGloss": "{{PROTAGONIST}} doesn't think about school.",
+      "note": "Pensare regular -are. Alla scuola: a + la."
+    },
+    {
+      "order": 64,
+      "targetText": "Lei pensa al disegno e al lago.",
+      "englishGloss": "She thinks about the drawing and the lake.",
+      "note": "Lei overt (a1-g-01). Al = a + il. Combines two prior thoughts into one sentence."
+    },
+    {
+      "order": 65,
+      "targetText": "La casa è piccola.",
+      "englishGloss": "The house is small.",
+      "note": "La casa: feminine."
+    },
+    {
+      "order": 66,
+      "targetText": "Mamma è sulla porta.",
+      "englishGloss": "Mamma is at the door.",
+      "note": "Mamma: hardcoded. Sulla = su + la. La porta: feminine."
+    },
+    {
+      "order": 67,
+      "targetText": "Lei ha il telefono in mano.",
+      "englishGloss": "She has the phone in her hand.",
+      "note": "Lei (Mamma) overt for clarity (a1-g-01). Il telefono: masc."
+    },
+    {
+      "order": 68,
+      "targetText": "«Com'è andata a scuola?» chiede Mamma.",
+      "englishGloss": "\"How did it go at school?\" Mamma asks.",
+      "note": "Receptive idiom — fixed greeting. A scuola: bare destination. Chiedere -ere."
+    },
+    {
+      "order": 69,
+      "targetText": "{{PROTAGONIST}} dice: «Bene.»",
+      "englishGloss": "{{PROTAGONIST}} says: \"Fine.\"",
+      "note": "Bene: adverb."
+    },
+    {
+      "order": 70,
+      "targetText": "Mamma sorride e torna in casa.",
+      "englishGloss": "Mamma smiles and goes back inside.",
+      "note": "Sorridere -ere. Tornare regular -are. Tornare in casa = go back inside."
+    },
+    {
+      "order": 71,
+      "targetText": "{{PROTAGONIST}} entra in camera.",
+      "englishGloss": "{{PROTAGONIST}} goes into her room.",
+      "note": "Entrare regular -are. La camera: feminine."
+    },
+    {
+      "order": 72,
+      "targetText": "Chiude la porta.",
+      "englishGloss": "She closes the door.",
+      "note": "Chiudere -ere. Subject dropped."
+    },
+    {
+      "order": 73,
+      "targetText": "La camera è piccola e tranquilla.",
+      "englishGloss": "The room is small and quiet.",
+      "note": "Repeats camera; demonstrates feminine adjective agreement (a1-g-07)."
+    },
+    {
+      "order": 74,
+      "targetText": "Apre il quaderno a una pagina nuova.",
+      "englishGloss": "She opens the notebook to a new page.",
+      "note": "Una pagina: feminine. Nuova agrees feminine (a1-g-07)."
+    },
+    {
+      "order": 75,
+      "targetText": "Prende la matita di Nonna.",
+      "englishGloss": "She takes Nonna's pencil.",
+      "note": "Repeats matita; di Nonna shows possession with di."
+    },
+    {
+      "order": 76,
+      "targetText": "Lei non disegna il cortile.",
+      "englishGloss": "She doesn't draw the schoolyard.",
+      "note": "Lei overt for emphasis (a1-g-01). Negation."
+    },
+    {
+      "order": 77,
+      "targetText": "Disegna il lago.",
+      "englishGloss": "She draws the lake.",
+      "note": "Subject dropped. Il lago: masc."
+    },
+    {
+      "order": 78,
+      "targetText": "La matita è leggera nella mano.",
+      "englishGloss": "The pencil is light in her hand.",
+      "note": "Matita third exposure. Nella = in + la."
+    },
+    {
+      "order": 79,
+      "targetText": "Fuori, Mamma parla ancora al telefono.",
+      "englishGloss": "Outside, Mamma is still talking on the phone.",
+      "note": "Fuori: adverb."
+    },
+    {
+      "order": 80,
+      "targetText": "In camera c'è solo la matita.",
+      "englishGloss": "In the room there is only the pencil.",
+      "note": "C'è: 3sg existential. Solo: adverb. Closing image with camera + matita."
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "essere",
+      "translation": "to be",
+      "pos": "verb"
+    },
+    {
+      "word": "avere",
+      "translation": "to have",
+      "pos": "verb"
+    },
+    {
+      "word": "il",
+      "translation": "the (m. sg.)",
+      "pos": "article"
+    },
+    {
+      "word": "la",
+      "translation": "the (f. sg.)",
+      "pos": "article"
+    },
+    {
+      "word": "i",
+      "translation": "the (m. pl.)",
+      "pos": "article"
+    },
+    {
+      "word": "le",
+      "translation": "the (f. pl.)",
+      "pos": "article"
+    },
+    {
+      "word": "un",
+      "translation": "a, one (m.)",
+      "pos": "article"
+    },
+    {
+      "word": "una",
+      "translation": "a, one (f.)",
+      "pos": "article"
+    },
+    {
+      "word": "io",
+      "translation": "I",
+      "pos": "pronoun"
+    },
+    {
+      "word": "tu",
+      "translation": "you (sg.)",
+      "pos": "pronoun"
+    },
+    {
+      "word": "lei",
+      "translation": "she",
+      "pos": "pronoun"
+    },
+    {
+      "word": "lui",
+      "translation": "he",
+      "pos": "pronoun"
+    },
+    {
+      "word": "noi",
+      "translation": "we",
+      "pos": "pronoun"
+    },
+    {
+      "word": "voi",
+      "translation": "you (pl.)",
+      "pos": "pronoun"
+    },
+    {
+      "word": "loro",
+      "translation": "they",
+      "pos": "pronoun"
+    },
+    {
+      "word": "non",
+      "translation": "not",
+      "pos": "adverb"
+    },
+    {
+      "word": "e",
+      "translation": "and",
+      "pos": "conjunction"
+    },
+    {
+      "word": "ma",
+      "translation": "but",
+      "pos": "conjunction"
+    },
+    {
+      "word": "sì",
+      "translation": "yes",
+      "pos": "adverb"
+    },
+    {
+      "word": "no",
+      "translation": "no",
+      "pos": "adverb"
+    },
+    {
+      "word": "anche",
+      "translation": "also, too",
+      "pos": "adverb"
+    },
+    {
+      "word": "già",
+      "translation": "already",
+      "pos": "adverb"
+    },
+    {
+      "word": "poi",
+      "translation": "then",
+      "pos": "adverb"
+    },
+    {
+      "word": "ancora",
+      "translation": "still, again",
+      "pos": "adverb"
+    },
+    {
+      "word": "oggi",
+      "translation": "today",
+      "pos": "adverb"
+    },
+    {
+      "word": "ora",
+      "translation": "now",
+      "pos": "adverb"
+    },
+    {
+      "word": "fuori",
+      "translation": "outside",
+      "pos": "adverb"
+    },
+    {
+      "word": "vicino",
+      "translation": "near",
+      "pos": "adverb"
+    },
+    {
+      "word": "insieme",
+      "translation": "together",
+      "pos": "adverb"
+    },
+    {
+      "word": "piano",
+      "translation": "slowly, quietly",
+      "pos": "adverb"
+    },
+    {
+      "word": "bene",
+      "translation": "well, fine",
+      "pos": "adverb"
+    },
+    {
+      "word": "grazie",
+      "translation": "thanks",
+      "pos": "interjection"
+    },
+    {
+      "word": "tre",
+      "translation": "three",
+      "pos": "number"
+    },
+    {
+      "word": "dieci",
+      "translation": "ten",
+      "pos": "number"
+    },
+    {
+      "word": "due",
+      "translation": "two",
+      "pos": "number"
+    },
+    {
+      "word": "quattro",
+      "translation": "four",
+      "pos": "number"
+    },
+    {
+      "word": "scuola",
+      "translation": "school",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "classe",
+      "translation": "class, classroom",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "maestra",
+      "translation": "teacher (f.)",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "bambina",
+      "translation": "girl, child (f.)",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "bambino",
+      "translation": "boy, child (m.)",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "amica",
+      "translation": "friend (f.)",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "gruppo",
+      "translation": "group",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "lavoro",
+      "translation": "work, project",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "banco",
+      "translation": "school desk",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "libro",
+      "translation": "book",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "quaderno",
+      "translation": "notebook",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "matita",
+      "translation": "pencil",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "foglio",
+      "translation": "sheet (of paper)",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "pagina",
+      "translation": "page",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "nome",
+      "translation": "name",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "finestra",
+      "translation": "window",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "porta",
+      "translation": "door",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "casa",
+      "translation": "house, home",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "camera",
+      "translation": "(bed)room",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "muro",
+      "translation": "wall",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "cortile",
+      "translation": "schoolyard, courtyard",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "strada",
+      "translation": "road, street",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "pietra",
+      "translation": "stone",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "lago",
+      "translation": "lake",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "acqua",
+      "translation": "water",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "sole",
+      "translation": "sun",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "aria",
+      "translation": "air",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "albero",
+      "translation": "tree",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "donna",
+      "translation": "woman",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "mano",
+      "translation": "hand",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "telefono",
+      "translation": "phone",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "campanella",
+      "translation": "(school) bell",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "sedia",
+      "translation": "chair",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "rumore",
+      "translation": "noise",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "disegno",
+      "translation": "drawing",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "mattina",
+      "translation": "morning",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "pomeriggio",
+      "translation": "afternoon",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "settembre",
+      "translation": "September",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "martedì",
+      "translation": "Tuesday",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "anno",
+      "translation": "year",
+      "pos": "noun",
+      "gender": "m"
+    },
+    {
+      "word": "mamma",
+      "translation": "mum, mother",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "nonna",
+      "translation": "grandmother",
+      "pos": "noun",
+      "gender": "f"
+    },
+    {
+      "word": "piccolo",
+      "translation": "small",
+      "pos": "adjective"
+    },
+    {
+      "word": "grande",
+      "translation": "big",
+      "pos": "adjective"
+    },
+    {
+      "word": "tranquillo",
+      "translation": "quiet, calm",
+      "pos": "adjective"
+    },
+    {
+      "word": "freddo",
+      "translation": "cold",
+      "pos": "adjective"
+    },
+    {
+      "word": "grigio",
+      "translation": "grey",
+      "pos": "adjective"
+    },
+    {
+      "word": "bianco",
+      "translation": "white",
+      "pos": "adjective"
+    },
+    {
+      "word": "basso",
+      "translation": "low",
+      "pos": "adjective"
+    },
+    {
+      "word": "fermo",
+      "translation": "still, motionless",
+      "pos": "adjective"
+    },
+    {
+      "word": "bagnato",
+      "translation": "wet",
+      "pos": "adjective"
+    },
+    {
+      "word": "pronto",
+      "translation": "ready",
+      "pos": "adjective"
+    },
+    {
+      "word": "nuovo",
+      "translation": "new",
+      "pos": "adjective"
+    },
+    {
+      "word": "altro",
+      "translation": "other",
+      "pos": "adjective"
+    },
+    {
+      "word": "ultimo",
+      "translation": "last",
+      "pos": "adjective"
+    },
+    {
+      "word": "solo",
+      "translation": "alone, only",
+      "pos": "adjective"
+    },
+    {
+      "word": "leggero",
+      "translation": "light (in weight)",
+      "pos": "adjective"
+    },
+    {
+      "word": "parlare",
+      "translation": "to speak",
+      "pos": "verb"
+    },
+    {
+      "word": "dire",
+      "translation": "to say",
+      "pos": "verb"
+    },
+    {
+      "word": "guardare",
+      "translation": "to look (at)",
+      "pos": "verb"
+    },
+    {
+      "word": "vedere",
+      "translation": "to see",
+      "pos": "verb"
+    },
+    {
+      "word": "fare",
+      "translation": "to do, to make",
+      "pos": "verb"
+    },
+    {
+      "word": "andare",
+      "translation": "to go",
+      "pos": "verb"
+    },
+    {
+      "word": "venire",
+      "translation": "to come",
+      "pos": "verb"
+    },
+    {
+      "word": "tornare",
+      "translation": "to go back",
+      "pos": "verb"
+    },
+    {
+      "word": "entrare",
+      "translation": "to enter",
+      "pos": "verb"
+    },
+    {
+      "word": "uscire",
+      "translation": "to go out",
+      "pos": "verb"
+    },
+    {
+      "word": "stare",
+      "translation": "to stay, to be (state)",
+      "pos": "verb"
+    },
+    {
+      "word": "scendere",
+      "translation": "to go down",
+      "pos": "verb"
+    },
+    {
+      "word": "camminare",
+      "translation": "to walk",
+      "pos": "verb"
+    },
+    {
+      "word": "prendere",
+      "translation": "to take",
+      "pos": "verb"
+    },
+    {
+      "word": "aprire",
+      "translation": "to open",
+      "pos": "verb"
+    },
+    {
+      "word": "chiudere",
+      "translation": "to close",
+      "pos": "verb"
+    },
+    {
+      "word": "scrivere",
+      "translation": "to write",
+      "pos": "verb"
+    },
+    {
+      "word": "disegnare",
+      "translation": "to draw",
+      "pos": "verb"
+    },
+    {
+      "word": "pensare",
+      "translation": "to think",
+      "pos": "verb"
+    },
+    {
+      "word": "chiamare",
+      "translation": "to call",
+      "pos": "verb"
+    },
+    {
+      "word": "chiedere",
+      "translation": "to ask",
+      "pos": "verb"
+    },
+    {
+      "word": "giocare",
+      "translation": "to play",
+      "pos": "verb"
+    },
+    {
+      "word": "sorridere",
+      "translation": "to smile",
+      "pos": "verb"
+    },
+    {
+      "word": "ridere",
+      "translation": "to laugh",
+      "pos": "verb"
+    },
+    {
+      "word": "suonare",
+      "translation": "to ring, to sound",
+      "pos": "verb"
+    },
+    {
+      "word": "lavorare",
+      "translation": "to work",
+      "pos": "verb"
+    },
+    {
+      "word": "alzare",
+      "translation": "to raise, to lift",
+      "pos": "verb"
+    },
+    {
+      "word": "insistere",
+      "translation": "to insist",
+      "pos": "verb"
+    },
+    {
+      "word": "di",
+      "translation": "of, from",
+      "pos": "preposition"
+    },
+    {
+      "word": "a",
+      "translation": "to, at",
+      "pos": "preposition"
+    },
+    {
+      "word": "in",
+      "translation": "in",
+      "pos": "preposition"
+    },
+    {
+      "word": "con",
+      "translation": "with",
+      "pos": "preposition"
+    },
+    {
+      "word": "per",
+      "translation": "for",
+      "pos": "preposition"
+    },
+    {
+      "word": "su",
+      "translation": "on",
+      "pos": "preposition"
+    },
+    {
+      "word": "verso",
+      "translation": "toward",
+      "pos": "preposition"
+    },
+    {
+      "word": "da",
+      "translation": "from, by",
+      "pos": "preposition"
+    }
+  ],
+  "grammar": [
+    {
+      "id": "a1-g-01",
+      "status": "new",
+      "name": "Subject pronouns (io, tu, lui/lei, noi, voi, loro)",
+      "explanation": "Italian has subject pronouns (io, tu, lui, lei, noi, voi, loro) but usually drops them — the verb ending is enough. The pronouns appear when you want to emphasize or contrast a subject. In this story, lei (she) and loro (they) appear at every key emotional moment: lei for {{PROTAGONIST}} alone with her thoughts, loro for the group she is not in.",
+      "longExplanation": "Italian has subject pronouns — io, tu, lui, lei, noi, voi, loro — but it usually drops them, because the verb ending already tells you who's doing the action. You'll mostly see them when the speaker wants to emphasize a person or contrast two subjects. Notice how 'lei' and 'loro' carry the emotional weight of this chapter: 'lei' picks out {{PROTAGONIST}} alone, 'loro' the group she's not in.",
+      "examples": [
+        {
+          "de": "Lei ha dieci anni.",
+          "en": "She is ten years old.",
+          "highlight": "Lei"
+        },
+        {
+          "de": "Loro ridono.",
+          "en": "They laugh.",
+          "highlight": "Loro"
+        },
+        {
+          "de": "Io sono Bianca.",
+          "en": "I am Bianca.",
+          "highlight": "Io"
+        }
+      ],
+      "tips": [
+        "Italian usually drops the pronoun — the verb ending tells you who.",
+        "Use the pronoun only for emphasis or contrast.",
+        "'lui' = he, 'lei' = she; both can also mean polite 'you' (introduced later)."
+      ],
+      "table": {
+        "title": "Subject pronouns",
+        "headers": [
+          "Person",
+          "Pronoun"
+        ],
+        "rows": [
+          [
+            "1st sing.",
+            "io (I)"
+          ],
+          [
+            "2nd sing.",
+            "tu (you, informal)"
+          ],
+          [
+            "3rd sing. m",
+            "lui (he)"
+          ],
+          [
+            "3rd sing. f",
+            "lei (she)"
+          ],
+          [
+            "1st plur.",
+            "noi (we)"
+          ],
+          [
+            "2nd plur.",
+            "voi (you all)"
+          ],
+          [
+            "3rd plur.",
+            "loro (they)"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "a1-g-02",
+      "status": "new",
+      "name": "Noun gender (masculine / feminine)",
+      "explanation": "Every Italian noun is masculine or feminine. Most nouns ending in -o are masculine (il libro, il banco, il lago); most ending in -a are feminine (la casa, la matita, la bambina). Nouns ending in -e can be either (il sole — m.; la classe — f.) and must be learned individually. The article and any adjective always agree with the noun's gender.",
+      "longExplanation": "Every Italian noun is either masculine or feminine — there's no neutral. Most nouns ending in -o are masculine (il libro, il banco, il lago); most ending in -a are feminine (la casa, la matita, la bambina). Nouns ending in -e go either way (il sole is masculine; la classe is feminine) and have to be learned one by one. The article and any adjective in the sentence MUST agree with the noun's gender.",
+      "examples": [
+        {
+          "de": "L'aria è fredda.",
+          "en": "The air is cold.",
+          "highlight": "aria"
+        },
+        {
+          "de": "il lago",
+          "en": "the lake",
+          "highlight": "lago"
+        },
+        {
+          "de": "la matita",
+          "en": "the pencil",
+          "highlight": "matita"
+        }
+      ],
+      "tips": [
+        "Most -o nouns are masculine; most -a nouns are feminine.",
+        "-e nouns can be either gender — memorize each one's gender with the article.",
+        "When in doubt, learn the noun together with its definite article (il / la)."
+      ],
+      "table": {
+        "title": "Typical gender endings",
+        "headers": [
+          "Ending",
+          "Usually",
+          "Examples"
+        ],
+        "rows": [
+          [
+            "-o",
+            "masculine",
+            "libro, banco, lago"
+          ],
+          [
+            "-a",
+            "feminine",
+            "casa, matita, aria"
+          ],
+          [
+            "-e",
+            "either",
+            "sole (m) · classe (f)"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "a1-g-03",
+      "status": "supporting",
+      "name": "Noun number (singular/plural)",
+      "explanation": "Singulars in -o → plural -i (libro → libri). Singulars in -a → plural -e (matita → matite). Singulars in -e → plural -i (nome → nomi).",
+      "longExplanation": "Italian nouns change ending to mark plural. The pattern depends on the singular ending: masculine -o becomes -i (libro → libri), feminine -a becomes -e (matita → matite), and both-gender -e becomes -i (nome → nomi, classe → classi). The article and adjective shift to plural too: il libro → i libri, la matita → le matite.",
+      "examples": [
+        {
+          "de": "i bambini",
+          "en": "the children",
+          "highlight": "bambini"
+        },
+        {
+          "de": "le pietre",
+          "en": "the stones",
+          "highlight": "pietre"
+        },
+        {
+          "de": "le classi",
+          "en": "the classes",
+          "highlight": "classi"
+        }
+      ],
+      "tips": [
+        "Masculine -o → -i.",
+        "Feminine -a → -e.",
+        "-e nouns (either gender) → -i.",
+        "The whole phrase shifts: la matita rossa → le matite rosse."
+      ],
+      "table": {
+        "title": "Plural endings",
+        "headers": [
+          "Singular",
+          "Plural",
+          "Example"
+        ],
+        "rows": [
+          [
+            "-o (m)",
+            "-i",
+            "libro → libri"
+          ],
+          [
+            "-a (f)",
+            "-e",
+            "matita → matite"
+          ],
+          [
+            "-e (m/f)",
+            "-i",
+            "nome → nomi · classe → classi"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "a1-g-04",
+      "status": "supporting",
+      "name": "Indefinite articles (un, una, un')",
+      "explanation": "Un before most masculine nouns; una before feminine consonant-initial nouns; un' before feminine vowel-initial nouns (un'amica).",
+      "longExplanation": "Indefinite articles (the equivalents of English 'a' / 'an') agree with the noun's gender and the next sound. Use 'un' before any masculine noun. Use 'una' before a feminine noun starting with a consonant. Use 'un'' (with apostrophe, no space) before a feminine noun starting with a vowel. Note: 'un amico' has no apostrophe — masculine 'un' never elides.",
+      "examples": [
+        {
+          "de": "una bambina piccola",
+          "en": "a small girl",
+          "highlight": "una"
+        },
+        {
+          "de": "un libro",
+          "en": "a book",
+          "highlight": "un"
+        },
+        {
+          "de": "un'amica",
+          "en": "a (female) friend",
+          "highlight": "un'"
+        }
+      ],
+      "tips": [
+        "'un' before masculine nouns — no apostrophe even before vowels.",
+        "'una' before feminine nouns starting with a consonant.",
+        "'un'' (apostrophe) before feminine nouns starting with a vowel."
+      ],
+      "table": {
+        "title": "Indefinite articles",
+        "headers": [
+          "Form",
+          "Use",
+          "Example"
+        ],
+        "rows": [
+          [
+            "un",
+            "masculine (any sound)",
+            "un libro · un amico"
+          ],
+          [
+            "una",
+            "feminine + consonant",
+            "una matita · una bambina"
+          ],
+          [
+            "un'",
+            "feminine + vowel",
+            "un'amica · un'ora"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "a1-g-05",
+      "status": "supporting",
+      "name": "Definite articles (il, la, l', i, le)",
+      "explanation": "Il / la for singular before consonants; l' before vowels; i / le for plural. Lo / gli (before s+cons., z) are introduced more fully in later stories.",
+      "longExplanation": "Definite articles (the equivalents of English 'the') change with gender, number, and the sound that follows. In this story you'll meet four forms: 'il' / 'la' for singular nouns starting with a consonant, 'l'' for singular nouns starting with a vowel (both genders), and 'i' / 'le' for plurals. The masculine 'lo' / 'gli' (before s+consonant, z, ps, gn) come up more fully in later stories.",
+      "examples": [
+        {
+          "de": "il lago",
+          "en": "the lake",
+          "highlight": "il"
+        },
+        {
+          "de": "la classe",
+          "en": "the class",
+          "highlight": "la"
+        },
+        {
+          "de": "l'aria",
+          "en": "the air",
+          "highlight": "l'"
+        },
+        {
+          "de": "le pietre",
+          "en": "the stones",
+          "highlight": "le"
+        }
+      ],
+      "tips": [
+        "'il' / 'la' before consonants — 'l'' before vowels (both genders).",
+        "Plural: 'i' for masculine, 'le' for feminine.",
+        "Always learn a noun together with its article."
+      ],
+      "table": {
+        "title": "Definite articles in this story",
+        "headers": [
+          "",
+          "Singular",
+          "Plural"
+        ],
+        "rows": [
+          [
+            "masculine",
+            "il",
+            "i"
+          ],
+          [
+            "feminine",
+            "la",
+            "le"
+          ],
+          [
+            "before vowel",
+            "l'",
+            "— (i / le)"
+          ]
+        ],
+        "note": "'lo' (sing.) and 'gli' (plur.) before s+consonant, z, ps, gn — covered later."
+      }
+    },
+    {
+      "id": "a1-g-06",
+      "status": "supporting",
+      "name": "Present tense of essere and avere",
+      "explanation": "Essere (sono, sei, è, siamo, siete, sono) for identity, location, description. Avere (ho, hai, ha, abbiamo, avete, hanno) for possession and — importantly — age (ha dieci anni).",
+      "longExplanation": "'Essere' (to be) and 'avere' (to have) are the two everyday verbs Italian leans on the most. Use 'essere' for identity, location, and description (Sono Bianca · È in classe · L'aria è fredda). Use 'avere' for possession AND for the states English expresses with 'to be' — age, hunger, thirst, cold (Ha dieci anni — literally 'she has ten years'). Memorize both paradigms now; almost every conversation uses one of them.",
+      "examples": [
+        {
+          "de": "{{PROTAGONIST}} è in classe.",
+          "en": "{{PROTAGONIST}} is in class.",
+          "highlight": "è"
+        },
+        {
+          "de": "Lei ha dieci anni.",
+          "en": "She is ten years old.",
+          "highlight": "ha"
+        },
+        {
+          "de": "Io sono Bianca.",
+          "en": "I am Bianca.",
+          "highlight": "sono"
+        }
+      ],
+      "tips": [
+        "'essere' = identity, location, traits.",
+        "'avere' = possession AND age, hunger, thirst, fear.",
+        "English says 'I am 10' — Italian says 'I have 10 years' (Ho dieci anni)."
+      ],
+      "table": {
+        "title": "Present tense — essere & avere",
+        "headers": [
+          "",
+          "essere (to be)",
+          "avere (to have)"
+        ],
+        "rows": [
+          [
+            "io",
+            "sono",
+            "ho"
+          ],
+          [
+            "tu",
+            "sei",
+            "hai"
+          ],
+          [
+            "lui / lei",
+            "è",
+            "ha"
+          ],
+          [
+            "noi",
+            "siamo",
+            "abbiamo"
+          ],
+          [
+            "voi",
+            "siete",
+            "avete"
+          ],
+          [
+            "loro",
+            "sono",
+            "hanno"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "a1-g-07",
+      "status": "supporting",
+      "name": "Adjective agreement",
+      "explanation": "Adjectives agree with the noun in gender and number: una bambina piccola, un bambino piccolo, le pietre bagnate.",
+      "longExplanation": "Adjectives in Italian shift their ending to match the noun's gender and number. Most adjectives have four forms: -o (masc. sing.), -a (fem. sing.), -i (masc. plur.), -e (fem. plur.) — so piccolo, piccola, piccoli, piccole. Some adjectives end in -e in the singular (grande, felice) and use only -e / -i. The adjective usually follows the noun, but a small core (bello, buono, grande, piccolo, vecchio, giovane) often goes before.",
+      "examples": [
+        {
+          "de": "una bambina piccola",
+          "en": "a small girl",
+          "highlight": "piccola"
+        },
+        {
+          "de": "un bambino piccolo",
+          "en": "a small boy",
+          "highlight": "piccolo"
+        },
+        {
+          "de": "le pietre bagnate",
+          "en": "the wet stones",
+          "highlight": "bagnate"
+        }
+      ],
+      "tips": [
+        "Adjective ending must match the noun's gender + number.",
+        "Most adjectives have 4 forms: -o / -a / -i / -e.",
+        "Adjectives ending in -e (singular) use only 2 forms: -e (sing.) / -i (plur.)."
+      ],
+      "table": {
+        "title": "Adjective endings",
+        "headers": [
+          "",
+          "Singular",
+          "Plural"
+        ],
+        "rows": [
+          [
+            "masculine",
+            "-o",
+            "-i"
+          ],
+          [
+            "feminine",
+            "-a",
+            "-e"
+          ],
+          [
+            "both (-e type)",
+            "-e",
+            "-i"
+          ]
+        ]
+      }
+    }
+  ],
+  "tests": [
+    {
+      "tier": 1,
+      "ruleId": "a1-g-01",
+      "type": "translate-en-to-it",
+      "prompt": "She speaks.",
+      "answer": "Lei parla.",
+      "note": "Subject pronoun used overtly for emphasis."
+    },
+    {
+      "tier": 1,
+      "ruleId": "a1-g-01",
+      "type": "translate-en-to-it",
+      "prompt": "They look.",
+      "answer": "Loro guardano.",
+      "note": "3pl subject pronoun + verb."
+    },
+    {
+      "tier": 1,
+      "ruleId": "a1-g-01",
+      "type": "translate-en-to-it",
+      "prompt": "We are ready.",
+      "answer": "Noi siamo pronti.",
+      "note": "Noi + essere 1pl. Pronti masc plural by default group."
+    },
+    {
+      "tier": 1,
+      "ruleId": "a1-g-02",
+      "type": "choose-article",
+      "prompt": "___ casa",
+      "options": [
+        "il",
+        "la",
+        "l'",
+        "lo"
+      ],
+      "answer": "la",
+      "note": "Casa is feminine."
+    },
+    {
+      "tier": 1,
+      "ruleId": "a1-g-02",
+      "type": "choose-article",
+      "prompt": "___ lago",
+      "options": [
+        "il",
+        "la",
+        "l'",
+        "lo"
+      ],
+      "answer": "il",
+      "note": "Lago is masculine."
+    },
+    {
+      "tier": 1,
+      "ruleId": "a1-g-02",
+      "type": "choose-article",
+      "prompt": "___ aria",
+      "options": [
+        "il",
+        "la",
+        "l'",
+        "lo"
+      ],
+      "answer": "l'",
+      "note": "Feminine noun starting with a vowel takes the elided l'."
+    },
+    {
+      "tier": 2,
+      "ruleId": "a1-g-02",
+      "type": "translate-en-to-it",
+      "prompt": "The pencil is small.",
+      "answer": "La matita è piccola.",
+      "note": "Feminine article + feminine adjective agreement."
+    },
+    {
+      "tier": 2,
+      "ruleId": "a1-g-02",
+      "type": "translate-en-to-it",
+      "prompt": "The book is new.",
+      "answer": "Il libro è nuovo.",
+      "note": "Masculine article + masculine adjective agreement."
+    },
+    {
+      "tier": 2,
+      "ruleId": "a1-g-01",
+      "type": "translate-en-to-it",
+      "prompt": "He doesn't speak. She speaks.",
+      "answer": "Lui non parla. Lei parla.",
+      "note": "Overt pronouns for contrast."
+    },
+    {
+      "tier": 2,
+      "ruleId": "a1-g-02",
+      "type": "translate-en-to-it",
+      "prompt": "The other girls are at home.",
+      "answer": "Le altre bambine sono a casa.",
+      "note": "Feminine plural article + adjective + noun + essere 3pl."
+    },
+    {
+      "tier": 3,
+      "ruleId": "a1-g-01",
+      "type": "translate-en-to-it",
+      "prompt": "We are at school. They are at home.",
+      "answer": "Noi siamo a scuola. Loro sono a casa.",
+      "note": "Two contrastive overt pronouns in two clauses."
+    },
+    {
+      "tier": 3,
+      "ruleId": "a1-g-02",
+      "type": "translate-en-to-it",
+      "prompt": "The white sheet is on the desk.",
+      "answer": "Il foglio bianco è sul banco.",
+      "note": "Masculine noun + masculine adjective + articulated preposition (su + il = sul)."
+    }
+  ]
+}

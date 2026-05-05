@@ -1245,6 +1245,267 @@
     }
     .read-toggle button[disabled] { cursor: not-allowed; }
 
+    /* ============================================================
+       LIBRARY — top-level language journey cards (Stage B).
+       Each card represents a full A1→B2 series for one language.
+       ============================================================ */
+    .journey-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    @media (min-width: 720px) {
+      .journey-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .journey-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      padding: 0;
+      cursor: pointer;
+      transition: transform 200ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+    .journey-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px color-mix(in srgb, var(--accent) 22%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    }
+    .journey-card .jc-cover {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .journey-card .jc-cover svg { width: 100%; height: 100%; display: block; }
+    .journey-card .jc-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.15) 60%, transparent 100%),
+        linear-gradient(135deg, transparent 60%, color-mix(in srgb, var(--accent) 18%, transparent));
+      pointer-events: none;
+    }
+    .journey-card .jc-body {
+      position: absolute;
+      inset: 0;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 6px;
+      z-index: 1;
+    }
+    .journey-card .jc-flag {
+      font-size: 30px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+      align-self: flex-end;
+      position: absolute;
+      top: 18px;
+      right: 20px;
+    }
+    .journey-card .jc-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      line-height: 1.05;
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+    .journey-card .jc-teaser {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.45;
+      max-width: 86%;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+    .journey-card .jc-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 6px;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.78);
+      text-transform: uppercase;
+    }
+    .journey-card .jc-progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 99px;
+      overflow: hidden;
+      width: 100%;
+      margin-top: 6px;
+    }
+    .journey-card .jc-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--grad-1), var(--grad-3));
+    }
+
+    /* Back-to-languages bar shown above story tiles when drilled in. */
+    .back-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .back-bar .back-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: transform 180ms ease, background 200ms ease;
+    }
+    .back-bar .back-btn:active { transform: scale(0.96); }
+    .back-bar .back-context {
+      font-size: 12px;
+      color: var(--text-soft);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    /* Story-tile completion badge (subtle "in progress" / "✓" on the
+       cover area). Layered over the existing story-card cover image. */
+    .story-card .story-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      background: color-mix(in srgb, var(--bg-from) 80%, transparent);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .story-card .story-badge.done {
+      background: color-mix(in srgb, var(--grad-3) 28%, transparent);
+      border-color: color-mix(in srgb, var(--grad-3) 50%, transparent);
+    }
+
+    /* Global Review button at the bottom of top-level library. */
+    .global-review {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .global-review:hover {
+      border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+    .global-review:active { transform: scale(0.98); }
+
+    /* Name-selection screen — full-screen overlay, similar shell to
+       the login picker but content-focused. */
+    .name-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      animation: fade-in 200ms ease;
+    }
+    .name-screen .ns-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.6;
+    }
+    .name-screen .ns-bg svg { width: 100%; height: 100%; display: block; }
+    .name-screen .ns-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.85));
+    }
+    .name-screen .ns-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      padding: 26px 22px;
+      text-align: center;
+    }
+    .name-screen .ns-flag {
+      font-size: 40px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .name-screen .ns-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: 0.5px;
+    }
+    .name-screen .ns-sub {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .name-screen select,
+    .name-screen input[type=text] {
+      width: 100%;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      margin-bottom: 10px;
+      -webkit-appearance: none;
+      outline: none;
+    }
+    .name-screen .ns-or {
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      margin: 6px 0 8px;
+    }
+    .name-screen .ns-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    body.name-locked #app, body.name-locked #toast-stack { display: none; }
+
     /* 3-way toggle for the Cards mode bar (Type / Speak / Browse). */
     .read-toggle.three { grid-template-columns: repeat(3, 1fr); }
 
@@ -1613,6 +1874,432 @@
       .tab-bar.cols-5 .tab { font-size: 10.5px; letter-spacing: 0.2px; }
       .streak-display .num { font-size: 40px; }
     }
+
+    /* ============================================================
+       FIRST-READ FLOW — Stage C styles. Six-step linear journey:
+       atmosphere listen, grammar preview, sentence walk, vocab walk,
+       closing listen, drill-flow unlock celebration.
+       ============================================================ */
+    .fr-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 14px;
+      flex-wrap: wrap;
+    }
+    .fr-step-pill {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: var(--text-soft);
+      font-size: 12px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+    .fr-exit-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+    .fr-cover-wrap {
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .fr-cover-wrap.fr-cover-thin .story-cover { height: 120px; }
+    .fr-cover-wrap .story-cover { height: 220px; }
+    @media (max-width: 380px) {
+      .fr-cover-wrap .story-cover { height: 180px; }
+    }
+    .fr-listen-card {
+      text-align: center;
+      padding: 28px 18px;
+    }
+    .fr-listen-title {
+      font-size: 20px;
+      margin: 14px 0 6px;
+      font-weight: 600;
+    }
+    .fr-listen-sub {
+      color: var(--text-soft);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+    .fr-listen-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .fr-pulse {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 6px 0 12px;
+    }
+    .fr-pulse span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.4;
+      animation: fr-pulse 1.4s infinite ease-in-out;
+    }
+    .fr-pulse span:nth-child(2) { animation-delay: 0.2s; }
+    .fr-pulse span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes fr-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50%      { opacity: 1;   transform: scale(1.2); }
+    }
+
+    .fr-soft-card {
+      text-align: center;
+      padding: 24px 18px;
+    }
+    .fr-soft-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .fr-soft-msg {
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .fr-narration-list {
+      padding: 16px 14px;
+      max-height: 50vh;
+      overflow-y: auto;
+    }
+    .fr-narr-row {
+      padding: 10px 8px;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .fr-narr-row.active {
+      background: rgba(255,255,255,0.08);
+    }
+    .fr-narr-row .de { font-size: 16px; line-height: 1.5; }
+    .fr-narr-row .en { font-size: 13px; color: var(--text-soft); margin-top: 4px; }
+    .fr-eng-toggle {
+      flex-shrink: 0;
+    }
+
+    .fr-section-intro {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .fr-rule-card {
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .fr-rule-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .fr-rule-expl {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .fr-rule-examples { display: flex; flex-direction: column; gap: 8px; }
+    .fr-rule-ex {
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      border-left: 3px solid var(--accent);
+    }
+    .fr-rule-ex .ex-de { font-size: 15px; }
+    .fr-rule-ex .ex-en { font-size: 13px; color: var(--text-soft); margin-top: 3px; }
+
+    .fr-progress-line {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .fr-sentence-card, .fr-vocab-card {
+      padding: 22px 18px;
+      text-align: center;
+      position: relative;
+    }
+    .fr-sentence-de {
+      font-size: 22px;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .fr-sentence-en {
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .fr-vocab-mark {
+      cursor: pointer;
+      border-bottom: 2px dotted var(--accent);
+      padding-bottom: 1px;
+    }
+    .fr-vocab-mark:hover { background: rgba(255,255,255,0.06); }
+    .fr-vocab-popover {
+      position: absolute;
+      z-index: 50;
+      padding: 10px 14px;
+      background: rgba(20,20,30,0.95);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      max-width: 240px;
+    }
+    .fr-vp-word { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+    .fr-vp-trans { color: var(--text-soft); font-size: 13px; }
+
+    .fr-vocab-pos { margin-bottom: 10px; }
+    .fr-vocab-word { font-size: 30px; margin-bottom: 8px; }
+    .fr-vocab-en { font-size: 16px; color: var(--text-soft); margin-bottom: 14px; }
+    .fr-vocab-context {
+      margin-top: 14px; font-size: 15px; line-height: 1.5;
+      padding: 10px 12px; background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+    }
+    .fr-vocab-context-en {
+      font-size: 13px; color: var(--text-soft); margin-top: 4px;
+      padding: 0 12px;
+    }
+
+    .fr-nav-row {
+      display: flex; gap: 10px; margin-top: 12px;
+    }
+    .fr-nav-row .ghost-btn { flex: 1; }
+    .fr-nav-row .gradient-btn { flex: 2; }
+
+    .fr-celebrate {
+      text-align: center; padding: 32px 20px;
+    }
+    .fr-celebrate-icon {
+      font-size: 56px; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .fr-celebrate-title {
+      font-size: 24px; font-weight: 700; margin-bottom: 10px;
+    }
+    .fr-celebrate-msg {
+      color: var(--text-soft); font-size: 14px; line-height: 1.5;
+      margin-bottom: 22px;
+    }
+
+    /* ============================================================
+       DRILL FLOW — Stage D styles. Six-dot progress track, shared
+       drill containers, sentence-assembly tiles, drill-complete card.
+       ============================================================ */
+    .drill-track {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin: 0 0 18px;
+    }
+    .drill-dot {
+      flex: 1;
+      max-width: 60px;
+      text-align: center;
+      padding: 6px 0;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      font-size: 12px;
+      color: var(--text-soft);
+      letter-spacing: 0.5px;
+    }
+    .drill-dot.current {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--accent);
+      color: var(--text);
+      font-weight: 600;
+    }
+    .drill-dot.done {
+      background: rgba(34,197,94,0.18);
+      border-color: rgba(34,197,94,0.4);
+      color: rgb(134,239,172);
+    }
+
+    .drill-progress-line {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .drill-empty {
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .drill-empty-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+    .drill-empty-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .drill-empty-msg {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .drill-complete {
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .drill-complete-icon {
+      font-size: 56px;
+      color: rgb(134,239,172);
+      margin-bottom: 12px;
+    }
+    .drill-complete-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .drill-complete-msg {
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* Drill 3 — Sentence assembly tiles */
+    .d3-pane {
+      padding: 18px;
+    }
+    .d3-hint {
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 14px;
+      margin-bottom: 14px;
+      font-style: italic;
+    }
+    .d3-assembled {
+      min-height: 56px;
+      padding: 12px;
+      margin-bottom: 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.12);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
+    }
+    .d3-tiles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .word-tile {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.1s, background 0.15s;
+    }
+    .word-tile:hover { background: rgba(255,255,255,0.12); }
+    .word-tile:active { transform: scale(0.95); }
+    .word-tile.assembled {
+      background: rgba(255,255,255,0.10);
+      border-color: var(--accent);
+    }
+    .word-tile-placeholder {
+      color: var(--text-soft);
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    /* Drill 4 — Dictation */
+    .d4-pane .audio-btn.big {
+      font-size: 18px;
+      padding: 14px 28px;
+    }
+    .d4-instructions {
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    /* Drill 5 — Rule spotting */
+    .d5-pane {
+      padding: 18px;
+    }
+    .d5-rule-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .d5-rule-expl {
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .d5-question {
+      font-size: 14px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .ghost-btn.d5-correct {
+      background: rgba(34,197,94,0.16);
+      border-color: rgba(34,197,94,0.5);
+    }
+    .ghost-btn.d5-wrong {
+      background: rgba(239,68,68,0.16);
+      border-color: rgba(239,68,68,0.5);
+    }
+
+    /* ============================================================
+       SETTINGS — wallpaper preview tile.
+       ============================================================ */
+    .bg-preview {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-md);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bg-preview.empty {
+      background: rgba(255,255,255,0.04);
+    }
+    .bg-empty-hint {
+      color: var(--text-soft);
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
@@ -1726,6 +2413,8 @@
         name: 'German',
         flag: '🇩🇪',
         ttsLang: 'de-DE',
+        teaser: 'A1–B2 journey through everyday German.',
+        levels: ['A1', 'A2', 'B1', 'B2'],
         // German default = Austrian Flag (red/cream/red). Both German Flag
         // (Bundesflagge) and Austrian Flag presets are available in the
         // Settings → Languages → Theme dropdown.
@@ -1736,6 +2425,14 @@
         name: 'Italian',
         flag: '🇮🇹',
         ttsLang: 'it-IT',
+        teaser: "Bianca's story — A1 through B2 across Lake Como and Milan.",
+        levels: ['A1', 'A2', 'B1', 'B2'],
+        // Italian series uses {{PROTAGONIST}} substitution — Bianca is
+        // the default; protagonistGender is fixed for the series so
+        // adjective/article agreement in the prose still works.
+        defaultProtagonist: 'Bianca',
+        suggestedProtagonistNames: ['Bianca', 'Sofia', 'Giulia', 'Alice', 'Chiara', 'Martina'],
+        protagonistGender: 'feminine',
         // Italian default = Tricolore preset (green / cream / red).
         theme: { ...THEME_PRESETS.flag_it.theme }
       }
@@ -2513,12 +3210,13 @@
        code that says `state.cards`, `state.languages`, etc. keeps
        working without a refactor.
        ------------------------------------------------------------ */
-    const PER_USER_FIELDS = new Set(['cards', 'testAttempts', 'sessions', 'settings', 'languages', 'activeLanguageId']);
+    const PER_USER_FIELDS = new Set(['cards', 'testAttempts', 'sessions', 'settings', 'languages', 'activeLanguageId', 'libraryDrilledIn']);
 
     function makeDefaultUser(id, name, role, password) {
       return {
         id, name, role, password,
         activeLanguageId: 'de',
+        libraryDrilledIn: null,    // null = top-level language picker; langId = drilled into that book
         languages: {},
         cards: {},
         testAttempts: {},
@@ -2748,6 +3446,19 @@
             existing.ttsLang = existing.ttsLang || builtin.ttsLang;
             existing.flag    = existing.flag    || builtin.flag;
             existing.name    = existing.name    || builtin.name;
+            existing.teaser  = existing.teaser  || builtin.teaser  || null;
+            existing.levels  = existing.levels  || builtin.levels  || null;
+            // Protagonist metadata (Stage B). Only languages that use
+            // {{PROTAGONIST}} substitution carry these fields.
+            if (builtin.defaultProtagonist && existing.defaultProtagonist === undefined) {
+              existing.defaultProtagonist = builtin.defaultProtagonist;
+            }
+            if (builtin.suggestedProtagonistNames && existing.suggestedProtagonistNames === undefined) {
+              existing.suggestedProtagonistNames = [...builtin.suggestedProtagonistNames];
+            }
+            if (builtin.protagonistGender && existing.protagonistGender === undefined) {
+              existing.protagonistGender = builtin.protagonistGender;
+            }
             if (!Array.isArray(existing.stories)) existing.stories = [];
             if (!existing.lastTab) existing.lastTab = 'library';
             if (existing.lastStoryId === undefined) existing.lastStoryId = null;
@@ -2841,6 +3552,81 @@
                 if (!user.cards[cardId]) user.cards[cardId] = newCard();
               });
             }
+          }
+        }
+      }
+    }
+
+    /* ------------------------------------------------------------
+       ensureStoryProgress — every (user, lang, story) gets a progress
+       record describing which phase the learner is in (first-read,
+       drill-flow, free-practice) and which substep within first-read.
+       Stories with prior card activity are auto-promoted past first-read
+       so existing users aren't pushed back through the 6-step flow.
+       ------------------------------------------------------------ */
+    function defaultStoryProgress() {
+      return {
+        phase: 'first-read',     // 'first-read' | 'drill-flow' | 'free-practice'
+        firstReadStep: 1,        // 1..6
+        step1Phase: 'intro',     // 'intro' | 'narration' | 'done'
+        sentenceIdx: 0,          // step 3 cursor
+        vocabIdx: 0,             // step 4 cursor
+        firstReadDone: false,
+        showEnglish: false,      // step 1 narration toggle
+        // Stage D — drill flow. currentDrill is the active drill (1..6);
+        // drillsDone[N] flips true when drill N is satisfied. Per-drill
+        // ephemeral state (queue index, retry buckets) lives here so a
+        // learner can resume mid-drill across sessions.
+        currentDrill: 1,
+        drillsDone: { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false },
+        drill2: { idx: 0, queue: null, streak: {} },        // EN→IT typed
+        drill3: { idx: 0, queue: null, retried: {} },        // sentence assembly
+        drill4: { idx: 0, queue: null, doneSet: {} },        // dictation
+        drill5: { idx: 0, queue: null, results: {} },        // rule spotting
+        unlocked: false                                       // drill 6 → next story unlock
+      };
+    }
+    function ensureStoryProgress(s) {
+      for (const uid in s.users) {
+        const user = s.users[uid];
+        const langs = user.languages || {};
+        for (const langId in langs) {
+          const lang = langs[langId];
+          if (!Array.isArray(lang.stories)) continue;
+          lang.storyProgress = lang.storyProgress || {};
+          for (const storyId of lang.stories) {
+            if (lang.storyProgress[storyId]) continue;
+            const prog = defaultStoryProgress();
+            // If any sentence/vocab card for this story already has reps>0,
+            // the user has already played with it — skip first-read.
+            const prefix = `${langId}::${storyId}::`;
+            let touched = false;
+            for (const cardId in user.cards) {
+              if (!cardId.startsWith(prefix)) continue;
+              const c = user.cards[cardId];
+              if (c && c.reps > 0) { touched = true; break; }
+            }
+            if (touched) {
+              prog.phase = 'drill-flow';
+              prog.firstReadDone = true;
+              prog.firstReadStep = 6;
+              prog.step1Phase = 'done';
+            }
+            lang.storyProgress[storyId] = prog;
+          }
+          // Backfill drill fields for stories that pre-date Stage D so
+          // existing localStorage upgrades cleanly without losing first-read
+          // progress.
+          for (const storyId of lang.stories) {
+            const p = lang.storyProgress[storyId];
+            if (!p) continue;
+            if (p.currentDrill === undefined) p.currentDrill = 1;
+            if (!p.drillsDone) p.drillsDone = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false };
+            if (!p.drill2) p.drill2 = { idx: 0, queue: null, streak: {} };
+            if (!p.drill3) p.drill3 = { idx: 0, queue: null, retried: {} };
+            if (!p.drill4) p.drill4 = { idx: 0, queue: null, doneSet: {} };
+            if (!p.drill5) p.drill5 = { idx: 0, queue: null, results: {} };
+            if (p.unlocked === undefined) p.unlocked = false;
           }
         }
       }
@@ -3020,6 +3806,8 @@
         if (!user.settings.cardSource) user.settings.cardSource = 'sentences';
         if (user.settings.ttsRate   === undefined) user.settings.ttsRate   = 0.9;
         if (user.settings.theme     === undefined) user.settings.theme     = 'dark';
+        if (user.settings.bgImage   === undefined) user.settings.bgImage   = null; // data URL or null
+        if (user.settings.bgOverlay === undefined) user.settings.bgOverlay = 0.5;  // 0..0.85
       }
     }
 
@@ -3206,7 +3994,10 @@
     /* ---------- Validators — return { valid, errors[] } ---------- */
     const HEX6 = /^#[0-9a-fA-F]{6}$/;
     const LANG_ID_RE = /^[a-z]{2,5}$/;
-    const STORY_ID_RE = /^story-[a-z0-9-]+$/;
+    // Accept both legacy ids (`story-1`, `story-foo`) and the new spec
+    // shape (`it-a1-s01`, `de-a1-s03`, etc). Any kebab-case id starting
+    // with a letter is allowed.
+    const STORY_ID_RE = /^[a-z][a-z0-9-]+$/;
     const PACK_ID_RE = /^[a-z0-9-]+$/;
     const THEME_FIELDS = ['gradient1', 'gradient2', 'gradient3', 'bgFrom', 'bgVia', 'bgTo', 'accent'];
 
@@ -3475,6 +4266,36 @@
       r.setProperty('--grad-2', theme.gradient2);
       r.setProperty('--grad-3', theme.gradient3);
       r.setProperty('--accent', theme.accent);
+      // Re-apply user wallpaper after theme change so the inline body bg
+      // stays correct; theme palette is rendered via :root vars and the
+      // body background is overridden when a custom image is set.
+      applyBackgroundImage();
+    }
+
+    /* Per-user wallpaper. When a bgImage is set we override body's
+       background with `linear-gradient(black-overlay), url(image)` so
+       the photo stays readable; otherwise we clear the inline style and
+       the theme's radial gradient takes over. Cosmic-glow blobs on
+       body::before remain in either case. */
+    function applyBackgroundImage() {
+      const body = document.body;
+      if (!body) return;
+      const s = (state && state.settings) || {};
+      const img = s.bgImage;
+      if (img) {
+        const o = (s.bgOverlay == null) ? 0.5 : Number(s.bgOverlay);
+        body.style.backgroundImage = `linear-gradient(rgba(0,0,0,${o}), rgba(0,0,0,${o})), url('${img}')`;
+        body.style.backgroundSize = 'cover';
+        body.style.backgroundPosition = 'center center';
+        body.style.backgroundAttachment = 'fixed';
+        body.style.backgroundRepeat = 'no-repeat';
+      } else {
+        body.style.backgroundImage = '';
+        body.style.backgroundSize = '';
+        body.style.backgroundPosition = '';
+        body.style.backgroundAttachment = '';
+        body.style.backgroundRepeat = '';
+      }
     }
 
     /* ============================================================
@@ -3506,16 +4327,31 @@
           }
         }
       } catch {}
-      const exact = voices.find(v => v.lang === langCode);
-      if (exact) return exact;
-      const prefix = langCode.split('-')[0];
-      return voices.find(v => v.lang && v.lang.toLowerCase().startsWith(prefix.toLowerCase())) || null;
+      const prefix = langCode.split('-')[0].toLowerCase();
+      const matches = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith(prefix));
+      if (!matches.length) return null;
+      // Quality sort: macOS premium/enhanced/neural voices sound far less
+      // robotic than the default. Boost names containing those markers,
+      // then prefer localService voices, then exact-locale matches.
+      const score = (v) => {
+        let s = 0;
+        const n = (v.name || '').toLowerCase();
+        if (/(premium|enhanced|neural|natural|siri)/.test(n)) s += 100;
+        if (v.localService) s += 10;
+        if (v.lang === langCode) s += 5;
+        if (v.default) s -= 1; // default is often the lowest-quality fallback
+        return s;
+      };
+      return matches.slice().sort((a, b) => score(b) - score(a))[0];
     }
 
     function speak(text, langCode, opts = {}) {
       return new Promise((resolve) => {
         if (!('speechSynthesis' in window)) return resolve();
-        const u = new SpeechSynthesisUtterance(text);
+        // Substitute {{PROTAGONIST}} so TTS doesn't read the literal token
+        // even if a caller passed unprocessed text.
+        const spoken = substituteProtagonist(String(text || ''));
+        const u = new SpeechSynthesisUtterance(spoken);
         u.lang = langCode;
         // Default rate comes from global settings; explicit opts.rate wins.
         const fallbackRate = (state && state.settings && state.settings.ttsRate) || 0.9;
@@ -3544,6 +4380,7 @@
     ensureChunk3a(rawState);
     migrateTestAttempts(rawState);
     ensureCards(rawState);
+    ensureStoryProgress(rawState);
     let state = makeStateProxy(rawState);
     saveState();
 
@@ -3565,8 +4402,31 @@
     function getActiveStoryId() { const l = getActiveLang(); return l && l.lastStoryId; }
     function getStory(langId, storyId) { return state.storiesData[`${langId}::${storyId}`]; }
 
+    // Per-story progress accessor. Lazily seeds a default record so callers
+    // can rely on every story having one. Persistence happens via the
+    // surrounding state Proxy + saveState().
+    function getStoryProgress(langId, storyId) {
+      const lang = state.languages && state.languages[langId];
+      if (!lang) return null;
+      lang.storyProgress = lang.storyProgress || {};
+      if (!lang.storyProgress[storyId]) {
+        lang.storyProgress[storyId] = defaultStoryProgress();
+      }
+      return lang.storyProgress[storyId];
+    }
+    function setStoryProgress(langId, storyId, patch) {
+      const prog = getStoryProgress(langId, storyId);
+      if (!prog) return null;
+      Object.assign(prog, patch);
+      saveState();
+      return prog;
+    }
+
     // Initial theme — read from active user's active language.
     if (getActiveLang() && getActiveLang().theme) applyTheme(getActiveLang().theme);
+    // Wallpaper applies even if no language theme is set (theme call
+    // already invokes applyBackgroundImage; this covers the no-theme path).
+    applyBackgroundImage();
 
     // Replace state in place (preserves the proxy reference so all
     // closures keep working). Used by reset / import-backup.
@@ -3580,11 +4440,12 @@
        ============================================================ */
     let playback = { active: false, idx: -1, version: 0 };
 
-    function startPlayAll(sentences, langCode) {
+    function startPlayAll(sentences, langCode, opts = {}) {
       stopPlayAll();
       playback.active = true;
       playback.version++;
       const myVersion = playback.version;
+      let completed = false;
 
       (async () => {
         for (let i = 0; i < sentences.length; i++) {
@@ -3598,10 +4459,14 @@
           await new Promise(r => setTimeout(r, 280));
         }
         if (playback.version === myVersion) {
+          completed = playback.active;
           playback.active = false;
           playback.idx = -1;
           updatePlayHighlight();
           updatePlayButton();
+          if (completed && typeof opts.onDone === 'function') {
+            try { opts.onDone(); } catch {}
+          }
         }
       })();
     }
@@ -3635,9 +4500,156 @@
        up event handlers for that pass.
        ============================================================ */
     function escapeHtml(str) {
-      return String(str)
+      // Substitute {{PROTAGONIST}} at render time per the Storyglot
+      // story spec §5.1. The token is unique enough that running this
+      // through every escapeHtml call is safe.
+      const sub = substituteProtagonist(String(str));
+      return sub
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    /* ============================================================
+       STORYGLOT SPEC ADAPTERS — schema + protagonist substitution.
+       Lets the app accept new-shape stories (targetText / englishGloss
+       / grammar.id / tests.type) alongside the legacy de/en shape.
+       Internal representation stays as the legacy shape; the new shape
+       is normalized on import.
+       ============================================================ */
+
+    // Map full-name language IDs (per the new spec — "italian", "german")
+    // to the 2-letter codes the app uses internally.
+    const LANGUAGE_ID_ALIASES = {
+      italian: 'it',
+      german: 'de',
+      english: 'en',
+      french: 'fr',
+      spanish: 'es',
+      portuguese: 'pt',
+      japanese: 'ja',
+      chinese: 'zh',
+      russian: 'ru'
+    };
+    function normalizeLangId(id) {
+      if (!id) return id;
+      const lower = String(id).toLowerCase();
+      return LANGUAGE_ID_ALIASES[lower] || lower;
+    }
+
+    // Detect whether a story JSON is in the new Storyglot spec shape
+    // (sentences with targetText / grammar with id+status / tests with
+    // type+ruleId) versus the legacy {de,en} shape used by chunks 1–3.
+    function isNewSchemaStory(json) {
+      if (!json || typeof json !== 'object') return false;
+      if (json.type === 'story') return true;
+      if (Array.isArray(json.sentences) && json.sentences.length > 0) {
+        const s0 = json.sentences[0];
+        if (s0 && s0.targetText !== undefined) return true;
+      }
+      if (Array.isArray(json.grammar) && json.grammar.length > 0 && json.grammar[0].id !== undefined) return true;
+      return false;
+    }
+
+    // Convert a new-spec story to the internal legacy shape so the
+    // existing renderers, validators, and SRS pipeline work unchanged.
+    function normalizeStoryShape(json) {
+      if (!isNewSchemaStory(json)) return json;
+      const sentences = (json.sentences || []).map(s => ({
+        de: s.targetText || '',
+        en: s.englishGloss || '',
+        note: s.note || null
+      }));
+      const vocabulary = (json.vocabulary || []).map(v => ({
+        de: v.word,
+        en: v.translation,
+        pos: v.pos || null,
+        gender: v.gender || null,
+        plural: v.plural || null,
+        note: v.note || null
+      }));
+      // The new schema doesn't carry per-rule tier; use status:'new' →
+      // tier 1 (introduced in this story) and status:'supporting' →
+      // tier 2 (recycled). Preserve the rule id so tests can reference
+      // it without ambiguity even if rule names collide.
+      const grammarRules = (json.grammar || []).map(g => ({
+        name: g.name || g.id || 'Untitled rule',
+        tier: g.status === 'new' ? 1 : 2,
+        desc: g.explanation || '',
+        longExplanation: g.longExplanation || g.explanation || '',
+        // Optional richer fields — pass through if the source carries them
+        // so the renderRuleCard surface (used by Rules tab + first-read +
+        // drill 5 review) can show examples, tips, and paradigm tables.
+        examples: Array.isArray(g.examples) ? g.examples : null,
+        tips: Array.isArray(g.tips) ? g.tips : null,
+        table: g.table || null,
+        formula: g.formula || null,
+        _id: g.id || null,
+        _status: g.status || null
+      }));
+      const ruleNameById = {};
+      (json.grammar || []).forEach(g => { if (g.id) ruleNameById[g.id] = g.name; });
+      const grammarTests = (json.tests || []).map(t => ({
+        tier: t.tier,
+        rule: ruleNameById[t.ruleId] || t.ruleId || '',
+        en: t.prompt || '',
+        de: t.answer || '',
+        trap: t.note || null,
+        _type: t.type || 'translate-en-to-it',
+        _options: Array.isArray(t.options) ? t.options : null,
+        _ruleId: t.ruleId || null
+      }));
+      return {
+        schemaVersion: 1,
+        languageId: normalizeLangId(json.languageId),
+        id: json.id,
+        title: json.title || '',
+        level: json.level || 'A1',
+        order: json.order || 1,
+        synopsis: json.synopsis || null,
+        _atmosphereIntro: json.atmosphere_intro || null,
+        _coverPrompt: json.cover_image_prompt || null,
+        sentences,
+        vocabulary,
+        grammarRules,
+        grammarTests
+      };
+    }
+
+    // Resolve the active protagonist name. Falls back to the language's
+    // configured default, then to a hard fallback ('Bianca' for it,
+    // empty for others — German story uses no token so it doesn't matter).
+    function getActiveProtagonistName() {
+      try {
+        const lang = state && state.languages ? state.languages[state.activeLanguageId] : null;
+        if (lang && lang.protagonistName) return lang.protagonistName;
+        if (lang && lang.defaultProtagonist) return lang.defaultProtagonist;
+        if (lang && lang.id === 'it') return 'Bianca';
+      } catch {}
+      return '';
+    }
+
+    // Active language's short code, uppercased. Used as the speak-button
+    // label (e.g. "🔊 IT") so the UI matches whichever language is loaded.
+    function speakLabelForActive() {
+      const l = (state && state.languages) ? state.languages[state.activeLanguageId] : null;
+      const id = l && l.id ? String(l.id) : '';
+      return id ? id.toUpperCase() : 'TARGET';
+    }
+
+    // Active language's display name, lower-cased for sentence-fit copy
+    // (e.g. "Type your italian word..."). Falls back to "target".
+    function targetLangNameLower() {
+      const l = (state && state.languages) ? state.languages[state.activeLanguageId] : null;
+      return (l && l.name) ? String(l.name).toLowerCase() : 'target';
+    }
+
+    // Replace {{PROTAGONIST}} occurrences in a string with the chosen
+    // name. Cheap; called from escapeHtml so it covers all rendered text.
+    function substituteProtagonist(text) {
+      if (!text || text.indexOf('{{PROTAGONIST}}') < 0) return text;
+      const name = getActiveProtagonistName();
+      if (!name) return text;          // leave the token literal so it's visible/debuggable
+      return text.split('{{PROTAGONIST}}').join(name);
     }
 
     function renderHeader() {
@@ -3698,46 +4710,148 @@
     }
 
     function renderLibrary() {
-      const lang = getActiveLang();
+      // Stage B: Library has two modes — top-level (one card per
+      // language journey) or drilled into a single language (story tiles).
+      const drilledLangId = state.libraryDrilledIn;
+      if (drilledLangId && state.languages[drilledLangId]) {
+        return renderLibraryDrilldown(drilledLangId);
+      }
+      return renderLibraryTop();
+    }
+
+    /* Library top-level — one card per language registered for this user.
+       Tapping a card switches active language and drills into it. */
+    function renderLibraryTop() {
+      const langs = Object.values(state.languages);
+      if (langs.length === 0) {
+        return `<div class="glass empty-state">
+          <div class="em-icon">📚</div>
+          No languages installed yet.
+        </div>`;
+      }
+      const cards = langs.map(l => renderJourneyCard(l)).join('');
+      const reviewBtn = `
+        <button class="global-review" data-global-review="1">
+          🔁  Review · cards due across all stories
+        </button>
+      `;
+      const progress = renderProgressSection();
+      return `<div class="journey-grid">${cards}</div>${reviewBtn}${progress}`;
+    }
+
+    function renderJourneyCard(l) {
+      const uploaded = l.coverImage || null;
+      const svgArt = !uploaded ? getDefaultCoverSvg(l.id) : null;
+      const coverStyle = uploaded ? `background-image: url('${escapeHtml(uploaded)}');` : '';
+      const coverArt = !uploaded && svgArt
+        ? `<div class="jc-cover">${svgArt}</div>`
+        : !uploaded
+          ? `<div class="jc-cover" style="background: linear-gradient(135deg, var(--grad-1), var(--grad-2) 55%, var(--grad-3));"></div>`
+          : `<div class="jc-cover" style="${coverStyle}"></div>`;
+
+      // Aggregate progress across this language's stories.
+      const stats = getStats(state, l.id);
+      const masteredPct = stats.total > 0 ? Math.round((stats.mastered / stats.total) * 100) : 0;
+      const storyCount = (l.stories || []).length;
+      const levelsLabel = (l.levels && l.levels.length)
+        ? `${l.levels[0]} → ${l.levels[l.levels.length - 1]} journey`
+        : `${storyCount} ${storyCount === 1 ? 'story' : 'stories'}`;
+      const teaser = l.teaser || '';
+
+      return `
+        <div class="glass journey-card" data-enter-lang="${escapeHtml(l.id)}">
+          ${coverArt}
+          <div class="jc-overlay"></div>
+          <div class="jc-flag">${l.flag || ''}</div>
+          <div class="jc-body">
+            <div class="jc-name">${escapeHtml(l.name).toUpperCase()}</div>
+            ${teaser ? `<div class="jc-teaser">${escapeHtml(teaser)}</div>` : ''}
+            <div class="jc-progress-bar"><div class="jc-progress-fill" style="width: ${masteredPct}%"></div></div>
+            <div class="jc-meta">
+              <span>${levelsLabel}</span>
+              <span>${storyCount} ${storyCount === 1 ? 'story' : 'stories'} · ${masteredPct}% mastered</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* Library drilled into a single language — shows story tiles. */
+    function renderLibraryDrilldown(langId) {
+      const lang = state.languages[langId] || getActiveLang();
       const hero = renderHeroCover(lang);
+      const back = `
+        <div class="back-bar">
+          <button class="back-btn" data-back-to-langs="1">← Languages</button>
+          <span class="back-context">${escapeHtml(lang.name)}</span>
+        </div>
+      `;
 
       if (!lang.stories.length) {
-        return hero + `<div class="glass empty-state">
+        return back + hero + `<div class="glass empty-state">
           <div class="em-icon">📚</div>
-          No stories yet for this language.
+          No stories yet for ${escapeHtml(lang.name)}.
         </div>` + renderProgressSection();
       }
 
-      const cards = lang.stories.map(storyId => {
-        const story = getStory(lang.id, storyId);
-        if (!story) return '';
-        const stats = getStats(state, lang.id, storyId);
-        const total = stats.total;
-        const masteredPct = total ? Math.round((stats.mastered / total) * 100) : 0;
-        const grammarCount = (story.grammarRules || []).length;
+      const cards = lang.stories.map(storyId => renderStoryTile(lang, storyId)).join('');
+      return back + hero + cards + renderProgressSection();
+    }
 
-        // Cover: uploaded image OR per-language SVG default fallback.
-        const coverHtml = renderStoryCover(lang.id, story);
-        const cardClass = coverHtml ? 'glass story-card with-cover' : 'glass story-card';
+    /* Story tile rendered inside the drilled-in library view. Adds a
+       small completion badge based on per-story mastery percentage. */
+    function renderStoryTile(lang, storyId) {
+      const story = getStory(lang.id, storyId);
+      if (!story) return '';
+      const stats = getStats(state, lang.id, storyId);
+      const total = stats.total;
+      const masteredPct = total ? Math.round((stats.mastered / total) * 100) : 0;
+      const grammarCount = (story.grammarRules || []).length;
+      const coverHtml = renderStoryCover(lang.id, story);
+      const cardClass = coverHtml ? 'glass story-card with-cover' : 'glass story-card';
 
-        return `
-          <div class="${cardClass}">
-            ${coverHtml}
-            <div class="tags">
-              <span class="tag-pill">${escapeHtml(story.level)}</span>
-              <span class="tag-pill">Story #${story.order || 1}</span>
-            </div>
-            <div class="story-title gradient-text">${escapeHtml(story.title)}</div>
-            <div class="story-meta">${story.sentences.length} sentences · ${grammarCount} grammar rules</div>
-            <div class="progress"><div class="progress-fill" style="width: ${masteredPct}%"></div></div>
-            <div class="story-foot">${stats.mastered} / ${total} mastered · ${stats.due} due today</div>
-            <button class="gradient-btn" data-open-story="${escapeHtml(storyId)}">
-              Continue Learning →
-            </button>
+      // Phase signals — drill activity vs. mid-flight first-read. Cards
+      // with reps>0 only happen once drill flow starts; first-read alone
+      // doesn't grade anything, so we also peek at storyProgress.
+      const prog = (lang.storyProgress && lang.storyProgress[storyId]) || null;
+      const drillStarted = (stats.total - stats.new) > 0;
+      const inFirstReadActive = !!prog && prog.phase === 'first-read' &&
+        (prog.firstReadStep > 1 || (prog.step1Phase && prog.step1Phase !== 'intro'));
+
+      // Completion badge: rough proxy until Stage D wires real drill-flow gating.
+      let badgeHtml = '';
+      if (masteredPct >= 80) {
+        badgeHtml = `<span class="story-badge done">✓ Done</span>`;
+      } else if (drillStarted) {
+        badgeHtml = `<span class="story-badge">In progress</span>`;
+      } else if (inFirstReadActive) {
+        badgeHtml = `<span class="story-badge">Intro · Step ${prog.firstReadStep}/6</span>`;
+      }
+
+      // Action label — drill activity wins; mid-flight first-read shows
+      // "Continue intro"; otherwise it's a fresh start.
+      const actionLabel = drillStarted
+        ? 'Continue Learning →'
+        : (inFirstReadActive ? 'Continue intro →' : 'Start →');
+
+      return `
+        <div class="${cardClass}">
+          ${coverHtml}
+          ${badgeHtml}
+          <div class="tags">
+            <span class="tag-pill">${escapeHtml(story.level)}</span>
+            <span class="tag-pill">Story #${story.order || 1}</span>
           </div>
-        `;
-      }).join('');
-      return hero + cards + renderProgressSection();
+          <div class="story-title gradient-text">${escapeHtml(story.title)}</div>
+          ${story.synopsis ? `<div class="story-meta" style="margin-bottom: 10px;">${escapeHtml(story.synopsis)}</div>` : ''}
+          <div class="story-meta">${story.sentences.length} sentences · ${grammarCount} grammar rules</div>
+          <div class="progress"><div class="progress-fill" style="width: ${masteredPct}%"></div></div>
+          <div class="story-foot">${stats.mastered} / ${total} mastered · ${stats.due} due today</div>
+          <button class="gradient-btn" data-open-story="${escapeHtml(storyId)}">
+            ${actionLabel}
+          </button>
+        </div>
+      `;
     }
 
     /* Hero cover at top of Library: uploaded image overrides default
@@ -3918,7 +5032,7 @@
           </div>
           <div class="sparkline-wrap">${svg}</div>
           <div class="vocab-line">
-            <span class="num">${vocab}</span> distinct German words mastered ·
+            <span class="num">${vocab}</span> distinct ${escapeHtml(targetLangNameLower())} words mastered ·
             <span class="num">${totalCards}</span> cards in last 30 days
           </div>
           <div class="row-list">${storyRows || '<div style="font-size:12px;color:var(--text-soft);text-align:center">No stories yet.</div>'}</div>
@@ -3948,8 +5062,20 @@
       const story = getStory(lang.id, storyId);
       if (!story) return `<div class="glass empty-state">Story not found.</div>`;
 
-      const mode = lang.readMode || 'full';
+      const progress = getStoryProgress(lang.id, storyId);
+      if (progress && progress.phase === 'first-read') {
+        return renderFirstRead(lang, story, progress);
+      }
+      if (progress && progress.phase === 'drill-flow') {
+        return renderDrillFlow(lang, story, progress);
+      }
+      // Free-practice falls back to legacy reader for now; Stage E will
+      // replace it with the tile-grid hub.
+      return renderReadLegacy(lang, story);
+    }
 
+    function renderReadLegacy(lang, story) {
+      const mode = lang.readMode || 'full';
       const toggle = `
         <div class="read-toggle">
           <button class="${mode === 'full' ? 'active' : ''}" data-read-mode="full">Full Text</button>
@@ -3987,6 +5113,950 @@
           <button class="gradient-btn" id="btn-play-all">${playback.active ? '⏹  Stop' : '🔊  Listen to whole story'}</button>
         </div>
         ${rows}
+      `;
+    }
+
+    /* ============================================================
+       FIRST-READ FLOW — 6 fixed steps per UX spec §4.
+       Step 1 atmosphere listen, Step 2 grammar preview,
+       Step 3 sentence walk, Step 4 vocab walk,
+       Step 5 closing listen, Step 6 drill-flow unlock.
+       Progress per (user, lang, story) lives on lang.storyProgress[storyId].
+       ============================================================ */
+
+    function frStepLabel(step) {
+      return ({
+        1: 'Atmosphere',
+        2: 'Grammar preview',
+        3: 'Sentence walk',
+        4: 'Vocab walk',
+        5: 'Closing listen',
+        6: 'Drill flow unlocked'
+      })[step] || '';
+    }
+
+    function frStepPill(step) {
+      // Top bar: step indicator + always-visible save-and-exit. State is
+      // already persisted on every setStoryProgress, so the button just
+      // navigates back; resuming the story drops the learner exactly here.
+      return `
+        <div class="fr-top-row">
+          <div class="fr-step-pill">Step ${step} of 6 · ${escapeHtml(frStepLabel(step))}</div>
+          <button class="ghost-btn fr-exit-btn" data-fr-exit="1" title="Progress is saved automatically">Save &amp; exit</button>
+        </div>
+      `;
+    }
+
+    // Vocabulary words flagged "new" for this story. Falls back to all
+    // vocab if normalization didn't tag a status (legacy stories).
+    function getNewVocab(story) {
+      const all = Array.isArray(story.vocabulary) ? story.vocabulary : [];
+      const flagged = all.filter(v => v && v._status === 'new');
+      return flagged.length ? flagged : all;
+    }
+
+    // Grammar rules flagged "new" for this story. Same fallback shape.
+    function getNewGrammar(story) {
+      const rules = Array.isArray(story.grammarRules) ? story.grammarRules : [];
+      const flagged = rules.filter(r => r && r._status === 'new');
+      return flagged.length ? flagged : rules.filter(r => r.tier === 1);
+    }
+
+    function renderFirstRead(lang, story, progress) {
+      const step = Math.min(Math.max(progress.firstReadStep || 1, 1), 6);
+      switch (step) {
+        case 1: return renderFRStep1(lang, story, progress);
+        case 2: return renderFRStep2(lang, story, progress);
+        case 3: return renderFRStep3(lang, story, progress);
+        case 4: return renderFRStep4(lang, story, progress);
+        case 5: return renderFRStep5(lang, story, progress);
+        case 6: return renderFRStep6(lang, story, progress);
+        default: return renderFRStep1(lang, story, progress);
+      }
+    }
+
+    /* Step 1 — Atmosphere listen.
+       intro phase: cover + EN atmosphere intro plays.
+       narration phase: cover + IT sentences, sync-highlighted, EN toggle.
+       done phase: cover + soft message + Continue. */
+    function renderFRStep1(lang, story, progress) {
+      const phase = progress.step1Phase || 'intro';
+      const coverHtml = renderStoryCover(lang.id, story) ||
+        `<div class="story-cover" style="background: linear-gradient(135deg, var(--grad-1), var(--grad-3));"></div>`;
+      const intro = story._atmosphereIntro || story.synopsis || '';
+      const narratorPrompt = lang.id === 'it' ? '' : '';
+
+      if (phase === 'intro') {
+        return `
+          ${frStepPill(1)}
+          <div class="fr-cover-wrap">${coverHtml}</div>
+          <div class="glass fr-listen-card">
+            <div class="fr-pulse"><span></span><span></span><span></span></div>
+            <div class="fr-listen-title">Setting the scene…</div>
+            <div class="fr-listen-sub">Listen — no need to read.</div>
+            <div class="fr-listen-actions">
+              <button class="ghost-btn" data-fr-replay-intro="1">🔊 Replay</button>
+              <button class="ghost-btn" data-fr-skip-to="narration">Skip to story →</button>
+            </div>
+          </div>
+        `;
+      }
+
+      if (phase === 'narration') {
+        const showEng = !!progress.showEnglish;
+        const rows = story.sentences.map((s, i) => `
+          <div class="fr-narr-row" data-sent-idx="${i}">
+            <div class="de">${escapeHtml(s.de)}</div>
+            ${showEng ? `<div class="en">${escapeHtml(s.en)}</div>` : ''}
+          </div>
+        `).join('');
+        return `
+          ${frStepPill(1)}
+          <div class="fr-cover-wrap fr-cover-thin">${coverHtml}</div>
+          <div class="play-bar">
+            <button class="gradient-btn" id="btn-play-all">${playback.active ? '⏹  Stop' : '🔊  Listen to the story'}</button>
+            <button class="ghost-btn fr-eng-toggle" data-fr-toggle-english="1">${showEng ? 'EN: on' : 'EN: off'}</button>
+          </div>
+          <div class="glass fr-narration-list">${rows}</div>
+          <button class="ghost-btn full-btn" data-fr-skip-to="done">I'm ready to continue →</button>
+        `;
+      }
+
+      // done
+      return `
+        ${frStepPill(1)}
+        <div class="fr-cover-wrap">${coverHtml}</div>
+        <div class="glass fr-soft-card">
+          <div class="fr-soft-title">${escapeHtml(story.title)}</div>
+          <div class="fr-soft-msg">Don't worry if you didn't grasp it all — you'll go through this sentence by sentence next.</div>
+          <button class="gradient-btn full-btn" data-fr-continue="1">Continue →</button>
+        </div>
+      `;
+    }
+
+    /* Step 2 — Grammar preview. Reuses the rich renderRuleCard so the
+       learner sees the same explanation + examples + tips + paradigm
+       tables they'll meet in the Rules tab — no formal sparse text. */
+    function renderFRStep2(lang, story, progress) {
+      const rules = getNewGrammar(story);
+      const list = rules.length
+        ? rules.map(r => renderRuleCard(r, r.tier || 1)).join('')
+        : `<div class="glass empty-state">No new grammar in this chapter — straight to the sentences.</div>`;
+
+      return `
+        ${frStepPill(2)}
+        <div class="fr-section-intro">A quick look at what's new before you start.</div>
+        ${list}
+        <button class="gradient-btn full-btn" data-fr-continue="1">Continue →</button>
+      `;
+    }
+
+    /* Step 3 — Sentence walk. One sentence at a time. New vocab
+       highlighted; tap → translation popover. Progress "12 / N". */
+    function renderFRStep3(lang, story, progress) {
+      const sentences = story.sentences || [];
+      const n = sentences.length;
+      const idx = Math.min(Math.max(progress.sentenceIdx || 0, 0), Math.max(0, n - 1));
+      const s = sentences[idx];
+      if (!s) return `<div class="glass empty-state">No sentences in this story.</div>`;
+
+      const newVocab = getNewVocab(story);
+      // Mark vocabulary tokens by simple word-boundary substitution.
+      // Uses dotted underline + tap-to-translate.
+      const markedDe = markVocabInSentence(s.de, newVocab);
+
+      const isLast = idx === n - 1;
+      const prevDisabled = idx === 0 ? 'disabled' : '';
+      const nextLabel = isLast ? 'Continue →' : 'Next →';
+
+      return `
+        ${frStepPill(3)}
+        <div class="fr-progress-line">${idx + 1} / ${n}</div>
+        <div class="glass fr-sentence-card">
+          <div class="fr-sentence-de">${markedDe}</div>
+          <div class="fr-sentence-en">${escapeHtml(s.en)}</div>
+          <div class="audio-row">
+            <button class="audio-btn" data-fr-speak="${escapeHtml(s.de)}">🔊 ${speakLabelForActive()}</button>
+          </div>
+          ${s.note ? `<div class="note-callout">${escapeHtml(s.note)}</div>` : ''}
+        </div>
+        <div id="fr-vocab-popover" class="fr-vocab-popover" style="display:none;"></div>
+        <div class="fr-nav-row">
+          <button class="ghost-btn" data-fr-sent-prev="1" ${prevDisabled}>← Prev</button>
+          <button class="gradient-btn" data-fr-sent-next="1">${nextLabel}</button>
+        </div>
+      `;
+    }
+
+    // Wrap each new-vocab head word inside the sentence with a tappable
+    // span. Cheap, case-insensitive, whole-word match. Renders escaped.
+    // Protagonist substitution must happen up front: the tokenizer below
+    // would otherwise slice "{{PROTAGONIST}}" into "{{" / "PROTAGONIST" /
+    // "}}", and escapeHtml's substitution (keyed on the full literal)
+    // would no longer match.
+    function markVocabInSentence(sentence, newVocab) {
+      const text = substituteProtagonist(String(sentence || ''));
+      if (!newVocab || !newVocab.length) return escapeHtml(text);
+      // Build a map from lowercased base word → translation. We match
+      // tokens character-by-character to preserve original casing/diacritics.
+      const dict = {};
+      newVocab.forEach(v => {
+        const w = String(v.de || '').toLowerCase().trim();
+        if (w) dict[w] = v;
+      });
+      // Tokenize on Unicode word boundaries that keep accented letters.
+      const out = [];
+      const re = /([\p{L}\p{M}'’]+)|([^\p{L}\p{M}'’]+)/gu;
+      let m;
+      while ((m = re.exec(text)) !== null) {
+        if (m[1]) {
+          const lower = m[1].toLowerCase();
+          if (dict[lower]) {
+            const v = dict[lower];
+            const trans = v.en || v.translation || '';
+            out.push(`<span class="fr-vocab-mark" data-fr-vocab="${escapeHtml(m[1])}" data-fr-vocab-trans="${escapeHtml(trans)}">${escapeHtml(m[1])}</span>`);
+          } else {
+            out.push(escapeHtml(m[1]));
+          }
+        } else if (m[2]) {
+          out.push(escapeHtml(m[2]));
+        }
+      }
+      return out.join('');
+    }
+
+    /* Step 4 — Vocab walk. One word at a time. Word + translation +
+       pos + audio + first sentence containing it. */
+    function renderFRStep4(lang, story, progress) {
+      const vocab = getNewVocab(story);
+      const n = vocab.length;
+      if (!n) {
+        return `
+          ${frStepPill(4)}
+          <div class="glass empty-state">No new vocabulary tracked for this story.</div>
+          <button class="gradient-btn full-btn" data-fr-continue="1">Continue →</button>
+        `;
+      }
+      const idx = Math.min(Math.max(progress.vocabIdx || 0, 0), n - 1);
+      const v = vocab[idx];
+
+      // First sentence containing this word (whole-word match).
+      const sentences = story.sentences || [];
+      const firstSent = findFirstSentenceWith(sentences, v.de);
+      const sentHtml = firstSent
+        ? `<div class="fr-vocab-context">${markVocabInSentence(firstSent.de, [v])}</div>
+           <div class="fr-vocab-context-en">${escapeHtml(firstSent.en)}</div>`
+        : '';
+
+      const speakText = vocabSpeakText(v);
+      const posLabel = v.pos ? `${v.pos}${v.gender ? ' · ' + v.gender : ''}` : (v.gender || '');
+
+      const isLast = idx === n - 1;
+      const prevDisabled = idx === 0 ? 'disabled' : '';
+      const nextLabel = isLast ? 'Continue →' : 'Next →';
+
+      return `
+        ${frStepPill(4)}
+        <div class="fr-progress-line">${idx + 1} / ${n}</div>
+        <div class="glass fr-vocab-card">
+          ${posLabel ? `<div class="fr-vocab-pos"><span class="rule-tag">${escapeHtml(posLabel)}</span></div>` : ''}
+          <div class="fr-vocab-word gradient-text">${escapeHtml(v.de)}</div>
+          <div class="fr-vocab-en">${escapeHtml(v.en || '')}</div>
+          <div class="audio-row">
+            <button class="audio-btn" data-fr-speak="${escapeHtml(speakText)}">🔊 ${speakLabelForActive()}</button>
+          </div>
+          ${sentHtml}
+        </div>
+        <div class="fr-nav-row">
+          <button class="ghost-btn" data-fr-vocab-prev="1" ${prevDisabled}>← Prev</button>
+          <button class="gradient-btn" data-fr-vocab-next="1">${nextLabel}</button>
+        </div>
+      `;
+    }
+
+    function findFirstSentenceWith(sentences, word) {
+      const target = String(word || '').toLowerCase();
+      if (!target) return null;
+      const re = new RegExp(`(?:^|[^\\p{L}\\p{M}])${escapeRegExp(target)}(?:[^\\p{L}\\p{M}]|$)`, 'iu');
+      for (const s of sentences) {
+        if (re.test(String(s.de || '').toLowerCase())) return s;
+      }
+      return null;
+    }
+    function escapeRegExp(s) {
+      return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    /* Step 5 — Closing listen. Cover + IT-only narration, no subtitles.
+       Audio auto-plays on enter; "Done" appears when playback finishes. */
+    function renderFRStep5(lang, story, progress) {
+      const coverHtml = renderStoryCover(lang.id, story) ||
+        `<div class="story-cover" style="background: linear-gradient(135deg, var(--grad-1), var(--grad-3));"></div>`;
+      const finished = !!progress.step5Finished;
+      return `
+        ${frStepPill(5)}
+        <div class="fr-cover-wrap">${coverHtml}</div>
+        <div class="glass fr-listen-card">
+          <div class="fr-pulse"><span></span><span></span><span></span></div>
+          <div class="fr-listen-title">${finished ? "You've finished your first read." : 'Listen one more time…'}</div>
+          <div class="fr-listen-sub">${finished ? 'Come back tomorrow to start practicing.' : 'No subtitles. Notice what you understand.'}</div>
+          <div class="fr-listen-actions">
+            <button class="ghost-btn" data-fr-replay-closing="1">🔊 ${playback.active ? 'Stop' : (finished ? 'Replay' : 'Play')}</button>
+          </div>
+        </div>
+        ${finished ? `<button class="gradient-btn full-btn" data-fr-continue="1">Done →</button>` : ''}
+      `;
+    }
+
+    /* Step 6 — Drill flow unlocks. Renders a brief celebration; phase
+       gets bumped to 'drill-flow' so subsequent renders fall through to
+       the legacy reader (Stage D will replace). */
+    function renderFRStep6(lang, story, progress) {
+      // Auto-promote on first render of step 6.
+      if (progress.phase === 'first-read') {
+        setStoryProgress(lang.id, story.id, {
+          phase: 'drill-flow',
+          firstReadDone: true
+        });
+      }
+      return `
+        ${frStepPill(6)}
+        <div class="glass fr-celebrate">
+          <div class="fr-celebrate-icon">✦</div>
+          <div class="fr-celebrate-title gradient-text">First read complete</div>
+          <div class="fr-celebrate-msg">The drill flow is now unlocked. Come back tomorrow for the first drill.</div>
+          <button class="gradient-btn full-btn" data-fr-finish="1">Back to library</button>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       DRILL FLOW — Stage D. Six gated drills per UX spec §5. Each drill
+       has a linear queue + completion check; finishing all six promotes
+       the story to free-practice and unlocks the next story.
+       Drill 1: vocab recognition (SRS)
+       Drill 2: vocab production (EN→IT typed)
+       Drill 3: sentence assembly (word tiles)
+       Drill 4: dictation (TTS → type)
+       Drill 5: rule spotting (multi-choice)
+       Drill 6: transfer test (tier 1, with mastery threshold)
+       ============================================================ */
+
+    const DRILL_NAMES = {
+      1: 'Vocab recognition',
+      2: 'Vocab production',
+      3: 'Sentence assembly',
+      4: 'Dictation',
+      5: 'Rule spotting',
+      6: 'Transfer test'
+    };
+
+    // Drill 1 mastery: 3 successful reviews + interval ≥ 3 days (per spec §7.1).
+    const DRILL1_MIN_REPS = 3;
+    const DRILL1_MIN_INTERVAL_DAYS = 3;
+    // Drill 2: each word answered correctly twice in a row.
+    const DRILL2_REQUIRED_STREAK = 2;
+
+    /* ----- Submission normalization (drills 2 + 4 per spec §5) -----
+       Strip diacritics, apostrophes, collapse whitespace, lowercase. */
+    function normalizeForDrill(s) {
+      return String(s || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')        // strip combining diacritics
+        .replace(/['’‘`]/g, '')       // strip apostrophes (incl. curly)
+        .replace(/[.,!?;:"()«»\[\]{}]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+    // Loose-equality check: matches even if learner skipped accents/apostrophes.
+    function drillAnswerMatches(submitted, expected) {
+      return normalizeForDrill(submitted) === normalizeForDrill(expected);
+    }
+    // Diacritic-only difference (for soft-correct messages).
+    function drillSpellingDiffers(submitted, expected) {
+      return submitted.trim() !== expected.trim() &&
+             drillAnswerMatches(submitted, expected);
+    }
+
+    /* ----- Drill 1 mastery check ----- */
+    function drill1Mastered(langId, storyId) {
+      const story = getStory(langId, storyId);
+      if (!story) return false;
+      const vocab = Array.isArray(story.vocabulary) ? story.vocabulary : [];
+      if (!vocab.length) return true;
+      const minMs = DRILL1_MIN_INTERVAL_DAYS * 86400000;
+      for (let i = 0; i < vocab.length; i++) {
+        const cardId = `${langId}::${storyId}::vocab::${i}`;
+        const c = state.cards[cardId];
+        if (!c) return false;
+        if (c.reps < DRILL1_MIN_REPS) return false;
+        // SM-2 interval is in days here; convert and compare.
+        if ((c.interval || 0) < DRILL1_MIN_INTERVAL_DAYS) return false;
+      }
+      return true;
+    }
+
+    /* ----- Drill flow top bar ----- */
+    function drillTopBar(currentDrill, drillsDone) {
+      const dots = [1,2,3,4,5,6].map(n => {
+        const cls = drillsDone[n] ? 'done' : (n === currentDrill ? 'current' : '');
+        return `<span class="drill-dot ${cls}" title="Drill ${n}: ${escapeHtml(DRILL_NAMES[n])}">${drillsDone[n] ? '✓' : n}</span>`;
+      }).join('');
+      return `
+        <div class="fr-top-row">
+          <div class="fr-step-pill">Drill ${currentDrill} of 6 · ${escapeHtml(DRILL_NAMES[currentDrill])}</div>
+          <button class="ghost-btn fr-exit-btn" data-fr-exit="1">Save &amp; exit</button>
+        </div>
+        <div class="drill-track">${dots}</div>
+      `;
+    }
+
+    /* ----- Drill flow dispatcher ----- */
+    function renderDrillFlow(lang, story, progress) {
+      // If drill 6 already passed, the phase should be free-practice;
+      // safety net here re-checks and promotes if state lagged.
+      if (progress.drillsDone[6]) {
+        setStoryProgress(lang.id, story.id, { phase: 'free-practice' });
+        return renderReadLegacy(lang, story);
+      }
+      // Auto-skip past completed drills. If currentDrill is marked done,
+      // bump to the next pending.
+      let cur = progress.currentDrill || 1;
+      while (cur < 6 && progress.drillsDone[cur]) cur++;
+      if (cur !== progress.currentDrill) {
+        setStoryProgress(lang.id, story.id, { currentDrill: cur });
+        progress.currentDrill = cur;
+      }
+
+      const top = drillTopBar(cur, progress.drillsDone);
+      const body =
+        cur === 1 ? renderDrill1(lang, story, progress) :
+        cur === 2 ? renderDrill2(lang, story, progress) :
+        cur === 3 ? renderDrill3(lang, story, progress) :
+        cur === 4 ? renderDrill4(lang, story, progress) :
+        cur === 5 ? renderDrill5(lang, story, progress) :
+                    renderDrill6(lang, story, progress);
+      return top + body;
+    }
+
+    /* ============================================================
+       DRILL 1 — Vocab recognition. Card-based SRS using existing
+       sentence/vocab card infrastructure, locked to vocabulary +
+       speak mode. Done when every vocab card has reps ≥ 3 and
+       interval ≥ 3 days.
+       ============================================================ */
+    function renderDrill1(lang, story, progress) {
+      // Mastery met → mark drill done + advance.
+      if (drill1Mastered(lang.id, story.id)) {
+        if (!progress.drillsDone[1]) {
+          progress.drillsDone[1] = true;
+          progress.currentDrill = 2;
+          saveState();
+        }
+        return renderDrillCompleteCard(1, 'Vocab recognized — every word has settled into your memory.');
+      }
+
+      // Reuse the existing card-session machinery for queue + grading.
+      const session = ensureCardSession(lang.id, story.id, 'speak', 'vocabulary');
+
+      // Queue empty after wrong-pile rotation → "come back" message.
+      if (session.queue.length === 0 && session.wrongPile.length === 0) {
+        const remaining = countDrill1Remaining(lang.id, story.id);
+        return `
+          <div class="glass drill-empty">
+            <div class="drill-empty-icon">⏳</div>
+            <div class="drill-empty-title">No cards due right now.</div>
+            <div class="drill-empty-msg">Come back later — ${remaining} ${remaining === 1 ? 'word' : 'words'} still building toward mastery.</div>
+            <button class="ghost-btn full-btn" data-fr-exit="1">Save &amp; exit</button>
+          </div>
+        `;
+      }
+      // End-of-batch — rotate wrongPile or finish.
+      if (session.idx >= session.queue.length) {
+        if (session.wrongPile.length > 0) {
+          session.queue = session.queue.concat(session.wrongPile);
+          session.wrongPile = [];
+        } else {
+          // Today's session done; mastery may still be incomplete though.
+          const remaining = countDrill1Remaining(lang.id, story.id);
+          return `
+            <div class="glass session-end">
+              <div class="se-title gradient-text">✅ Session done</div>
+              <div class="se-sub">${remaining} ${remaining === 1 ? 'word' : 'words'} still building toward drill mastery — come back later.</div>
+              <button class="ghost-btn full-btn" data-fr-exit="1">Save &amp; exit</button>
+            </div>
+          `;
+        }
+      }
+
+      const card = session.queue[session.idx];
+      const content = getCardContent(card.id, story);
+      if (!content) {
+        return `<div class="glass empty-state">Card data missing.</div>`;
+      }
+      const progressLine = drill1ProgressLine(lang.id, story.id);
+      return `
+        <div class="drill-progress-line">${progressLine}</div>
+        ${renderCardsSpeak(session, card, content)}
+      `;
+    }
+
+    function countDrill1Remaining(langId, storyId) {
+      const story = getStory(langId, storyId);
+      const vocab = Array.isArray(story.vocabulary) ? story.vocabulary : [];
+      let pending = 0;
+      for (let i = 0; i < vocab.length; i++) {
+        const cardId = `${langId}::${storyId}::vocab::${i}`;
+        const c = state.cards[cardId];
+        if (!c || c.reps < DRILL1_MIN_REPS || (c.interval || 0) < DRILL1_MIN_INTERVAL_DAYS) pending++;
+      }
+      return pending;
+    }
+    function drill1ProgressLine(langId, storyId) {
+      const story = getStory(langId, storyId);
+      const vocab = Array.isArray(story.vocabulary) ? story.vocabulary : [];
+      let mastered = 0;
+      for (let i = 0; i < vocab.length; i++) {
+        const cardId = `${langId}::${storyId}::vocab::${i}`;
+        const c = state.cards[cardId];
+        if (c && c.reps >= DRILL1_MIN_REPS && (c.interval || 0) >= DRILL1_MIN_INTERVAL_DAYS) mastered++;
+      }
+      return `${mastered} / ${vocab.length} words mastered`;
+    }
+
+    /* ============================================================
+       DRILL 2 — Vocab production. EN → IT typed answer for every new
+       vocab word. Each word must be answered correctly twice in a row.
+       Wrong answers reset the streak and re-queue the word.
+       ============================================================ */
+    function renderDrill2(lang, story, progress) {
+      const vocab = getNewVocab(story);
+      if (!vocab.length) {
+        // Nothing to drill — auto-pass.
+        progress.drillsDone[2] = true;
+        progress.currentDrill = 3;
+        saveState();
+        return renderDrillCompleteCard(2, 'No new vocab to drill — moving on.');
+      }
+      const d2 = progress.drill2;
+      if (!d2.queue || !d2.queue.length) {
+        // Initialize queue: shuffled vocab indices.
+        d2.queue = shuffleArray(vocab.map((_, i) => i));
+        d2.streak = {};
+        d2.idx = 0;
+        d2.lastInput = '';
+        d2.revealed = false;
+        saveState();
+      }
+      const widx = d2.queue[d2.idx];
+      const v = vocab[widx];
+      if (!v) return `<div class="glass empty-state">Vocab missing.</div>`;
+
+      const remaining = d2.queue.length;
+      const total = vocab.length;
+      const completed = total - countRemainingDrill2(d2, vocab);
+      const progressLine = `${completed} / ${total} words mastered (need ${DRILL2_REQUIRED_STREAK} in a row each)`;
+
+      if (!d2.revealed) {
+        return `
+          <div class="drill-progress-line">${progressLine}</div>
+          <div class="glass card-pane">
+            <div class="big-sentence gradient-text">${escapeHtml(v.en)}</div>
+            <textarea class="type-area" id="d2-input"
+              placeholder="Type the ${escapeHtml(targetLangNameLower())} word..."
+              autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">${escapeHtml(d2.lastInput || '')}</textarea>
+            <button class="gradient-btn full-btn" id="btn-d2-check">Check</button>
+          </div>
+        `;
+      }
+
+      // Reveal pane.
+      const expected = v.de || '';
+      const submitted = d2.lastInput || '';
+      const exact = submitted.trim() === expected.trim();
+      const loose = drillAnswerMatches(submitted, expected);
+      const banner = exact
+        ? `<div class="feedback ok">✅ Exact match</div>`
+        : loose
+          ? `<div class="feedback almost">🟡 Correct! Spelled <strong>${escapeHtml(expected)}</strong>, mind the accents.</div>`
+          : `<div class="feedback bad">❌ Not quite</div>`;
+      const speakText = vocabSpeakText(v);
+      return `
+        <div class="drill-progress-line">${progressLine}</div>
+        <div class="glass card-pane">
+          ${banner}
+          <div class="big-sentence gradient-text">${escapeHtml(expected)}</div>
+          <div class="audio-row">
+            <button class="audio-btn" data-fr-speak="${escapeHtml(speakText)}">🔊 ${speakLabelForActive()}</button>
+          </div>
+          ${v.note ? `<div class="note-callout">${escapeHtml(v.note)}</div>` : ''}
+          <button class="gradient-btn full-btn" id="btn-d2-next">Next →</button>
+        </div>
+      `;
+    }
+    function countRemainingDrill2(d2, vocab) {
+      let pending = 0;
+      for (let i = 0; i < vocab.length; i++) {
+        if ((d2.streak[i] || 0) < DRILL2_REQUIRED_STREAK) pending++;
+      }
+      return pending;
+    }
+
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    /* ============================================================
+       DRILL 3 — Sentence assembly. Scrambled tiles per sentence with
+       2 distractor tiles drawn from the story's vocab. Pass requires
+       correct first attempt; failed sentences re-queue.
+       ============================================================ */
+    function renderDrill3(lang, story, progress) {
+      const sentences = Array.isArray(story.sentences) ? story.sentences : [];
+      if (!sentences.length) {
+        progress.drillsDone[3] = true;
+        progress.currentDrill = 4;
+        saveState();
+        return renderDrillCompleteCard(3, 'No sentences to assemble.');
+      }
+      const d3 = progress.drill3;
+      if (!d3.queue || !d3.queue.length) {
+        d3.queue = shuffleArray(sentences.map((_, i) => i));
+        d3.retried = {};
+        d3.idx = 0;
+        d3.tiles = null;
+        saveState();
+      }
+      const sidx = d3.queue[d3.idx];
+      const s = sentences[sidx];
+      if (!s) return `<div class="glass empty-state">Sentence missing.</div>`;
+
+      const target = substituteProtagonist(String(s.de || ''));
+      // Build tiles once per sentence and stash on the in-progress state.
+      if (!d3.tiles || d3.tiles.sidx !== sidx) {
+        const words = target.split(/\s+/).filter(Boolean);
+        const distractors = pickDistractors(story, words, 2);
+        const all = shuffleArray(words.concat(distractors));
+        d3.tiles = {
+          sidx,
+          target,
+          targetWords: words,
+          tiles: all,                // displayed
+          assembled: [],             // user picks (indices into tiles)
+          available: all.map((_, i) => i),
+          checked: false,
+          correct: false
+        };
+      }
+      const t = d3.tiles;
+
+      const remainingCount = d3.queue.length - d3.idx;
+      const totalCount = sentences.length;
+      const progressLine = `Sentence ${d3.idx + 1} / ${d3.queue.length} this round · ${totalCount} total`;
+
+      const assembledHtml = t.assembled.length
+        ? t.assembled.map((tileIdx, i) =>
+            `<button class="word-tile assembled" data-d3-unpick="${i}">${escapeHtml(t.tiles[tileIdx])}</button>`
+          ).join('')
+        : `<span class="word-tile-placeholder">tap tiles to build the sentence</span>`;
+
+      const availableHtml = t.available.map(tileIdx =>
+        `<button class="word-tile" data-d3-pick="${tileIdx}">${escapeHtml(t.tiles[tileIdx])}</button>`
+      ).join('');
+
+      const banner = t.checked
+        ? (t.correct
+            ? `<div class="feedback ok">✅ Perfect</div>`
+            : `<div class="feedback bad">❌ Not quite — the right answer was:<br><strong>${escapeHtml(target)}</strong></div>`)
+        : '';
+
+      const englishHint = `<div class="d3-hint">${escapeHtml(s.en || '')}</div>`;
+
+      const ctrlHtml = t.checked
+        ? `<button class="gradient-btn full-btn" id="btn-d3-next">Next →</button>`
+        : `
+          <div class="btn-row">
+            <button class="ghost-btn" id="btn-d3-clear">Clear</button>
+            <button class="gradient-btn" id="btn-d3-check" ${t.assembled.length ? '' : 'disabled'} style="flex:2">Check</button>
+          </div>
+        `;
+
+      return `
+        <div class="drill-progress-line">${progressLine}</div>
+        <div class="glass d3-pane">
+          ${englishHint}
+          <div class="d3-assembled">${assembledHtml}</div>
+          ${banner}
+          ${!t.checked ? `<div class="d3-tiles">${availableHtml}</div>` : ''}
+          ${ctrlHtml}
+        </div>
+      `;
+    }
+
+    function pickDistractors(story, sentenceWords, n) {
+      const have = new Set(sentenceWords.map(w => w.toLowerCase()));
+      const pool = [];
+      const vocab = Array.isArray(story.vocabulary) ? story.vocabulary : [];
+      vocab.forEach(v => {
+        const w = String(v.de || '').trim();
+        if (w && !have.has(w.toLowerCase())) pool.push(w);
+      });
+      // Also pull individual words from other sentences as backup pool.
+      (story.sentences || []).forEach(s => {
+        substituteProtagonist(String(s.de || '')).split(/\s+/).forEach(w => {
+          const clean = w.replace(/[.,!?;:"()«»]/g, '');
+          if (clean && !have.has(clean.toLowerCase())) pool.push(clean);
+        });
+      });
+      const unique = Array.from(new Set(pool));
+      return shuffleArray(unique).slice(0, n);
+    }
+
+    /* ============================================================
+       DRILL 4 — Dictation. TTS plays a sentence; learner types it.
+       Replay is free. Same normalization as drill 2.
+       ============================================================ */
+    function renderDrill4(lang, story, progress) {
+      const sentences = Array.isArray(story.sentences) ? story.sentences : [];
+      if (!sentences.length) {
+        progress.drillsDone[4] = true;
+        progress.currentDrill = 5;
+        saveState();
+        return renderDrillCompleteCard(4, 'No sentences to transcribe.');
+      }
+      const d4 = progress.drill4;
+      if (!d4.queue || !d4.queue.length) {
+        d4.queue = shuffleArray(sentences.map((_, i) => i));
+        d4.doneSet = {};
+        d4.idx = 0;
+        d4.lastInput = '';
+        d4.revealed = false;
+        saveState();
+      }
+      const sidx = d4.queue[d4.idx];
+      const s = sentences[sidx];
+      if (!s) return `<div class="glass empty-state">Sentence missing.</div>`;
+      const expected = substituteProtagonist(String(s.de || ''));
+
+      const total = sentences.length;
+      const completed = Object.keys(d4.doneSet).length;
+      const progressLine = `${completed} / ${total} dictated`;
+
+      if (!d4.revealed) {
+        return `
+          <div class="drill-progress-line">${progressLine}</div>
+          <div class="glass card-pane d4-pane">
+            <div class="d4-instructions">Listen and type what you hear.</div>
+            <div class="audio-row">
+              <button class="audio-btn big" data-fr-speak="${escapeHtml(expected)}">🔊 Play</button>
+            </div>
+            <textarea class="type-area" id="d4-input"
+              placeholder="Type the ${escapeHtml(targetLangNameLower())} sentence..."
+              autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">${escapeHtml(d4.lastInput || '')}</textarea>
+            <button class="gradient-btn full-btn" id="btn-d4-check">Check</button>
+          </div>
+        `;
+      }
+
+      const submitted = d4.lastInput || '';
+      const exact = submitted.trim() === expected.trim();
+      const loose = drillAnswerMatches(submitted, expected);
+      const banner = exact
+        ? `<div class="feedback ok">✅ Exact match</div>`
+        : loose
+          ? `<div class="feedback almost">🟡 Correct! Spelling: <strong>${escapeHtml(expected)}</strong></div>`
+          : `<div class="feedback bad">❌ Compare carefully</div>`;
+      return `
+        <div class="drill-progress-line">${progressLine}</div>
+        <div class="glass card-pane d4-pane">
+          ${banner}
+          <div class="big-sentence gradient-text">${escapeHtml(expected)}</div>
+          <div class="audio-row">
+            <button class="audio-btn" data-fr-speak="${escapeHtml(expected)}">🔊 Replay</button>
+          </div>
+          <button class="gradient-btn full-btn" id="btn-d4-next">Next →</button>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       DRILL 5 — Rule spotting. Spec calls for tapping rule-relevant
+       tokens inside story sentences, which needs sentence-rule
+       tagging the current schema doesn't carry. v1 fallback: walk the
+       learner through each new rule (name + explanation + examples
+       when present) and require a "Got it" tap to advance. Once we
+       have rule-tagged sentences in story JSON we'll upgrade this
+       drill to true token-tap spotting.
+       ============================================================ */
+    function renderDrill5(lang, story, progress) {
+      const rules = getNewGrammar(story);
+      if (!rules.length) {
+        progress.drillsDone[5] = true;
+        progress.currentDrill = 6;
+        saveState();
+        return renderDrillCompleteCard(5, 'No new rules to review.');
+      }
+      const d5 = progress.drill5;
+      if (!d5.queue || !d5.queue.length) {
+        d5.queue = rules.map((_, i) => i);  // preserve story order
+        d5.results = {};
+        d5.idx = 0;
+        d5.picked = null;
+        saveState();
+      }
+      const ridx = d5.queue[d5.idx];
+      const rule = rules[ridx];
+      if (!rule) return `<div class="glass empty-state">Rule missing.</div>`;
+
+      const total = rules.length;
+      const confirmed = Object.values(d5.results).filter(v => v === true).length;
+
+      return `
+        <div class="drill-progress-line">${confirmed} / ${total} rules reviewed</div>
+        ${renderRuleCard(rule, rule.tier || 1)}
+        <button class="gradient-btn full-btn" id="btn-d5-next" style="margin-top: 12px;">Got it →</button>
+      `;
+    }
+
+    /* ============================================================
+       DRILL 6 — Transfer test. Tier-1 only. Mastery threshold:
+       ≥80% over max(15, 7 × rules_introduced) first-attempts (§7.2).
+       Reuses the existing test session machinery, filtered to tier 1.
+       ============================================================ */
+    function renderDrill6(lang, story, progress) {
+      const tier1Tests = (story.grammarTests || []).filter(t => t.tier === 1);
+      if (!tier1Tests.length) {
+        // No tier-1 tests defined — auto-pass.
+        progress.drillsDone[6] = true;
+        progress.unlocked = true;
+        saveState();
+        promoteStoryToFreePractice(lang.id, story.id);
+        return renderDrillCompleteCard(6, 'No tier-1 tests defined — story marked complete.');
+      }
+      const rulesIntroduced = (story.grammarRules || []).filter(r => r.tier === 1).length;
+      const required = Math.max(15, 7 * Math.max(1, rulesIntroduced));
+      const stats = getDrill6Stats(lang.id, story.id, tier1Tests);
+      const accuracy = stats.firstAttempts > 0 ? Math.round((stats.correctOnFirst / stats.firstAttempts) * 100) : 0;
+      const thresholdMet = stats.firstAttempts >= required && accuracy >= 80;
+
+      if (thresholdMet) {
+        progress.drillsDone[6] = true;
+        progress.unlocked = true;
+        saveState();
+        promoteStoryToFreePractice(lang.id, story.id);
+        return renderDrill6Celebration(lang, story);
+      }
+
+      // Build / reuse a test session. The existing testSession machinery
+      // records first-attempts in state.testAttempts via the same path
+      // as the regular Test tab; we just keep the user on tier 1.
+      const needNew = !testSession ||
+        testSession.langId !== lang.id ||
+        testSession.storyId !== story.id ||
+        testSession.tier !== 1;
+      if (needNew) {
+        const queue = buildTestQueue(lang.id, story.id, 1);
+        testSession = {
+          langId: lang.id, storyId: story.id, tier: 1,
+          queue, idx: 0, wrongPile: [],
+          revealed: false, lastInput: '',
+          correctOnFirst: 0, totalThisSession: queue.length,
+          prevNextTierUnlocked: tierUnlocked(2, lang.id, story.id)
+        };
+      }
+
+      const progressLine = `${stats.firstAttempts} / ${required} first-attempts · ${accuracy}% accuracy (need ≥80%)`;
+
+      if (!testSession || !testSession.queue || !testSession.queue.length) {
+        return `
+          <div class="drill-progress-line">${progressLine}</div>
+          <div class="glass drill-empty">
+            <div class="drill-empty-icon">🎯</div>
+            <div class="drill-empty-title">No tier-1 prompts queued.</div>
+            <div class="drill-empty-msg">Try again later — every test has been seen recently.</div>
+            <button class="ghost-btn full-btn" data-fr-exit="1">Save &amp; exit</button>
+          </div>
+        `;
+      }
+
+      // Reuse the existing in-tab test renderer; it already handles
+      // type+choose-article modes and grading.
+      return `
+        <div class="drill-progress-line">${progressLine}</div>
+        ${renderTestSession(story, lang)}
+      `;
+    }
+
+    function getDrill6Stats(langId, storyId, tier1Tests) {
+      // testAttempts records carry: firstAttempts (count) +
+      // firstAttemptsCorrect (count of correct first answers).
+      let firstAttempts = 0;
+      let correctOnFirst = 0;
+      tier1Tests.forEach((t, idx) => {
+        const key = `${langId}::${storyId}::tier1::builtin::${idx}`;
+        const a = state.testAttempts[key];
+        if (!a) return;
+        firstAttempts += a.firstAttempts || 0;
+        correctOnFirst += a.firstAttemptsCorrect || 0;
+      });
+      return { firstAttempts, correctOnFirst };
+    }
+
+    function renderDrill6Celebration(lang, story) {
+      const nextStoryId = findNextStoryId(lang, story.id);
+      const ctaLabel = nextStoryId ? 'Open the next story' : 'Back to library';
+      return `
+        <div class="glass fr-celebrate">
+          <div class="fr-celebrate-icon">🎉</div>
+          <div class="fr-celebrate-title gradient-text">Story complete</div>
+          <div class="fr-celebrate-msg">
+            ${nextStoryId
+              ? 'You hit the tier-1 mastery threshold. The next chapter just unlocked.'
+              : 'You hit the tier-1 mastery threshold. Free practice for this story is now open in the library.'}
+          </div>
+          <button class="gradient-btn full-btn" data-d6-next="${escapeHtml(nextStoryId || '')}">${ctaLabel}</button>
+        </div>
+      `;
+    }
+
+    function findNextStoryId(lang, storyId) {
+      const list = lang.stories || [];
+      const idx = list.indexOf(storyId);
+      if (idx < 0 || idx >= list.length - 1) return null;
+      return list[idx + 1];
+    }
+
+    function promoteStoryToFreePractice(langId, storyId) {
+      // Phase transition + clear ephemeral session so other tabs render
+      // a clean slate against the post-drill state.
+      const lang = state.languages[langId];
+      if (lang && lang.storyProgress && lang.storyProgress[storyId]) {
+        lang.storyProgress[storyId].phase = 'free-practice';
+      }
+      cardSession = null;
+      testSession = null;
+      saveState();
+    }
+
+    /* ----- Generic "drill complete" pane (shown briefly between drills) ----- */
+    function renderDrillCompleteCard(n, msg) {
+      const next = n + 1;
+      const isLast = n >= 6;
+      return `
+        <div class="glass drill-complete">
+          <div class="drill-complete-icon">✓</div>
+          <div class="drill-complete-title gradient-text">Drill ${n} done</div>
+          <div class="drill-complete-msg">${escapeHtml(msg)}</div>
+          ${isLast
+            ? `<button class="gradient-btn full-btn" data-fr-exit="1">Back to library</button>`
+            : `<button class="gradient-btn full-btn" data-d-advance="${next}">Start drill ${next} →</button>`}
+        </div>
       `;
     }
 
@@ -4133,12 +6203,39 @@
     }
 
     /* `content` is { type: 'sentence' | 'vocab', item, idx } from
-       getCardContent(). For vocab the German text is the bare word;
-       audio playback prefixes the gender so 'Kaffee' speaks as 'der
-       Kaffee'. */
+       getCardContent(). For vocab the target text is the bare word;
+       audio playback prefixes a real article so the noun reads naturally.
+       German vocabulary stores the article itself (der/die/das) — passed
+       through as-is. Italian stores m/f markers — those are letters TTS
+       would pronounce ("eme lago"), so we derive the right article and
+       splice it in. */
     function vocabSpeakText(item) {
-      if (item.gender) return `${item.gender} ${item.de}`;
-      return item.de;
+      const word = String(item.de || '').trim();
+      if (!item.gender) return word;
+      const g = String(item.gender).trim();
+
+      // Multi-char gender = the article itself (German style). Use as-is.
+      if (g.length > 1) return `${g} ${word}`;
+
+      // Single-letter gender (m/f) — Italian convention. Build the article.
+      const lang = getActiveLang();
+      if (lang && lang.id === 'it') {
+        const lower = word.toLowerCase();
+        const startsWithVowel = /^[aeiouàèéìòù]/.test(lower);
+        const startsWithSpecialMasc = /^(s[bcdfghjklmnpqrstvwxz]|z|ps|gn|x|y)/.test(lower);
+        if (g === 'm') {
+          if (startsWithVowel) return `l'${word}`;
+          if (startsWithSpecialMasc) return `lo ${word}`;
+          return `il ${word}`;
+        }
+        if (g === 'f') {
+          if (startsWithVowel) return `l'${word}`;
+          return `la ${word}`;
+        }
+      }
+      // Unknown short gender for unknown lang — speak the bare word
+      // rather than the letter ("eme") which sounds wrong.
+      return word;
     }
     function renderVocabPosTag(item) {
       if (!item.pos) return '';
@@ -4165,9 +6262,10 @@
       const posTag = content.type === 'vocab' ? renderVocabPosTag(item) : '';
 
       if (!session.revealed) {
+        const targetName = targetLangNameLower();
         const placeholder = content.type === 'vocab'
-          ? 'Type the German word...'
-          : 'Type your German translation...';
+          ? `Type the ${targetName} word...`
+          : `Type your ${targetName} translation...`;
         return `
           <div class="glass card-pane">
             ${posTag}
@@ -4195,7 +6293,7 @@
           ${banner}
           ${answerBlock}
           <div class="audio-row">
-            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 DE</button>
+            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 ${speakLabelForActive()}</button>
           </div>
           ${posTag}
           ${item.note ? `<div class="note-callout">${escapeHtml(item.note)}</div>` : ''}
@@ -4215,9 +6313,10 @@
       const posTag = content.type === 'vocab' ? renderVocabPosTag(item) : '';
 
       if (!session.flipped) {
+        const targetName = targetLangNameLower();
         const hint = content.type === 'vocab'
-          ? 'Say the German word aloud, then tap to flip'
-          : 'Say it aloud in German, then tap to flip';
+          ? `Say the ${targetName} word aloud, then tap to flip`
+          : `Say it aloud in ${targetName}, then tap to flip`;
         return `
           <div class="glass card-pane flip-card" id="flip-card">
             ${posTag}
@@ -4236,7 +6335,7 @@
         <div class="glass card-pane flip-card" id="flip-card">
           ${answerBlock}
           <div class="audio-row">
-            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 DE</button>
+            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 ${speakLabelForActive()}</button>
           </div>
           <div style="font-size: 14px; color: var(--text-dim); text-align: center; margin-top: 4px;">
             ${escapeHtml(item.en)}
@@ -4286,7 +6385,7 @@
               <div class="bt-de">${genderHtml}${escapeHtml(item.de)}</div>
               <div class="bt-en">${escapeHtml(item.en || '')}</div>
               <div class="bt-meta">${meta}${plural}</div>
-              <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 DE</button>
+              <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(speakText)}">🔊 ${speakLabelForActive()}</button>
             </div>
           `;
         }
@@ -4296,7 +6395,7 @@
             <div class="bt-idx">#${i + 1}</div>
             <div class="bt-de">${escapeHtml(item.de)}</div>
             <div class="bt-en">${escapeHtml(item.en)}</div>
-            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(item.de)}">🔊 DE</button>
+            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(item.de)}">🔊 ${speakLabelForActive()}</button>
           </div>
         `;
       }).join('');
@@ -4448,8 +6547,25 @@
       }
 
       const t = ts.queue[ts.idx];
+      const isMultiple = t._type === 'choose-article' && Array.isArray(t._options);
+      const targetLangLabel = (lang.name || 'target').toLowerCase();
 
       if (!ts.revealed) {
+        if (isMultiple) {
+          // Multiple-choice: render options as buttons; clicking submits.
+          const optsHtml = t._options.map((opt, i) =>
+            `<button class="ghost-btn full-btn" style="margin: 4px 0;" data-test-option="${escapeHtml(opt)}">${escapeHtml(opt)}</button>`
+          ).join('');
+          return `
+            <div class="glass card-pane">
+              <div style="text-align: center; margin-bottom: 12px;">
+                <span class="rule-tag">${escapeHtml(t.rule)}</span>
+              </div>
+              <div class="big-sentence gradient-text">${escapeHtml(t.en)}</div>
+              <div style="margin-top: 8px;">${optsHtml}</div>
+            </div>
+          `;
+        }
         return `
           <div class="glass card-pane">
             <div style="text-align: center; margin-bottom: 12px;">
@@ -4457,15 +6573,19 @@
             </div>
             <div class="big-sentence gradient-text">${escapeHtml(t.en)}</div>
             <textarea class="type-area" id="test-input"
-              placeholder="Type your German translation..."
+              placeholder="Type your ${escapeHtml(targetLangLabel)} translation..."
               autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false">${escapeHtml(ts.lastInput || '')}</textarea>
             <button class="gradient-btn full-btn" id="btn-test-check">Check</button>
           </div>
         `;
       }
 
+      // Reveal pane — same for free-text and multiple-choice. The grader
+      // (gradeTestAnswer) already used the right comparison for both.
       const dist = levenshtein(normalize(ts.lastInput || ''), normalize(t.de));
-      const ok = dist <= 2;
+      const ok = isMultiple
+        ? (ts.lastInput || '').trim() === t.de.trim()
+        : dist <= 2;
       const banner = ok
         ? `<div class="feedback ok">✅ Correct</div>`
         : `<div class="feedback bad">❌ Not quite</div>`;
@@ -4477,7 +6597,7 @@
           </div>
           <div class="big-sentence gradient-text">${escapeHtml(t.de)}</div>
           <div class="audio-row">
-            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(t.de)}">🔊 DE</button>
+            <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(t.de)}">🔊 ${speakLabelForActive()}</button>
           </div>
           ${t.trap ? `<div class="trap-callout">⚠️ ${escapeHtml(t.trap)}</div>` : ''}
           <button class="gradient-btn full-btn" id="btn-test-next" style="margin-top: 14px;">Next</button>
@@ -4493,16 +6613,58 @@
       const isAdmin = me && me.role === 'admin';
       const sections = [
         renderSettingsAccount(),
+        renderSettingsBackground(),
         isAdmin ? renderSettingsUsers() : '',
         renderSettingsStudy(),
-        // Languages / Stories management is admin-only — uploads affect
-        // every user's library, deletions wipe their progress, etc.
-        isAdmin ? renderSettingsLanguages() : '',
+        // Theme/cover edits live on each user's own language record, so
+        // the section is visible to everyone; the Add/Delete buttons are
+        // admin-gated inside renderSettingsLanguages.
+        renderSettingsLanguages(),
+        // Story import/delete still admin-only — affects every profile.
         isAdmin ? renderSettingsStories() : '',
         renderSettingsBackup(),
         isAdmin ? renderSettingsReset() : ''
       ];
       return sections.join('');
+    }
+
+    /* Per-user wallpaper. Image data URL lives in state.settings.bgImage,
+       overlay darkness in state.settings.bgOverlay (0..0.85). The image
+       is downsized (1280×720 max) before storage to keep localStorage
+       within budget. */
+    function renderSettingsBackground() {
+      const s = state.settings;
+      const hasBg = !!s.bgImage;
+      const overlay = s.bgOverlay == null ? 0.5 : Number(s.bgOverlay);
+      const overlayPct = Math.round(overlay * 100);
+      const previewStyle = hasBg
+        ? `background-image: linear-gradient(rgba(0,0,0,${overlay}), rgba(0,0,0,${overlay})), url('${escapeHtml(s.bgImage)}');`
+        : '';
+      return `
+        <div class="glass section-card">
+          <div class="section-title gradient-text">Background</div>
+          <div class="section-sub">${hasBg ? 'Custom wallpaper set' : 'Using default theme background'}</div>
+
+          <div class="bg-preview ${hasBg ? '' : 'empty'}" style="${previewStyle}">
+            ${hasBg ? '' : '<span class="bg-empty-hint">No image set</span>'}
+          </div>
+
+          <div class="form-row" style="margin-top: 14px; ${hasBg ? '' : 'opacity:0.5; pointer-events:none;'}">
+            <div class="lbl">
+              <span>Darken overlay</span>
+              <span class="val" id="bg-overlay-val">${overlayPct}%</span>
+            </div>
+            <input type="range" id="bg-overlay" min="0" max="85" step="5" value="${overlayPct}"
+              style="width:100%; accent-color: var(--accent);">
+            <div class="meta" style="margin-top:6px;">Higher values keep text readable on bright photos.</div>
+          </div>
+
+          <div class="btn-row" style="margin-top: 12px;">
+            <button class="gradient-btn" id="btn-set-bg" style="flex:1">${hasBg ? 'Change Image' : 'Upload Image'}</button>
+            ${hasBg ? `<button class="ghost-btn" id="btn-clear-bg" style="flex:1">Remove</button>` : ''}
+          </div>
+        </div>
+      `;
     }
 
     function renderSettingsAccount() {
@@ -4622,6 +6784,8 @@
     }
 
     function renderSettingsLanguages() {
+      const me = getActiveUser(rawState);
+      const isAdmin = me && me.role === 'admin';
       const langs = Object.values(state.languages);
       const active = getActiveLang();
       const builtinIds = new Set(Object.keys(BUILTIN_LANGUAGES));
@@ -4649,7 +6813,7 @@
               </div>
               <div class="actions">
                 ${!isActive ? `<button class="small-btn" data-set-active-lang="${escapeHtml(l.id)}">Set Active</button>` : ''}
-                ${(!isActive && !isBuiltin) ? `<button class="small-btn danger" data-delete-lang="${escapeHtml(l.id)}">Delete</button>` : ''}
+                ${(isAdmin && !isActive && !isBuiltin) ? `<button class="small-btn danger" data-delete-lang="${escapeHtml(l.id)}">Delete</button>` : ''}
               </div>
             </div>
             <div class="form-row" style="margin-top: 10px; margin-bottom: 0;">
@@ -4668,6 +6832,16 @@
                 ${cover ? `<button class="small-btn danger" data-clear-lang-cover="${escapeHtml(l.id)}">Remove</button>` : ''}
               </div>
             </div>
+            ${(l.suggestedProtagonistNames || l.defaultProtagonist) ? `
+            <div class="cover-row">
+              <div class="cover-thumb" style="font-size: 22px;">👤</div>
+              <div class="grow">
+                <div class="meta" style="margin-top: 0;">Protagonist: <strong>${escapeHtml(l.protagonistName || l.defaultProtagonist || '—')}</strong></div>
+              </div>
+              <div class="actions">
+                <button class="small-btn" data-set-protagonist="${escapeHtml(l.id)}">Change</button>
+              </div>
+            </div>` : ''}
           </div>
         `;
       }).join('');
@@ -4679,7 +6853,7 @@
 
           <div class="btn-row" style="margin-bottom: 12px;">
             <button class="gradient-btn" id="btn-switch-lang" style="flex:1">Switch Language</button>
-            <button class="gradient-btn" id="btn-add-lang" style="flex:1">Add New Language</button>
+            ${isAdmin ? `<button class="gradient-btn" id="btn-add-lang" style="flex:1">Add New Language</button>` : ''}
           </div>
 
           <div class="row-list">${rows}</div>
@@ -4858,7 +7032,7 @@
               <div class="rule-example">
                 <div class="ex-de">${de}</div>
                 <div class="ex-en">${escapeHtml(ex.en || '')}</div>
-                <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(ex.de || '')}">🔊 DE</button>
+                <button class="audio-btn" data-action="speak-de" data-text="${escapeHtml(ex.de || '')}">🔊 ${speakLabelForActive()}</button>
               </div>
             `;
           }).join('')
@@ -5034,6 +7208,8 @@
       loggedIn = true;
       const lang = getActiveLang();
       if (lang && lang.theme) applyTheme(lang.theme);
+      // Each user has their own wallpaper; reapply on every login.
+      applyBackgroundImage();
       render();
       showToast(`Welcome, ${rawState.users[uid].name}`, 'success');
     }
@@ -5051,6 +7227,89 @@
     function saveStateLocal() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rawState)); }
       catch (e) { console.warn('saveStateLocal failed', e); }
+    }
+
+    /* ============================================================
+       NAME SELECTION SCREEN — full-screen overlay shown the first
+       time the learner taps Start on a story whose language uses
+       {{PROTAGONIST}} substitution.
+       ============================================================ */
+    function openNameSelection(lang, onConfirm) {
+      let root = document.getElementById('name-root');
+      if (!root) {
+        root = document.createElement('div');
+        root.id = 'name-root';
+        document.body.appendChild(root);
+      }
+      document.body.classList.add('name-locked');
+
+      const suggestions = lang.suggestedProtagonistNames || [];
+      const defaultName = lang.defaultProtagonist || (suggestions[0] || '');
+      const genderHint = lang.protagonistGender
+        ? `Names assume ${escapeHtml(lang.protagonistGender)} grammar (the prose uses matching adjective/article agreement).`
+        : '';
+      const svgArt = getDefaultCoverSvg(lang.id) || '';
+
+      const optsHtml = suggestions.map(n =>
+        `<option value="${escapeHtml(n)}" ${n === defaultName ? 'selected' : ''}>${escapeHtml(n)}</option>`
+      ).join('');
+
+      root.innerHTML = `
+        <div class="name-screen">
+          <div class="ns-bg">${svgArt}</div>
+          <div class="ns-overlay"></div>
+          <div class="glass ns-card">
+            <div class="ns-flag">${lang.flag || ''}</div>
+            <div class="ns-title gradient-text">Choose your protagonist's name</div>
+            <div class="ns-sub">${escapeHtml(lang.name)} — every story in this journey will use the name you pick. ${genderHint}</div>
+
+            ${suggestions.length ? `
+              <select id="ns-suggested">
+                ${optsHtml}
+              </select>
+              <div class="ns-or">— or —</div>
+            ` : ''}
+            <input type="text" id="ns-custom" placeholder="Type a custom name" autocapitalize="words" autocorrect="off" spellcheck="false" value="">
+
+            <div class="ns-actions">
+              <button class="ghost-btn" id="ns-cancel" style="flex:1">Cancel</button>
+              <button class="gradient-btn" id="ns-confirm" style="flex:1">Confirm</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const close = () => {
+        document.body.classList.remove('name-locked');
+        const node = document.getElementById('name-root');
+        if (node) node.remove();
+      };
+
+      document.getElementById('ns-cancel').addEventListener('click', close);
+      document.getElementById('ns-confirm').addEventListener('click', () => {
+        const custom = (document.getElementById('ns-custom').value || '').trim();
+        const sel = document.getElementById('ns-suggested');
+        const fromList = sel ? sel.value : '';
+        const chosen = custom || fromList || defaultName;
+        if (!chosen) {
+          showToast('Pick a name or type one', 'error');
+          return;
+        }
+        // Apply across every user (so Sofia & Luka see the same name
+        // for the same language, just like a book.json default).
+        for (const uid in rawState.users) {
+          const userLang = rawState.users[uid].languages?.[lang.id];
+          if (userLang) userLang.protagonistName = chosen;
+        }
+        saveState();
+        close();
+        showToast(`Protagonist set: ${chosen}`, 'success');
+        if (typeof onConfirm === 'function') onConfirm();
+      });
+
+      // Pre-focus the custom input so iPad users can just type.
+      const inp = document.getElementById('ns-custom');
+      if (inp) { try { inp.focus(); } catch {} }
     }
 
     /* ============================================================
@@ -5101,6 +7360,10 @@
       cardSession = null;
       testSession = null;
       state.activeLanguageId = langId;
+      // Reset library nav so a quick language switch doesn't leave the
+      // library showing stories from a different language than the one
+      // selected as active.
+      state.libraryDrilledIn = langId;
       applyTheme(state.languages[langId].theme);
       saveState();
       render();
@@ -5125,11 +7388,62 @@
         });
       });
 
-      // Library "Continue Learning" → open Read tab on that story.
+      // Library top-level: tap a language journey card → drill in.
+      document.querySelectorAll('[data-enter-lang]').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.getAttribute('data-enter-lang');
+          if (!state.languages[id]) return;
+          if (state.activeLanguageId !== id) {
+            switchLanguage(id);          // theme + active swap
+          }
+          state.libraryDrilledIn = id;
+          // Clear ephemeral sessions tied to a different language/story.
+          cardSession = null;
+          testSession = null;
+          saveState();
+          render();
+        });
+      });
+
+      // Drilled-in view: back to top-level language picker.
+      document.querySelectorAll('[data-back-to-langs]').forEach(el => {
+        el.addEventListener('click', () => {
+          state.libraryDrilledIn = null;
+          saveState();
+          render();
+        });
+      });
+
+      // Global Review button (top-level library). Stage E will wire
+      // the real cross-story SRS aggregation; for now, surface a
+      // placeholder toast so the affordance is discoverable.
+      document.querySelectorAll('[data-global-review]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          showToast('Global Review opens in Stage E (cross-story SRS queue).', 'info');
+        });
+      });
+
+      // Story tile "Start / Continue" → open the story. If the language
+      // uses {{PROTAGONIST}} substitution and the user hasn't picked a
+      // name yet, show the name-selection screen first.
       document.querySelectorAll('[data-open-story]').forEach(el => {
         el.addEventListener('click', () => {
           const sid = el.getAttribute('data-open-story');
           const lang = getActiveLang();
+          if (!lang) return;
+          const needsName = !!(
+            (lang.suggestedProtagonistNames && lang.suggestedProtagonistNames.length) ||
+            lang.defaultProtagonist
+          ) && !lang.protagonistName;
+          if (needsName) {
+            openNameSelection(lang, () => {
+              lang.lastStoryId = sid;
+              lang.lastTab = 'read';
+              saveState();
+              render();
+            });
+            return;
+          }
           lang.lastStoryId = sid;
           lang.lastTab = 'read';
           saveState();
@@ -5326,6 +7640,15 @@
           try { ti.focus({ preventScroll: true }); } catch {}
         }
       }
+      // Multi-choice test ("choose-article"): tapping an option records
+      // it as the input and grades immediately.
+      document.querySelectorAll('[data-test-option]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!testSession) return;
+          testSession.lastInput = btn.getAttribute('data-test-option') || '';
+          gradeTestAnswer();
+        });
+      });
       const testNextBtn = document.getElementById('btn-test-next');
       if (testNextBtn && testSession) {
         testNextBtn.addEventListener('click', advanceTestCard);
@@ -5451,6 +7774,19 @@
           saveState();
           render();
           showToast('Cover image removed', 'info');
+        });
+      });
+
+      // Protagonist name change (per language). Reuses the
+      // name-selection screen used on first Start.
+      document.querySelectorAll('[data-set-protagonist]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const langId = btn.getAttribute('data-set-protagonist');
+          const lang = state.languages[langId];
+          if (!lang) return;
+          openNameSelection(lang, () => {
+            render();
+          });
         });
       });
 
@@ -5581,6 +7917,44 @@
       const addUserBtn = document.getElementById('btn-add-user');
       if (addUserBtn) addUserBtn.addEventListener('click', () => addUserModal());
 
+      /* ---------- Settings: Background wallpaper ---------- */
+      const setBgBtn = document.getElementById('btn-set-bg');
+      if (setBgBtn) {
+        setBgBtn.addEventListener('click', () => {
+          importImageFile((dataUrl) => {
+            state.settings.bgImage = dataUrl;
+            saveState();
+            applyBackgroundImage();
+            render();
+            showToast('Background updated', 'success');
+          });
+        });
+      }
+      const clearBgBtn = document.getElementById('btn-clear-bg');
+      if (clearBgBtn) {
+        clearBgBtn.addEventListener('click', () => {
+          state.settings.bgImage = null;
+          saveState();
+          applyBackgroundImage();
+          render();
+          showToast('Background cleared', 'info');
+        });
+      }
+      const overlayInput = document.getElementById('bg-overlay');
+      if (overlayInput) {
+        const valEl = document.getElementById('bg-overlay-val');
+        // Live preview: update body bg + label as the user drags. Persist
+        // on `change` (drag end) so we don't write to localStorage every
+        // frame.
+        overlayInput.addEventListener('input', () => {
+          const o = Number(overlayInput.value) / 100;
+          state.settings.bgOverlay = o;
+          if (valEl) valEl.textContent = overlayInput.value + '%';
+          applyBackgroundImage();
+        });
+        overlayInput.addEventListener('change', () => saveState());
+      }
+
       /* ---------- Settings: Backup + Reset ---------- */
       const exportBtn = document.getElementById('btn-export-backup');
       if (exportBtn) exportBtn.addEventListener('click', exportBackup);
@@ -5606,6 +7980,583 @@
           render();
         });
       }
+
+      bindFirstReadHandlers();
+      bindDrillFlowHandlers();
+      frAutoPlayHook();
+    }
+
+    /* ============================================================
+       DRILL-FLOW event wiring (Stage D). Drills 1 and 6 reuse the
+       existing Cards/Test handlers; drills 2–5 own their own input.
+       ============================================================ */
+    function bindDrillFlowHandlers() {
+      // Generic "go to drill N" advance button (rendered after each
+      // drill-complete card).
+      document.querySelectorAll('[data-d-advance]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const next = parseInt(btn.getAttribute('data-d-advance'), 10);
+          setStoryProgress(lang.id, sid, { currentDrill: next });
+          // Drop ephemeral sessions so the new drill renders cleanly.
+          cardSession = null;
+          testSession = null;
+          render();
+        });
+      });
+
+      // Drill 6 celebration → next story or back to library.
+      document.querySelectorAll('[data-d6-next]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          if (!lang) return;
+          const next = btn.getAttribute('data-d6-next');
+          if (next) {
+            // Open the next story (which starts in first-read).
+            lang.lastStoryId = next;
+            lang.lastTab = 'read';
+            cardSession = null;
+            testSession = null;
+            saveState();
+          } else {
+            lang.lastTab = 'library';
+            state.libraryDrilledIn = lang.id;
+            saveState();
+          }
+          render();
+        });
+      });
+
+      /* ---------- Drill 2 — Vocab production ---------- */
+      const d2Check = document.getElementById('btn-d2-check');
+      if (d2Check) {
+        d2Check.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const vocab = getNewVocab(story);
+          const widx = prog.drill2.queue[prog.drill2.idx];
+          const v = vocab[widx];
+          const input = document.getElementById('d2-input');
+          const submitted = (input && input.value) || '';
+          prog.drill2.lastInput = submitted;
+          prog.drill2.revealed = true;
+          // Record streak.
+          if (drillAnswerMatches(submitted, v.de)) {
+            prog.drill2.streak[widx] = (prog.drill2.streak[widx] || 0) + 1;
+          } else {
+            prog.drill2.streak[widx] = 0;
+          }
+          saveState();
+          render();
+        });
+      }
+      const d2Next = document.getElementById('btn-d2-next');
+      if (d2Next) {
+        d2Next.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const vocab = getNewVocab(story);
+          const widx = prog.drill2.queue[prog.drill2.idx];
+
+          // Advance: if word satisfied streak, drop from queue; else re-queue.
+          const satisfied = (prog.drill2.streak[widx] || 0) >= DRILL2_REQUIRED_STREAK;
+          const queue = prog.drill2.queue.slice();
+          queue.splice(prog.drill2.idx, 1);
+          if (!satisfied) queue.push(widx);
+
+          prog.drill2.queue = queue;
+          prog.drill2.idx = 0;
+          prog.drill2.lastInput = '';
+          prog.drill2.revealed = false;
+
+          // Drill complete?
+          const remaining = countRemainingDrill2(prog.drill2, vocab);
+          if (remaining === 0 || !queue.length) {
+            prog.drillsDone[2] = true;
+            prog.currentDrill = 3;
+          }
+          saveState();
+          render();
+        });
+      }
+
+      /* ---------- Drill 3 — Sentence assembly ---------- */
+      document.querySelectorAll('[data-d3-pick]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const t = prog.drill3.tiles;
+          if (!t || t.checked) return;
+          const tileIdx = parseInt(btn.getAttribute('data-d3-pick'), 10);
+          // Move from available to assembled.
+          const av = t.available.filter(i => i !== tileIdx);
+          t.available = av;
+          t.assembled.push(tileIdx);
+          saveState();
+          render();
+        });
+      });
+      document.querySelectorAll('[data-d3-unpick]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const t = prog.drill3.tiles;
+          if (!t || t.checked) return;
+          const i = parseInt(btn.getAttribute('data-d3-unpick'), 10);
+          const tileIdx = t.assembled[i];
+          t.assembled.splice(i, 1);
+          t.available.push(tileIdx);
+          saveState();
+          render();
+        });
+      });
+      const d3Clear = document.getElementById('btn-d3-clear');
+      if (d3Clear) {
+        d3Clear.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const t = prog.drill3.tiles;
+          if (!t || t.checked) return;
+          t.available = t.available.concat(t.assembled);
+          t.assembled = [];
+          saveState();
+          render();
+        });
+      }
+      const d3Check = document.getElementById('btn-d3-check');
+      if (d3Check) {
+        d3Check.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const t = prog.drill3.tiles;
+          if (!t) return;
+          const built = t.assembled.map(i => t.tiles[i]).join(' ');
+          // Compare against target words (ignore distractors).
+          const targetStr = t.targetWords.join(' ');
+          // Use diacritic-insensitive compare to keep accents permissive.
+          t.correct = drillAnswerMatches(built, targetStr);
+          t.checked = true;
+          saveState();
+          render();
+        });
+      }
+      const d3Next = document.getElementById('btn-d3-next');
+      if (d3Next) {
+        d3Next.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const sentences = story.sentences || [];
+          const t = prog.drill3.tiles;
+          const sidx = t.sidx;
+          // Remove current from queue; if wrong on first attempt, requeue.
+          const queue = prog.drill3.queue.slice();
+          queue.splice(prog.drill3.idx, 1);
+          const wasFirstAttempt = !prog.drill3.retried[sidx];
+          if (!t.correct) {
+            prog.drill3.retried[sidx] = true;
+            queue.push(sidx);
+          }
+          prog.drill3.queue = queue;
+          prog.drill3.idx = 0;
+          prog.drill3.tiles = null;
+
+          if (!queue.length) {
+            prog.drillsDone[3] = true;
+            prog.currentDrill = 4;
+          }
+          saveState();
+          render();
+        });
+      }
+
+      /* ---------- Drill 4 — Dictation ---------- */
+      const d4Check = document.getElementById('btn-d4-check');
+      if (d4Check) {
+        d4Check.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const sentences = story.sentences || [];
+          const sidx = prog.drill4.queue[prog.drill4.idx];
+          const expected = substituteProtagonist(String((sentences[sidx] || {}).de || ''));
+          const input = document.getElementById('d4-input');
+          const submitted = (input && input.value) || '';
+          prog.drill4.lastInput = submitted;
+          prog.drill4.revealed = true;
+          if (drillAnswerMatches(submitted, expected)) {
+            prog.drill4.doneSet[sidx] = true;
+          }
+          saveState();
+          render();
+        });
+      }
+      const d4Next = document.getElementById('btn-d4-next');
+      if (d4Next) {
+        d4Next.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const sidx = prog.drill4.queue[prog.drill4.idx];
+          const queue = prog.drill4.queue.slice();
+          queue.splice(prog.drill4.idx, 1);
+          // If not in doneSet, requeue.
+          if (!prog.drill4.doneSet[sidx]) queue.push(sidx);
+          prog.drill4.queue = queue;
+          prog.drill4.idx = 0;
+          prog.drill4.lastInput = '';
+          prog.drill4.revealed = false;
+
+          if (!queue.length) {
+            prog.drillsDone[4] = true;
+            prog.currentDrill = 5;
+          }
+          saveState();
+          render();
+        });
+      }
+
+      /* ---------- Drill 5 — Rule review ("Got it" advance) ---------- */
+      const d5Next = document.getElementById('btn-d5-next');
+      if (d5Next) {
+        d5Next.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const ridx = prog.drill5.queue[prog.drill5.idx];
+          prog.drill5.results[ridx] = true;
+          const queue = prog.drill5.queue.slice();
+          queue.splice(prog.drill5.idx, 1);
+          prog.drill5.queue = queue;
+          prog.drill5.idx = 0;
+
+          if (!queue.length) {
+            prog.drillsDone[5] = true;
+            prog.currentDrill = 6;
+          }
+          saveState();
+          render();
+        });
+      }
+    }
+
+    /* ============================================================
+       FIRST-READ event wiring + auto-play hook. Triggered from
+       bindHandlers each render pass.
+       ============================================================ */
+    function bindFirstReadHandlers() {
+      // Continue / advance step button — used by steps 1(done), 2, 4(empty), 6.
+      document.querySelectorAll('[data-fr-continue]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const next = Math.min((prog.firstReadStep || 1) + 1, 6);
+          const patch = { firstReadStep: next };
+          if (next === 1) patch.step1Phase = 'intro';
+          if (next === 5) patch.step5Finished = false;
+          setStoryProgress(lang.id, sid, patch);
+          render();
+        });
+      });
+
+      // Step 1 phase nav (intro → narration → done).
+      document.querySelectorAll('[data-fr-skip-to]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const target = btn.getAttribute('data-fr-skip-to');
+          setStoryProgress(lang.id, sid, { step1Phase: target });
+          render();
+        });
+      });
+
+      // Step 1 intro replay button.
+      document.querySelectorAll('[data-fr-replay-intro]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          frPlayIntro();
+        });
+      });
+
+      // Step 1 EN/IT subtitle toggle.
+      document.querySelectorAll('[data-fr-toggle-english]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          setStoryProgress(lang.id, sid, { showEnglish: !prog.showEnglish });
+          render();
+        });
+      });
+
+      // Step 3 — sentence walk navigation.
+      document.querySelectorAll('[data-fr-sent-prev]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const idx = Math.max(0, (prog.sentenceIdx || 0) - 1);
+          setStoryProgress(lang.id, sid, { sentenceIdx: idx });
+          render();
+        });
+      });
+      document.querySelectorAll('[data-fr-sent-next]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const n = (story.sentences || []).length;
+          const cur = prog.sentenceIdx || 0;
+          if (cur >= n - 1) {
+            // Last sentence: advance to step 4.
+            setStoryProgress(lang.id, sid, { firstReadStep: 4, sentenceIdx: 0 });
+          } else {
+            setStoryProgress(lang.id, sid, { sentenceIdx: cur + 1 });
+          }
+          render();
+        });
+      });
+
+      // Step 4 — vocab walk navigation.
+      document.querySelectorAll('[data-fr-vocab-prev]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const idx = Math.max(0, (prog.vocabIdx || 0) - 1);
+          setStoryProgress(lang.id, sid, { vocabIdx: idx });
+          render();
+        });
+      });
+      document.querySelectorAll('[data-fr-vocab-next]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          const sid = lang && lang.lastStoryId;
+          if (!sid) return;
+          const prog = getStoryProgress(lang.id, sid);
+          const story = getStory(lang.id, sid);
+          const n = getNewVocab(story).length;
+          const cur = prog.vocabIdx || 0;
+          if (cur >= n - 1) {
+            setStoryProgress(lang.id, sid, { firstReadStep: 5, vocabIdx: 0, step5Finished: false });
+          } else {
+            setStoryProgress(lang.id, sid, { vocabIdx: cur + 1 });
+          }
+          render();
+        });
+      });
+
+      // Generic FR speak button (sentence-walk audio + vocab-walk audio).
+      document.querySelectorAll('[data-fr-speak]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-fr-speak');
+          if (!text) return;
+          btn.classList.add('speaking');
+          stopPlayAll();
+          speak(text, getActiveLang().ttsLang).finally(() => btn.classList.remove('speaking'));
+        });
+      });
+
+      // Step 3 — vocab tap-to-translate popover.
+      document.querySelectorAll('[data-fr-vocab]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const word = el.getAttribute('data-fr-vocab');
+          const trans = el.getAttribute('data-fr-vocab-trans');
+          showFRVocabPopover(el, word, trans);
+        });
+      });
+      // Tap anywhere else dismisses the popover.
+      const tabContent = document.getElementById('tab-content');
+      if (tabContent) {
+        tabContent.addEventListener('click', (e) => {
+          if (!e.target.closest('[data-fr-vocab]')) hideFRVocabPopover();
+        });
+      }
+
+      // Step 5 — closing replay (or stop, if currently playing).
+      document.querySelectorAll('[data-fr-replay-closing]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (playback.active) {
+            stopPlayAll();
+          } else {
+            frPlayClosing();
+          }
+          // Re-render the button label (Stop ↔ Replay) on next paint.
+          setTimeout(render, 0);
+        });
+      });
+
+      // Step 6 — finish first-read, jump back to library drilled view.
+      document.querySelectorAll('[data-fr-finish]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          if (!lang) return;
+          lang.lastTab = 'library';
+          state.libraryDrilledIn = lang.id;
+          saveState();
+          render();
+        });
+      });
+
+      // Save & exit — always available from any first-read step. Progress
+      // is already on disk via setStoryProgress; this just navigates out.
+      document.querySelectorAll('[data-fr-exit]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          stopPlayAll();
+          const lang = getActiveLang();
+          if (!lang) return;
+          lang.lastTab = 'library';
+          state.libraryDrilledIn = lang.id;
+          saveState();
+          showToast('Progress saved — pick up where you left off anytime.', 'info');
+          render();
+        });
+      });
+    }
+
+    function showFRVocabPopover(anchor, word, translation) {
+      const pop = document.getElementById('fr-vocab-popover');
+      if (!pop) return;
+      pop.innerHTML = `<div class="fr-vp-word">${escapeHtml(word || '')}</div>
+                       <div class="fr-vp-trans">${escapeHtml(translation || '')}</div>`;
+      pop.style.display = 'block';
+      // Anchor under the tapped word.
+      const r = anchor.getBoundingClientRect();
+      const parentR = pop.parentElement.getBoundingClientRect();
+      pop.style.left = Math.max(8, (r.left - parentR.left)) + 'px';
+      pop.style.top = (r.bottom - parentR.top + 4) + 'px';
+    }
+    function hideFRVocabPopover() {
+      const pop = document.getElementById('fr-vocab-popover');
+      if (pop) pop.style.display = 'none';
+    }
+
+    // Auto-play hook — triggers TTS when entering a step that needs it.
+    // Checks DOM state to avoid double-play within a render pass.
+    let _frLastAutoplayKey = null;
+    function frAutoPlayHook() {
+      const lang = getActiveLang();
+      if (!lang) return;
+      const tab = lang.lastTab || 'library';
+      if (tab !== 'read') { _frLastAutoplayKey = null; return; }
+      const sid = lang.lastStoryId;
+      if (!sid) return;
+      const story = getStory(lang.id, sid);
+      const prog = getStoryProgress(lang.id, sid);
+      if (!story || !prog || prog.phase !== 'first-read') {
+        _frLastAutoplayKey = null;
+        return;
+      }
+      const step = prog.firstReadStep || 1;
+      const sub = step === 1 ? (prog.step1Phase || 'intro') : '';
+      const key = `${lang.id}|${sid}|${step}|${sub}`;
+      if (key === _frLastAutoplayKey) return;
+      _frLastAutoplayKey = key;
+
+      if (step === 1 && sub === 'intro')      frPlayIntro();
+      else if (step === 1 && sub === 'narration') frPlayNarration();
+      else if (step === 5 && !prog.step5Finished) frPlayClosing();
+    }
+
+    function frPlayIntro() {
+      const lang = getActiveLang();
+      const sid = lang && lang.lastStoryId;
+      if (!sid) return;
+      const story = getStory(lang.id, sid);
+      const intro = (story && (story._atmosphereIntro || story.synopsis)) || '';
+      if (!intro) {
+        setStoryProgress(lang.id, sid, { step1Phase: 'narration' });
+        render();
+        return;
+      }
+      stopPlayAll();
+      // Use playback machinery as a simple cancel/version guard.
+      playback.active = true;
+      playback.version++;
+      const myV = playback.version;
+      speak(intro, 'en-US').then(() => {
+        if (playback.version !== myV) return;
+        playback.active = false;
+        // Auto-advance to narration phase.
+        const lang2 = getActiveLang();
+        if (!lang2 || lang2.lastStoryId !== sid) return;
+        setStoryProgress(lang2.id, sid, { step1Phase: 'narration' });
+        render();
+      });
+    }
+    function frPlayNarration() {
+      const lang = getActiveLang();
+      const sid = lang && lang.lastStoryId;
+      if (!sid) return;
+      const story = getStory(lang.id, sid);
+      if (!story || !Array.isArray(story.sentences)) return;
+      startPlayAll(story.sentences, lang.ttsLang, {
+        onDone: () => {
+          // After narration completes, surface the soft-message + Continue.
+          const lang2 = getActiveLang();
+          if (!lang2 || lang2.lastStoryId !== sid) return;
+          const prog2 = getStoryProgress(lang2.id, sid);
+          if (prog2.firstReadStep !== 1 || prog2.step1Phase !== 'narration') return;
+          setStoryProgress(lang2.id, sid, { step1Phase: 'done' });
+          render();
+        }
+      });
+    }
+    function frPlayClosing() {
+      const lang = getActiveLang();
+      const sid = lang && lang.lastStoryId;
+      if (!sid) return;
+      const story = getStory(lang.id, sid);
+      if (!story || !Array.isArray(story.sentences)) return;
+      startPlayAll(story.sentences, lang.ttsLang, {
+        onDone: () => {
+          const lang2 = getActiveLang();
+          if (!lang2 || lang2.lastStoryId !== sid) return;
+          setStoryProgress(lang2.id, sid, { step5Finished: true });
+          render();
+        }
+      });
     }
 
     /* ============================================================
@@ -5650,15 +8601,20 @@
       showToast(`Language ${json.name} added${note}`, 'success');
     }
 
-    async function handleStoryImport(json, coverImage) {
-      if (!json) {
+    async function handleStoryImport(rawJson, coverImage) {
+      if (!rawJson) {
         showToast('No JSON file selected', 'error');
         return;
       }
+      // Accept both the legacy {de,en} shape and the Storyglot spec
+      // shape (targetText/englishGloss + grammar.id + tests.type).
+      // Normalize the new shape to legacy before validating + storing.
+      const json = normalizeStoryShape(rawJson);
       const v = validateStoryAllowReplace(json);
       if (!v.valid) {
         showToast('Invalid story: ' + v.errors[0], 'error');
         console.warn('story errors:', v.errors);
+        console.warn('original payload:', rawJson);
         return;
       }
       const storyKey = `${json.languageId}::${json.id}`;
@@ -5690,6 +8646,7 @@
         if (lang && !lang.stories.includes(json.id)) lang.stories.push(json.id);
       }
       ensureCards(rawState);
+      ensureStoryProgress(rawState);
       saveState();
       render();
       const note = (coverImage || json.coverImage) ? ' (with cover image)' : '';
@@ -5829,6 +8786,7 @@
           rawState.users[uid] = makeDefaultUser(uid, name, 'user', pass);
           ensureBuiltins(rawState);   // gives the new user the German language registration
           ensureCards(rawState);      // seeds their cards for any registered story
+          ensureStoryProgress(rawState); // initialize first-read state for the new user
           saveState();
           finish();
           render();
@@ -5899,8 +8857,12 @@
       const ts = testSession;
       if (!ts) return;
       const t  = ts.queue[ts.idx];
-      const dist = levenshtein(normalize(ts.lastInput || ''), normalize(t.de));
-      const ok = dist <= 2;
+      // Multi-choice (choose-article) wants exact match against the
+      // selected option. Free-text uses Levenshtein with threshold 2.
+      const isMultiple = t._type === 'choose-article' && Array.isArray(t._options);
+      const ok = isMultiple
+        ? (ts.lastInput || '').trim() === String(t.de).trim()
+        : (levenshtein(normalize(ts.lastInput || ''), normalize(t.de)) <= 2);
       // Key includes pack segment so uploaded packs and built-in tests
       // accumulate progress under distinct slots.
       const packSeg = t._packId || 'builtin';
