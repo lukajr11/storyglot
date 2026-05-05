@@ -3511,6 +3511,202 @@
           s.storiesData[key] = story;
         }
       }
+      // Italian "Il gruppo" grammar enrichment patch — the imported v1
+      // shipped with sparse explanations only. Splice the rich examples /
+      // tips / paradigm tables into the stored copy so the Rules tab,
+      // first-read step 2, and drill 5 review all show the richer card.
+      patchItGrammarRich(s);
+    }
+
+    // Idempotent: only writes when fields are missing.
+    const IT_A1_S01_GRAMMAR_PATCH = {
+      'a1-g-01': {
+        longExplanation: "Italian has subject pronouns — io, tu, lui, lei, noi, voi, loro — but it usually drops them, because the verb ending already tells you who's doing the action. You'll mostly see them when the speaker wants to emphasize a person or contrast two subjects. Notice how 'lei' and 'loro' carry the emotional weight of this chapter: 'lei' picks out {{PROTAGONIST}} alone, 'loro' the group she's not in.",
+        examples: [
+          { de: 'Lei ha dieci anni.', en: 'She is ten years old.', highlight: 'Lei' },
+          { de: 'Loro ridono.', en: 'They laugh.', highlight: 'Loro' },
+          { de: 'Io sono Bianca.', en: 'I am Bianca.', highlight: 'Io' }
+        ],
+        tips: [
+          "Italian usually drops the pronoun — the verb ending tells you who.",
+          "Use the pronoun only for emphasis or contrast.",
+          "'lui' = he, 'lei' = she; both can also mean polite 'you' (introduced later)."
+        ],
+        table: {
+          title: 'Subject pronouns',
+          headers: ['Person', 'Pronoun'],
+          rows: [
+            ['1st sing.',    'io (I)'],
+            ['2nd sing.',    'tu (you, informal)'],
+            ['3rd sing. m',  'lui (he)'],
+            ['3rd sing. f',  'lei (she)'],
+            ['1st plur.',    'noi (we)'],
+            ['2nd plur.',    'voi (you all)'],
+            ['3rd plur.',    'loro (they)']
+          ]
+        }
+      },
+      'a1-g-02': {
+        longExplanation: "Every Italian noun is either masculine or feminine — there's no neutral. Most nouns ending in -o are masculine (il libro, il banco, il lago); most ending in -a are feminine (la casa, la matita, la bambina). Nouns ending in -e go either way (il sole is masculine; la classe is feminine) and have to be learned one by one. The article and any adjective in the sentence MUST agree with the noun's gender.",
+        examples: [
+          { de: "L'aria è fredda.", en: 'The air is cold.', highlight: 'aria' },
+          { de: 'il lago', en: 'the lake', highlight: 'lago' },
+          { de: 'la matita', en: 'the pencil', highlight: 'matita' }
+        ],
+        tips: [
+          "Most -o nouns are masculine; most -a nouns are feminine.",
+          "-e nouns can be either gender — memorize each one's gender with the article.",
+          "When in doubt, learn the noun together with its definite article (il / la)."
+        ],
+        table: {
+          title: 'Typical gender endings',
+          headers: ['Ending', 'Usually', 'Examples'],
+          rows: [
+            ['-o', 'masculine', 'libro, banco, lago'],
+            ['-a', 'feminine',  'casa, matita, aria'],
+            ['-e', 'either',    'sole (m) · classe (f)']
+          ]
+        }
+      },
+      'a1-g-03': {
+        longExplanation: "Italian nouns change ending to mark plural. The pattern depends on the singular ending: masculine -o becomes -i (libro → libri), feminine -a becomes -e (matita → matite), and both-gender -e becomes -i (nome → nomi, classe → classi). The article and adjective shift to plural too: il libro → i libri, la matita → le matite.",
+        examples: [
+          { de: 'i bambini', en: 'the children', highlight: 'bambini' },
+          { de: 'le pietre', en: 'the stones',   highlight: 'pietre' },
+          { de: 'le classi', en: 'the classes',  highlight: 'classi' }
+        ],
+        tips: [
+          "Masculine -o → -i.",
+          "Feminine -a → -e.",
+          "-e nouns (either gender) → -i.",
+          "The whole phrase shifts: la matita rossa → le matite rosse."
+        ],
+        table: {
+          title: 'Plural endings',
+          headers: ['Singular', 'Plural', 'Example'],
+          rows: [
+            ['-o (m)',   '-i', 'libro → libri'],
+            ['-a (f)',   '-e', 'matita → matite'],
+            ['-e (m/f)', '-i', 'nome → nomi · classe → classi']
+          ]
+        }
+      },
+      'a1-g-04': {
+        longExplanation: "Indefinite articles (the equivalents of English 'a' / 'an') agree with the noun's gender and the next sound. Use 'un' before any masculine noun. Use 'una' before a feminine noun starting with a consonant. Use 'un\\'' (with apostrophe, no space) before a feminine noun starting with a vowel. Note: 'un amico' has no apostrophe — masculine 'un' never elides.",
+        examples: [
+          { de: 'una bambina piccola', en: 'a small girl',         highlight: 'una' },
+          { de: 'un libro',            en: 'a book',               highlight: 'un' },
+          { de: "un'amica",            en: 'a (female) friend',    highlight: "un'" }
+        ],
+        tips: [
+          "'un' before masculine nouns — no apostrophe even before vowels.",
+          "'una' before feminine nouns starting with a consonant.",
+          "'un\\'' (apostrophe) before feminine nouns starting with a vowel."
+        ],
+        table: {
+          title: 'Indefinite articles',
+          headers: ['Form', 'Use', 'Example'],
+          rows: [
+            ['un',   'masculine (any sound)',    'un libro · un amico'],
+            ['una',  'feminine + consonant',     'una matita · una bambina'],
+            ["un'",  'feminine + vowel',         "un'amica · un'ora"]
+          ]
+        }
+      },
+      'a1-g-05': {
+        longExplanation: "Definite articles (the equivalents of English 'the') change with gender, number, and the sound that follows. In this story you'll meet four forms: 'il' / 'la' for singular nouns starting with a consonant, 'l\\'' for singular nouns starting with a vowel (both genders), and 'i' / 'le' for plurals. The masculine 'lo' / 'gli' (before s+consonant, z, ps, gn) come up more fully in later stories.",
+        examples: [
+          { de: 'il lago',   en: 'the lake',   highlight: 'il' },
+          { de: 'la classe', en: 'the class',  highlight: 'la' },
+          { de: "l'aria",    en: 'the air',    highlight: "l'" },
+          { de: 'le pietre', en: 'the stones', highlight: 'le' }
+        ],
+        tips: [
+          "'il' / 'la' before consonants — 'l\\'' before vowels (both genders).",
+          "Plural: 'i' for masculine, 'le' for feminine.",
+          "Always learn a noun together with its article."
+        ],
+        table: {
+          title: 'Definite articles in this story',
+          headers: ['', 'Singular', 'Plural'],
+          rows: [
+            ['masculine',     'il',  'i'],
+            ['feminine',      'la',  'le'],
+            ['before vowel',  "l'",  '— (i / le)']
+          ],
+          note: "'lo' (sing.) and 'gli' (plur.) before s+consonant, z, ps, gn — covered later."
+        }
+      },
+      'a1-g-06': {
+        longExplanation: "'Essere' (to be) and 'avere' (to have) are the two everyday verbs Italian leans on the most. Use 'essere' for identity, location, and description (Sono Bianca · È in classe · L'aria è fredda). Use 'avere' for possession AND for the states English expresses with 'to be' — age, hunger, thirst, cold (Ha dieci anni — literally 'she has ten years'). Memorize both paradigms now; almost every conversation uses one of them.",
+        examples: [
+          { de: '{{PROTAGONIST}} è in classe.', en: '{{PROTAGONIST}} is in class.', highlight: 'è' },
+          { de: 'Lei ha dieci anni.',           en: 'She is ten years old.',         highlight: 'ha' },
+          { de: 'Io sono Bianca.',              en: 'I am Bianca.',                  highlight: 'sono' }
+        ],
+        tips: [
+          "'essere' = identity, location, traits.",
+          "'avere' = possession AND age, hunger, thirst, fear.",
+          "English says 'I am 10' — Italian says 'I have 10 years' (Ho dieci anni)."
+        ],
+        table: {
+          title: 'Present tense — essere & avere',
+          headers: ['', 'essere (to be)', 'avere (to have)'],
+          rows: [
+            ['io',        'sono',   'ho'],
+            ['tu',        'sei',    'hai'],
+            ['lui / lei', 'è',      'ha'],
+            ['noi',       'siamo',  'abbiamo'],
+            ['voi',       'siete',  'avete'],
+            ['loro',      'sono',   'hanno']
+          ]
+        }
+      },
+      'a1-g-07': {
+        longExplanation: "Adjectives in Italian shift their ending to match the noun's gender and number. Most adjectives have four forms: -o (masc. sing.), -a (fem. sing.), -i (masc. plur.), -e (fem. plur.) — so piccolo, piccola, piccoli, piccole. Some adjectives end in -e in the singular (grande, felice) and use only -e / -i. The adjective usually follows the noun, but a small core (bello, buono, grande, piccolo, vecchio, giovane) often goes before.",
+        examples: [
+          { de: 'una bambina piccola', en: 'a small girl',  highlight: 'piccola' },
+          { de: 'un bambino piccolo',  en: 'a small boy',   highlight: 'piccolo' },
+          { de: 'le pietre bagnate',   en: 'the wet stones', highlight: 'bagnate' }
+        ],
+        tips: [
+          "Adjective ending must match the noun's gender + number.",
+          "Most adjectives have 4 forms: -o / -a / -i / -e.",
+          "Adjectives ending in -e (singular) use only 2 forms: -e (sing.) / -i (plur.)."
+        ],
+        table: {
+          title: 'Adjective endings',
+          headers: ['', 'Singular', 'Plural'],
+          rows: [
+            ['masculine',       '-o', '-i'],
+            ['feminine',        '-a', '-e'],
+            ['both (-e type)',  '-e', '-i']
+          ]
+        }
+      }
+    };
+    function patchItGrammarRich(s) {
+      const story = s.storiesData && s.storiesData['it::it-a1-s01'];
+      if (!story || !Array.isArray(story.grammarRules)) return;
+      let changed = false;
+      story.grammarRules.forEach(r => {
+        const patch = IT_A1_S01_GRAMMAR_PATCH[r._id];
+        if (!patch) return;
+        // Only fill in fields that aren't already set, so user-imported
+        // updates aren't overwritten.
+        if (!Array.isArray(r.examples) || !r.examples.length) {
+          r.examples = patch.examples; changed = true;
+        }
+        if (!Array.isArray(r.tips) || !r.tips.length) {
+          r.tips = patch.tips; changed = true;
+        }
+        if (!r.table) { r.table = patch.table; changed = true; }
+        if (patch.longExplanation && (!r.longExplanation || r.longExplanation === r.desc)) {
+          r.longExplanation = patch.longExplanation; changed = true;
+        }
+      });
+      // No saveState here — caller's flow will save once everything's
+      // ensured. Just mark the in-memory copy.
     }
 
     /* ------------------------------------------------------------
@@ -3583,7 +3779,10 @@
         drill3: { idx: 0, queue: null, retried: {} },        // sentence assembly
         drill4: { idx: 0, queue: null, doneSet: {} },        // dictation
         drill5: { idx: 0, queue: null, results: {} },        // rule spotting
-        unlocked: false                                       // drill 6 → next story unlock
+        unlocked: false,                                      // drill 6 → next story unlock
+        // Stage E — free practice. fpMode is the active sub-screen
+        // inside the free-practice phase; default 'hub' = tile grid.
+        fpMode: 'hub'                                         // 'hub' | 'listen' | 'assembly' | 'dictation'
       };
     }
     function ensureStoryProgress(s) {
@@ -3627,6 +3826,7 @@
             if (!p.drill4) p.drill4 = { idx: 0, queue: null, doneSet: {} };
             if (!p.drill5) p.drill5 = { idx: 0, queue: null, results: {} };
             if (p.unlocked === undefined) p.unlocked = false;
+            if (!p.fpMode) p.fpMode = 'hub';
           }
         }
       }
@@ -5069,8 +5269,9 @@
       if (progress && progress.phase === 'drill-flow') {
         return renderDrillFlow(lang, story, progress);
       }
-      // Free-practice falls back to legacy reader for now; Stage E will
-      // replace it with the tile-grid hub.
+      if (progress && progress.phase === 'free-practice') {
+        return renderFreePractice(lang, story, progress);
+      }
       return renderReadLegacy(lang, story);
     }
 
@@ -6058,6 +6259,166 @@
             : `<button class="gradient-btn full-btn" data-d-advance="${next}">Start drill ${next} →</button>`}
         </div>
       `;
+    }
+
+    /* ============================================================
+       FREE PRACTICE — Stage E. Story has finished its drill flow and
+       enters open-ended mode. The hub is a tile grid; tiles either
+       deep-link to existing tabs (Cards / Rules / Test) or render
+       in-place (Listen / Sentence assembly / Dictation).
+       ============================================================ */
+    function renderFreePractice(lang, story, progress) {
+      const mode = progress.fpMode || 'hub';
+      switch (mode) {
+        case 'listen':    return renderFPListen(lang, story, progress);
+        case 'assembly':  return renderFPAssembly(lang, story, progress);
+        case 'dictation': return renderFPDictation(lang, story, progress);
+        default:          return renderFPHub(lang, story, progress);
+      }
+    }
+
+    function renderFPHub(lang, story, progress) {
+      const stats = getStats(state, lang.id, story.id);
+      const vocabCount = (story.vocabulary || []).length;
+      const sentCount = (story.sentences || []).length;
+      const ruleCount = (story.grammarRules || []).length;
+      // Tier accuracy across all attempts.
+      const acc = (tier) => {
+        const prefix = `${lang.id}::${story.id}::tier${tier}::`;
+        let attempts = 0, correct = 0;
+        for (const k in state.testAttempts) {
+          if (!k.startsWith(prefix)) continue;
+          attempts += state.testAttempts[k].attempts || 0;
+          correct  += state.testAttempts[k].correct  || 0;
+        }
+        return { attempts, accuracy: attempts ? Math.round(correct / attempts * 100) : 0 };
+      };
+      const tiers = [acc(1), acc(2), acc(3)];
+
+      const tile = (key, icon, title, sub) => `
+        <div class="glass fp-tile" data-fp-tile="${key}">
+          <div class="fp-tile-icon">${icon}</div>
+          <div class="fp-tile-title">${escapeHtml(title)}</div>
+          <div class="fp-tile-sub">${escapeHtml(sub)}</div>
+        </div>
+      `;
+
+      return `
+        <div class="fr-top-row">
+          <div class="fr-step-pill">Free practice</div>
+          <button class="ghost-btn fr-exit-btn" data-fp-back-to-library="1">← Library</button>
+        </div>
+        <div class="glass fp-header">
+          <div class="fp-title gradient-text">${escapeHtml(story.title)}</div>
+          <div class="fp-sub">Pick anything — drill order is over. Cross-story Review on the library home.</div>
+        </div>
+        <div class="fp-grid">
+          ${tile('listen',     '🎧', 'Listen',           `${sentCount} sentences · subtitle toggle`)}
+          ${tile('sentences',  '📝', 'Sentence cards',   'Type or speak · SRS')}
+          ${tile('vocab',      '🔤', 'Vocab cards',      `${vocabCount} words · SRS`)}
+          ${tile('assembly',   '🧩', 'Sentence assembly', 'Repeatable, free order')}
+          ${tile('dictation',  '✍️', 'Dictation',        'Listen and type')}
+          ${tile('rules',      '📚', 'Grammar rules',    `${ruleCount} ${ruleCount === 1 ? 'rule' : 'rules'} with examples`)}
+          ${tile('tests',      '🎯', 'Transfer test',    `T1 ${tiers[0].accuracy}% · T2 ${tiers[1].accuracy}% · T3 ${tiers[2].accuracy}%`)}
+        </div>
+      `;
+    }
+
+    /* ----- Listen mode: cover + sentences + audio + EN toggle ----- */
+    function renderFPListen(lang, story, progress) {
+      const showEng = !!progress.fpListenEng;
+      const subModes = ['off', 'it', 'both'];
+      const cur = progress.fpSubMode || 'it';
+      const next = subModes[(subModes.indexOf(cur) + 1) % subModes.length];
+      const subLabel =
+        cur === 'off'  ? 'Subtitles: off' :
+        cur === 'it'   ? 'Subtitles: IT'  : 'Subtitles: IT + EN';
+
+      const coverHtml = renderStoryCover(lang.id, story) ||
+        `<div class="story-cover" style="background: linear-gradient(135deg, var(--grad-1), var(--grad-3));"></div>`;
+
+      const rows = (cur === 'off')
+        ? ''
+        : story.sentences.map((s, i) => `
+            <div class="fr-narr-row" data-sent-idx="${i}">
+              <div class="de">${escapeHtml(s.de)}</div>
+              ${cur === 'both' ? `<div class="en">${escapeHtml(s.en)}</div>` : ''}
+            </div>
+          `).join('');
+
+      return `
+        <div class="fr-top-row">
+          <div class="fr-step-pill">Listen</div>
+          <button class="ghost-btn fr-exit-btn" data-fp-back-to-hub="1">← Free practice</button>
+        </div>
+        <div class="fr-cover-wrap fr-cover-thin">${coverHtml}</div>
+        <div class="play-bar">
+          <button class="gradient-btn" id="btn-play-all">${playback.active ? '⏹  Stop' : '🔊  Play full story'}</button>
+          <button class="ghost-btn fr-eng-toggle" data-fp-cycle-sub="${next}">${escapeHtml(subLabel)}</button>
+        </div>
+        ${rows ? `<div class="glass fr-narration-list">${rows}</div>` : '<div class="glass empty-state">Subtitles off — close your eyes and listen.</div>'}
+      `;
+    }
+
+    /* ----- Assembly + Dictation reuse drill renderers in repeatable mode.
+       Each entry resets the queue so the user can replay from scratch.
+       Completion does NOT mutate drillsDone (this is just practice). ----- */
+    function renderFPAssembly(lang, story, progress) {
+      // Use a parallel ephemeral state object keyed off progress.fpAssembly.
+      progress.fpAssembly = progress.fpAssembly || { idx: 0, queue: null, retried: {} };
+      // If queue exhausted on previous render, rebuild fresh.
+      if (!progress.fpAssembly.queue || !progress.fpAssembly.queue.length) {
+        const sentences = story.sentences || [];
+        progress.fpAssembly.queue = shuffleArray(sentences.map((_, i) => i));
+        progress.fpAssembly.tiles = null;
+        progress.fpAssembly.retried = {};
+        progress.fpAssembly.idx = 0;
+      }
+      // Render via the shared drill 3 body but with a Free Practice top bar.
+      // Swap progress.drill3 pointer to fpAssembly so existing handlers work.
+      const stash = progress.drill3;
+      progress.drill3 = progress.fpAssembly;
+      const body = renderDrill3InnerHTML(lang, story, progress);
+      progress.drill3 = stash;
+      return `
+        <div class="fr-top-row">
+          <div class="fr-step-pill">Sentence assembly</div>
+          <button class="ghost-btn fr-exit-btn" data-fp-back-to-hub="1">← Free practice</button>
+        </div>
+        ${body}
+      `;
+    }
+    function renderFPDictation(lang, story, progress) {
+      progress.fpDictation = progress.fpDictation || { idx: 0, queue: null, doneSet: {} };
+      if (!progress.fpDictation.queue || !progress.fpDictation.queue.length) {
+        const sentences = story.sentences || [];
+        progress.fpDictation.queue = shuffleArray(sentences.map((_, i) => i));
+        progress.fpDictation.doneSet = {};
+        progress.fpDictation.idx = 0;
+        progress.fpDictation.lastInput = '';
+        progress.fpDictation.revealed = false;
+      }
+      const stash = progress.drill4;
+      progress.drill4 = progress.fpDictation;
+      const body = renderDrill4InnerHTML(lang, story, progress);
+      progress.drill4 = stash;
+      return `
+        <div class="fr-top-row">
+          <div class="fr-step-pill">Dictation</div>
+          <button class="ghost-btn fr-exit-btn" data-fp-back-to-hub="1">← Free practice</button>
+        </div>
+        ${body}
+      `;
+    }
+
+    // Strip drill-3's outer top bar so it can render inside the FP shell.
+    function renderDrill3InnerHTML(lang, story, progress) {
+      // renderDrill3 only emits a progress-line + body, no top bar. So we
+      // can call it directly. Same for renderDrill4.
+      return renderDrill3(lang, story, progress);
+    }
+    function renderDrill4InnerHTML(lang, story, progress) {
+      return renderDrill4(lang, story, progress);
     }
 
     function renderPlaceholder(name) {
